@@ -1,5 +1,4 @@
 "use client";
-
 import {
   LineChart,
   Line,
@@ -7,90 +6,86 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
+  Label,
+  Legend,
 } from "recharts";
 import { CountryData } from "../../data/affordability";
-
 interface RentPriceDivergenceChartProps {
   countryData: CountryData;
 }
-
-const createIndexedData = (countryData: CountryData) => {
-  const basePti = countryData.pti[0]?.value;
-  const baseRent = countryData.rent[0]?.value;
-
+const createIndexedData = (c: CountryData) => {
+  const basePti = c.pti[0]?.value;
+  const baseRent = c.rent[0]?.value;
   if (!basePti || !baseRent) return [];
-
-  const indexedData = countryData.pti
-    .map((ptiPoint) => {
-      const year = ptiPoint.year;
-      const rentPoint = countryData.rent.find((r) => r.year === year);
-      if (!rentPoint) return null;
-
-      const ptiValue = ptiPoint.value;
-      const rentValue = rentPoint.value;
-
-      // Assuming income growth is baked into PTI, we can use PTI as a proxy for price index
-      const priceIndex = (ptiValue / basePti) * 100;
-      const rentIndex = (rentValue / baseRent) * 100;
-
+  return c.pti
+    .map((p) => {
+      const rent = c.rent.find((r) => r.year === p.year);
+      if (!rent) return null;
+      const priceIndex = (p.value / basePti) * 100;
+      const rentIndex = (rent.value / baseRent) * 100;
       return {
-        year,
+        year: p.year,
         priceIndex: parseFloat(priceIndex.toFixed(2)),
         rentIndex: parseFloat(rentIndex.toFixed(2)),
       };
     })
-    .filter(Boolean);
-
-  return indexedData as { year: number; priceIndex: number; rentIndex: number }[];
+    .filter(Boolean) as { year: number; priceIndex: number; rentIndex: number }[];
 };
-
-export function RentPriceDivergenceChart({
-  countryData,
-}: RentPriceDivergenceChartProps) {
-  const chartData = createIndexedData(countryData);
+export function RentPriceDivergenceChart({ countryData }: RentPriceDivergenceChartProps) {
+  const data = createIndexedData(countryData);
   return (
     <div className="h-96">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
-          data={chartData}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
+          data={data}
+          margin={{ top: 10, right: 30, left: 20, bottom: 30 }}
         >
-          <CartesianGrid
-            strokeDasharray="3 3"
-            stroke="rgba(128, 128, 128, 0.3)"
-          />
-          <XAxis dataKey="year" />
-          <YAxis yAxisId="left" stroke="#8884d8" />
-          <YAxis yAxisId="right" orientation="right" stroke="#82ca9d" />
+          <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
+          <XAxis dataKey="year" stroke="var(--color-text)">
+            <Label
+              value="Year"
+              offset={-20}
+              position="insideBottom"
+              fill="var(--color-text)"
+            />
+          </XAxis>
+          <YAxis stroke="var(--color-text)">
+            <Label
+              value="Index (1985=100)"
+              angle={-90}
+              position="insideLeft"
+              fill="var(--color-text)"
+              style={{ textAnchor: "middle" }}
+            />
+          </YAxis>
           <Tooltip
             contentStyle={{
-              backgroundColor: "rgba(30, 30, 30, 0.8)",
-              borderColor: "rgba(128, 128, 128, 0.5)",
+              backgroundColor: "var(--color-card)",
+              border: "1px solid var(--color-border)",
+              borderRadius: "0.5rem",
             }}
+            labelStyle={{ color: "var(--color-title)", fontWeight: "bold" }}
+            itemStyle={{ color: "var(--color-text)" }}
           />
-          <Legend />
+          <Legend verticalAlign="top" height={36} />
           <Line
-            yAxisId="left"
+            yAxisId={0}
             type="monotone"
             dataKey="priceIndex"
+            stroke="#2563eb"
+            strokeWidth={3}
+            dot={false}
             name="Price Index"
-            stroke="#8884d8"
-            strokeWidth={2}
           />
           <Line
-            yAxisId="right"
+            yAxisId={0}
             type="monotone"
             dataKey="rentIndex"
+            stroke="#10b981"
+            strokeWidth={3}
+            dot={false}
             name="Rent Index"
-            stroke="#82ca9d"
-            strokeWidth={2}
           />
         </LineChart>
       </ResponsiveContainer>

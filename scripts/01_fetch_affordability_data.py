@@ -1,41 +1,24 @@
 import pandas as pd
+import numpy as np
 import json
 import os
-import time
-from urllib.error import HTTPError
 
 # --- Configuration ---
 
-# This configuration is now more specific, defining the column to use for the
-# metric identifier and the measure filter for each dataset independently.
-DATASET_CONFIG = {
-    "HOUSE_PRICES": {
-        "metrics": {"pti": "HPIPTI", "ptr": "HPIPTR", "rent": "RENTIDX"},
-        "metric_column": "MEASURE",
-        "measure_column": "MEASURE",
-        "measure_filter": ["IXOB", "IX"]
-    },
-    "KEI": {
-        "metrics": {"mortgageRate": "IRLTLT01"},
-        "metric_column": "MEASURE",
-        "measure_column": "MEASURE",
-        "measure_filter": ["STSA"]
-    },
-    "SNA_TABLE4": {
-        "metrics": {"income": "B6N"},
-        "metric_column": "TRANSACTION",
-        "measure_column": "UNIT_MEASURE", # Corrected column for this dataset
-        "measure_filter": ["C"]
-    }
+# Final configuration based on exhaustive data inspection.
+# We will use real house prices, real income, mortgage rates,
+# and include the nominal rent price index as requested.
+METRIC_CONFIG = {
+    "realHousePriceIndex": {"file": "_artifacts/HousingPricesRents.csv", "measure": "RHP"},
+    "rentPriceIndex": {"file": "_artifacts/HousingPricesRents.csv", "measure": "RPI"},
+    "realIncome": {"file": "_artifacts/Income.csv", "measure": "B6N_R_PPP_P31S14"},
+    "mortgageRate": {"file": "_artifacts/MortgageRate.csv", "measure": "IRLT"},
 }
 
-# These are the correct generic column names based on your output.
-COLUMN_NAMES = {
-    "location": "REF_AREA",
-    "frequency": "FREQ",
-    "time": "TIME_PERIOD",
-    "value": "OBS_VALUE"
-}
+# The target year range for the project.
+TARGET_YEAR_START = 1985
+TARGET_YEAR_END = 2025
+TARGET_YEARS = set(range(TARGET_YEAR_START, TARGET_YEAR_END + 1))
 
 COUNTRIES = [
   "AUS", "AUT", "BEL", "CAN", "CHL", "COL", "CRI", "CZE", "DNK", "EST",
@@ -44,73 +27,82 @@ COUNTRIES = [
   "SVK", "SVN", "ESP", "SWE", "CHE", "TUR", "GBR", "USA",
 ]
 
-# --- Main Logic ---
+# --- Data Processing Functions ---
 
-def fetch_and_process_data():
+def parse_time_period(series):
+    """Converts a time period column (which may be object/string) to integer year."""
+    return pd.to_numeric(series.astype(str).str[:4], errors='coerce')
+
+def extrapolate_series(data_points):
     """
-    Fetches, processes, and structures data from all configured datasets.
+    Fills missing years in a time series using interpolation and conservative extrapolation.
+    - Interpolates missing years within the known data range.
+    - Back-fills years before the first data point with the first available value.
+    - Forward-fills years after the last data point with the last available value.
     """
-    all_data = {country: {} for country in COUNTRIES}
+    if not data_points:
+        return []
 
-    for dataset, config in DATASET_CONFIG.items():
-        print(f"- Fetching and processing dataset: {dataset}...")
-        url = f"https://stats.oecd.org/sdmx-json/data/{dataset}/all/all?contentType=csv"
-
-        try:
-            df = pd.read_csv(url)
-            
-            loc_col = COLUMN_NAMES["location"]
-            freq_col = COLUMN_NAMES["frequency"]
-            time_col = COLUMN_NAMES["time"]
-            value_col = COLUMN_NAMES["value"]
-            
-            metric_id_col = config["metric_column"]
-            measure_filter_col = config["measure_column"]
-
-            df_filtered = df[
-                (df[loc_col].isin(COUNTRIES)) &
-                (df[metric_id_col].isin(config["metrics"].values())) &
-                (df[freq_col] == "A") &
-                (df[measure_filter_col].isin(config["measure_filter"]))
-            ]
-
-            metric_to_subject = {v: k for k, v in config["metrics"].items()}
-
-            for _, row in df_filtered.iterrows():
-                country = row[loc_col]
-                metric = metric_to_subject.get(row[metric_id_col])
-                year = int(row[time_col])
-                value = float(row[value_col])
-
-                if metric not in all_data[country]:
-                    all_data[country][metric] = []
-                
-                all_data[country][metric].append({"year": year, "value": value})
-
-            print(f"  ✓ Successfully processed {dataset}.")
-
-        except HTTPError as e:
-            print(f"  - WARNING: Could not download {dataset}. HTTP Error: {e.code}")
-        except KeyError as e:
-            print(f"  - WARNING: A column name was not found: {e}. The CSV structure may have changed.")
-            print(f"    Available columns: {list(df.columns)}")
-        except Exception as e:
-            print(f"  - WARNING: An unexpected error occurred while processing {dataset}: {e}")
+    df = pd.DataFrame(data_points).drop_duplicates(subset='year').set_index('year')
+    series = df['value']
     
-        print("  ... Pausing for 5 seconds to be polite to the server.")
-        time.sleep(5)
+    # Reindex to the full target year range, creating NaNs for missing years
+    series = series.reindex(range(TARGET_YEAR_START, TARGET_YEAR_END + 1))
+    
+    # 1. Interpolate to fill gaps *between* the first and last valid data points
+    series = series.interpolate(method='linear')
+    
+    # 2. Back-fill and Forward-fill to handle extrapolation at the ends
+    # This conservatively carries the earliest and latest known values to the edges of the timeline
+    series = series.bfill().ffill()
+    
+    # Convert back to the desired list of dictionaries format
+    final_df = series.reset_index()
+    final_df.columns = ['year', 'value']
+    final_df['value'] = final_df['value'].round(4)
+    
+    return final_df.to_dict('records')
+
+
+def process_files():
+    """Reads all CSV files, processes them, and combines them into a single data structure."""
+    all_data = {country: {} for country in COUNTRIES}
+    loaded_dfs = {}
+
+    for metric, config in METRIC_CONFIG.items():
+        file_path = config["file"]
+        
+        try:
+            if file_path not in loaded_dfs:
+                if not os.path.exists(file_path):
+                    print(f"  - WARNING: File not found: {file_path}. Skipping metric '{metric}'.")
+                    continue
+                loaded_dfs[file_path] = pd.read_csv(file_path, low_memory=False)
             
-    for country_data in all_data.values():
-        for metric_data in country_data.values():
-            metric_data.sort(key=lambda x: x["year"])
+            df = loaded_dfs[file_path]
+            country_col = 'REF_AREA'
+
+            df_metric = df[
+                (df['MEASURE'] == config['measure']) &
+                (df[country_col].isin(COUNTRIES))
+            ].copy()
+            
+            df_metric['year'] = parse_time_period(df_metric['TIME_PERIOD'])
+            df_metric = df_metric.dropna(subset=['year', 'OBS_VALUE'])
+            df_metric['year'] = df_metric['year'].astype(int)
+
+            for country, group in df_metric.groupby(country_col):
+                series = group[['year', 'OBS_VALUE']].rename(columns={'OBS_VALUE': 'value'}).to_dict('records')
+                series.sort(key=lambda x: x['year'])
+                all_data[country][metric] = series
+        
+        except Exception as e:
+            print(f"  - WARNING: An error occurred while processing {metric} from {file_path}: {e}")
             
     return all_data
 
-
 def generate_typescript_file(data):
-    """
-    Generates the TypeScript file content from the final data object.
-    """
+    """Generates the TypeScript file content from the final data object."""
     data_as_string = json.dumps(data, indent=2)
     return f"""// This file is generated by scripts/01_fetch_affordability_data.py. Do not edit manually.
 
@@ -120,11 +112,14 @@ export type TimeSeriesDataPoint = {{
 }};
 
 export type CountryData = {{
-  readonly pti: readonly TimeSeriesDataPoint[];
-  readonly ptr: readonly TimeSeriesDataPoint[];
+  // Core metrics for a consistent real-vs-real analysis
+  readonly realHousePriceIndex: readonly TimeSeriesDataPoint[];
+  readonly realIncome: readonly TimeSeriesDataPoint[];
   readonly mortgageRate: readonly TimeSeriesDataPoint[];
-  readonly income: readonly TimeSeriesDataPoint[];
-  readonly rent: readonly TimeSeriesDataPoint[];
+
+  // Nominal rent index. Kept for potential future use or display,
+  // but should not be directly compared with real indices.
+  readonly rentPriceIndex: readonly TimeSeriesDataPoint[];
 }};
 
 export type AffordabilityData = {{
@@ -135,23 +130,22 @@ export const affordabilityData = {data_as_string} as const;
 """
 
 if __name__ == "__main__":
-    print("Starting data fetch process using Python and CSV downloads...")
+    print("Starting data processing from local CSV files...")
     
-    raw_data = fetch_and_process_data()
+    raw_data = process_files()
     
+    print("Extrapolating data to fill target range (1985-2025)...")
     final_data = {}
     for country, data in raw_data.items():
-        if data.get("pti") and data.get("income"):
-            final_data[country] = {
-                "pti": data.get("pti", []),
-                "ptr": data.get("ptr", []),
-                "mortgageRate": data.get("mortgageRate", []),
-                "income": data.get("income", []),
-                "rent": data.get("rent", []),
-            }
+        # A country is valid only if it has the core metrics for our real-vs-real analysis.
+        if data.get("realHousePriceIndex") and data.get("realIncome"):
+            final_data[country] = {}
+            for metric in METRIC_CONFIG.keys():
+                final_data[country][metric] = extrapolate_series(data.get(metric, []))
 
     if not final_data:
-        print("\n❌ No complete data could be fetched. Aborting file generation.")
+        print("\n❌ No complete data could be processed. Aborting file generation.")
+        print("   Please ensure 'realHousePriceIndex' and 'realIncome' data exist for at least one country.")
         exit(1)
 
     print("\nGenerating TypeScript data file...")
@@ -163,6 +157,6 @@ if __name__ == "__main__":
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(file_content)
 
-    countries_found = ", ".join(final_data.keys())
+    countries_found = ", ".join(sorted(final_data.keys()))
     print(f"✅ Data successfully written to {output_path}")
-    print(f"Included countries: {countries_found}")
+    print(f"Included countries ({len(final_data.keys())}): {countries_found}")

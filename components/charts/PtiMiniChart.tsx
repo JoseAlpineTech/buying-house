@@ -9,6 +9,7 @@ import {
   ResponsiveContainer,
   ReferenceArea,
   Label,
+  Legend,
 } from "recharts";
 import { TimeSeriesDataPoint } from "../../data/affordability";
 
@@ -23,19 +24,45 @@ export function PtiMiniChart({ data }: PtiMiniChartProps) {
         <LineChart
           data={[...data]} // Create a mutable copy for recharts
           margin={{
-            top: 5,
+            top: 25,
             right: 20,
-            left: -10,
-            bottom: 5,
+            left: 10,
+            bottom: 20,
           }}
         >
-          <XAxis dataKey="year" />
-          <YAxis domain={["auto", "auto"]} />
+          <XAxis dataKey="year" stroke="var(--color-text)">
+            <Label
+              value="Year"
+              offset={-15}
+              position="insideBottom"
+              fill="var(--color-text)"
+              fontSize={12}
+            />
+          </XAxis>
+          <YAxis domain={["auto", "auto"]} stroke="var(--color-text)">
+            <Label
+              value="Ratio"
+              angle={-90}
+              position="insideLeft"
+              fill="var(--color-text)"
+              fontSize={12}
+              style={{ textAnchor: "middle" }}
+            />
+          </YAxis>
           <Tooltip
             contentStyle={{
-              backgroundColor: "rgba(30, 30, 30, 0.8)",
-              borderColor: "rgba(128, 128, 128, 0.5)",
+              backgroundColor: "var(--color-card)",
+              border: "1px solid var(--color-border)",
+              borderRadius: "0.5rem",
             }}
+            labelStyle={{ color: "var(--color-title)", fontWeight: "bold" }}
+            itemStyle={{ color: "var(--color-text)" }}
+          />
+
+          <Legend
+            verticalAlign="top"
+            height={25}
+            wrapperStyle={{ fontSize: "12px" }}
           />
 
           {/* Healthy Range Indicator */}
@@ -59,7 +86,7 @@ export function PtiMiniChart({ data }: PtiMiniChartProps) {
             type="monotone"
             dataKey="value"
             name="Price-to-Income Ratio"
-            stroke="#8884d8"
+            stroke="#ffb703"
             strokeWidth={2}
             dot={false}
           />

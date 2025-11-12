@@ -7,6 +7,8 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
+  Label,
+  Legend,
 } from "recharts";
 import { CountryData } from "../../data/affordability";
 import { calcYDP } from "../../lib/metrics";
@@ -50,25 +52,47 @@ export function YdpMiniChart({
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           data={chartData}
-          margin={{ top: 5, right: 20, left: -10, bottom: 5 }}
+          margin={{ top: 25, right: 20, left: 10, bottom: 20 }}
         >
-          <XAxis dataKey="year" />
-          <YAxis
-            domain={[0, "auto"]}
-            label={{ value: "Years", angle: -90, position: "insideLeft" }}
-          />
+          <XAxis dataKey="year" stroke="var(--color-text)">
+            <Label
+              value="Year"
+              offset={-15}
+              position="insideBottom"
+              fill="var(--color-text)"
+              fontSize={12}
+            />
+          </XAxis>
+          <YAxis domain={[0, "auto"]} stroke="var(--color-text)">
+            <Label
+              value="Years"
+              angle={-90}
+              position="insideLeft"
+              fill="var(--color-text)"
+              fontSize={12}
+              style={{ textAnchor: "middle" }}
+            />
+          </YAxis>
           <Tooltip
             contentStyle={{
-              backgroundColor: "rgba(30, 30, 30, 0.8)",
-              borderColor: "rgba(128, 128, 128, 0.5)",
+              backgroundColor: "var(--color-card)",
+              border: "1px solid var(--color-border)",
+              borderRadius: "0.5rem",
             }}
+            labelStyle={{ color: "var(--color-title)", fontWeight: "bold" }}
+            itemStyle={{ color: "var(--color-text)" }}
             formatter={(value: number) => `${value.toFixed(1)} years`}
+          />
+          <Legend
+            verticalAlign="top"
+            height={25}
+            wrapperStyle={{ fontSize: "12px" }}
           />
           <Line
             type="monotone"
             dataKey="ydp"
             name="Years to Save"
-            stroke="#413ea0"
+            stroke="#ffb703"
             strokeWidth={2}
             dot={false}
           />

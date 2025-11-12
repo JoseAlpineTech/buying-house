@@ -7,117 +7,127 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
-  ReferenceArea,
+  ReferenceLine,
   Label,
+  Legend,
 } from "recharts";
 import { CountryData } from "../../data/affordability";
 import { calcMortgagePayment, calcMPS } from "../../lib/metrics";
+import { getMetricsForYear } from "../../lib/insights";
 
 interface MortgageBurdenChartProps {
   countryData: CountryData;
+  countryCode: string;
   ltv: number;
   term: number;
-  isMini?: boolean; // New prop to control the variant
+  isMini?: boolean;
 }
 
 const processBurdenData = (
   countryData: CountryData,
+  countryCode: string,
   ltv: number,
   term: number,
 ) => {
-  const data = countryData.income
-    .map((incomePoint) => {
-      const year = incomePoint.year;
-      const income = incomePoint.value;
+  if (!countryData?.realIncome) return [];
 
-      const ptiPoint = countryData.pti.find((p) => p.year === year);
-      const ratePoint = countryData.mortgageRate.find((r) => r.year === year);
+  return countryData.realIncome
+    .map(({ year }) => {
+      const metrics = getMetricsForYear(countryData, year, countryCode);
+      const rateData = countryData.mortgageRate.find((r) => r.year === year);
 
-      if (!ptiPoint || !ratePoint) return null;
+      if (!metrics || !rateData) return null;
 
-      const price = income * ptiPoint.value;
-      const rate = ratePoint.value;
+      const payment = calcMortgagePayment(
+        rateData.value,
+        metrics.housePrice,
+        ltv,
+        term,
+      );
+      const mps = calcMPS(metrics.income, payment);
 
-      const payment = calcMortgagePayment(rate, price, ltv, term);
-      const mps = calcMPS(income, payment);
-
-      return {
-        year,
-        mps: parseFloat(mps.toFixed(2)),
-      };
+      return { year: metrics.year, mps: parseFloat(mps.toFixed(2)) };
     })
-    .filter(Boolean);
-
-  return data as { year: number; mps: number }[];
+    .filter(Boolean) as { year: number; mps: number }[];
 };
 
 export function MortgageBurdenChart({
   countryData,
+  countryCode,
   ltv,
   term,
   isMini = false,
 }: MortgageBurdenChartProps) {
-  const chartData = processBurdenData(countryData, ltv, term);
+  const data = processBurdenData(countryData, countryCode, ltv, term);
 
   return (
     <div className={isMini ? "h-60" : "h-96"}>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
-          data={chartData}
+          data={data}
           margin={
             isMini
-              ? { top: 5, right: 20, left: -10, bottom: 5 }
-              : { top: 5, right: 30, left: 20, bottom: 5 }
+              ? { top: 25, right: 10, left: 10, bottom: 20 }
+              : { top: 10, right: 30, left: 20, bottom: 30 }
           }
         >
           {!isMini && (
-            <CartesianGrid
-              strokeDasharray="3 3"
-              stroke="rgba(128, 128, 128, 0.3)"
-            />
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
           )}
-          <XAxis dataKey="year" />
-          <YAxis
-            unit="%"
-            domain={[0, (dataMax: number) => Math.max(dataMax, 45)]} // Start at 0 and ensure the axis includes at least the 43% high-risk benchmark
-            allowDataOverflow={true}
-          />
+          <XAxis dataKey="year" stroke="var(--color-text)">
+            <Label
+              value="Year"
+              offset={isMini ? -15 : -20}
+              position="insideBottom"
+              fill="var(--color-text)"
+              fontSize={isMini ? 12 : undefined}
+            />
+          </XAxis>
+          <YAxis stroke="var(--color-text)" unit="%">
+            <Label
+              value="Mortgage Burden (%)"
+              angle={-90}
+              position="insideLeft"
+              fill="var(--color-text)"
+              fontSize={isMini ? 12 : undefined}
+              style={{ textAnchor: "middle" }}
+            />
+          </YAxis>
           <Tooltip
             contentStyle={{
-              backgroundColor: "rgba(30, 30, 30, 0.8)",
-              borderColor: "rgba(128, 128, 128, 0.5)",
+              backgroundColor: "var(--color-card)",
+              border: "1px solid var(--color-border)",
+              borderRadius: "0.5rem",
             }}
-            formatter={(value: number) => `${value.toFixed(1)}%`}
+            labelStyle={{ color: "var(--color-title)", fontWeight: "bold" }}
+            itemStyle={{ color: "var(--color-text)" }}
+            formatter={(v: number) => `${v.toFixed(1)}%`}
           />
-          {!isMini && <Legend />}
-
-          {/* Sustainable Limit Indicator for the mini chart */}
-          {isMini && (
-            <ReferenceArea
-              y1={0}
-              y2={30} // 30% is a common affordability benchmark
-              ifOverflow="visible"
-              stroke="none"
-              fill="rgba(75, 181, 67, 0.15)"
+          <Legend
+            verticalAlign="top"
+            height={isMini ? 25 : 36}
+            wrapperStyle={isMini ? { fontSize: "12px" } : undefined}
+          />
+          {!isMini && (
+            <ReferenceLine
+              y={30}
+              stroke="var(--color-accent)"
+              strokeDasharray="4 4"
             >
               <Label
-                value="Sustainable Limit (~30%)"
-                position="insideTopLeft"
-                fill="rgba(75, 181, 67, 0.8)"
-                fontSize={12}
-                offset={10}
+                value="30% affordability threshold"
+                fill="var(--color-accent)"
+                dy={-4}
               />
-            </ReferenceArea>
+            </ReferenceLine>
           )}
-
           <Line
             type="monotone"
             dataKey="mps"
-            name="Mortgage Payment to Income"
-            stroke="#ff7300"
-            strokeWidth={2}
+            name="Mortgage Burden"
+            stroke={isMini ? "#ffb703" : "#f97316"}
+            strokeWidth={3}
             dot={!isMini}
           />
         </LineChart>

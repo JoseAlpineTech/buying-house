@@ -7,96 +7,81 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
-  ReferenceArea,
+  Label,
+  Legend,
 } from "recharts";
-import { TimeSeriesDataPoint } from "../../data/affordability";
+import { CountryData } from "../../data/affordability";
+import { getMetricsForYear } from "../../lib/insights";
 
 interface AffordabilityTrendsChartProps {
-  ptiData: readonly TimeSeriesDataPoint[];
-  ptrData: readonly TimeSeriesDataPoint[];
+  countryData: CountryData;
+  countryCode: string;
 }
 
-// Combine data for charting
-const processChartData = (
-  pti: readonly TimeSeriesDataPoint[],
-  ptr: readonly TimeSeriesDataPoint[],
-) => {
-  const dataMap = new Map<
-    number,
-    { year: number; pti?: number; ptr?: number }
-  >();
+const processChartData = (countryData: CountryData, countryCode: string) => {
+  if (!countryData?.realIncome) return [];
 
-  pti.forEach(({ year, value }) => {
-    if (!dataMap.has(year)) dataMap.set(year, { year });
-    dataMap.get(year)!.pti = value;
-  });
-
-  ptr.forEach(({ year, value }) => {
-    if (!dataMap.has(year)) dataMap.set(year, { year });
-    dataMap.get(year)!.ptr = value;
-  });
-
-  return Array.from(dataMap.values()).sort((a, b) => a.year - b.year);
+  return countryData.realIncome
+    .map(({ year }) => {
+      const metrics = getMetricsForYear(countryData, year, countryCode);
+      if (!metrics) return null;
+      return {
+        year: metrics.year,
+        pti: parseFloat(metrics.pti.toFixed(2)),
+      };
+    })
+    .filter(Boolean) as { year: number; pti: number }[];
 };
 
 export function AffordabilityTrendsChart({
-  ptiData,
-  ptrData,
+  countryData,
+  countryCode,
 }: AffordabilityTrendsChartProps) {
-  const chartData = processChartData(ptiData, ptrData);
+  const chartData = processChartData(countryData, countryCode);
 
   return (
     <div className="h-96">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           data={chartData}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
+          margin={{ top: 10, right: 30, left: 20, bottom: 30 }}
         >
-          <CartesianGrid
-            strokeDasharray="3 3"
-            stroke="rgba(128, 128, 128, 0.3)"
-          />
-          <XAxis dataKey="year" />
-          <YAxis />
+          <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
+          <XAxis dataKey="year" stroke="var(--color-text)">
+            <Label
+              value="Year"
+              offset={-20}
+              position="insideBottom"
+              fill="var(--color-text)"
+            />
+          </XAxis>
+          <YAxis stroke="var(--color-text)">
+            <Label
+              value="Ratio"
+              angle={-90}
+              position="insideLeft"
+              fill="var(--color-text)"
+              style={{ textAnchor: "middle" }}
+            />
+          </YAxis>
           <Tooltip
             contentStyle={{
-              backgroundColor: "rgba(30, 30, 30, 0.8)",
-              borderColor: "rgba(128, 128, 128, 0.5)",
+              backgroundColor: "var(--color-card)",
+              border: "1px solid var(--color-border)",
+              borderRadius: "0.5rem",
             }}
+            labelStyle={{ color: "var(--color-title)", fontWeight: "bold" }}
+            itemStyle={{ color: "var(--color-text)" }}
           />
-          <Legend />
-          <ReferenceArea
-            x1={2020}
-            x2={2025}
-            stroke="none"
-            fill="rgba(255, 165, 0, 0.1)"
-            label={{
-              value: "Recent",
-              position: "insideTop",
-              fill: "rgba(255, 255, 255, 0.5)",
-            }}
-          />
+          <Legend verticalAlign="top" height={36} />
           <Line
             type="monotone"
             dataKey="pti"
-            name="Price-to-Income"
-            stroke="#8884d8"
-            strokeWidth={2}
-            activeDot={{ r: 8 }}
-          />
-          <Line
-            type="monotone"
-            dataKey="ptr"
-            name="Price-to-Rent"
-            stroke="#82ca9d"
-            strokeWidth={2}
+            name="Real Price-to-Income Ratio"
+            stroke="#2563eb"
+            strokeWidth={3}
+            dot={{ r: 3 }}
           />
         </LineChart>
       </ResponsiveContainer>

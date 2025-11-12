@@ -1,77 +1,103 @@
 import { CountryData } from "../data/affordability";
-import { calcYDP } from "./metrics";
+import { BASE_HOUSE_PRICES_2015 } from "./constants";
 
 export interface AffordabilityMetrics {
-  pti: number;
-  ydp: number;
   year: number;
+  housePrice: number;
+  income: number;
+  pti: number; // Price-to-Income Ratio
 }
 
 /**
- * Generates a plain-language summary of affordability changes over time.
- * @param startMetrics - The metrics from the earliest available year.
- * @param endMetrics - The metrics from the most recent available year.
- * @returns A string summarizing the changes in affordability.
+ * Calculates a representative house price for a given year using the index.
+ * @param year - The target year.
+ * @param countryData - The dataset for the selected country.
+ * @param basePrice - The anchor house price for the base year (2015).
+ * @returns The calculated representative house price.
+ */
+function calculateHousePrice(
+  year: number,
+  countryData: CountryData,
+  basePrice: number,
+): number | null {
+  const priceIndexCurrentYear = countryData.realHousePriceIndex.find(
+    (p) => p.year === year,
+  );
+  const priceIndexBaseYear = countryData.realHousePriceIndex.find(
+    (p) => p.year === 2015,
+  );
+
+  if (!priceIndexCurrentYear || !priceIndexBaseYear || priceIndexBaseYear.value === 0) {
+    return null;
+  }
+
+  return (
+    basePrice * (priceIndexCurrentYear.value / priceIndexBaseYear.value)
+  );
+}
+
+/**
+ * Generates a plain-language summary based on calculated affordability changes.
+ * @param startMetrics - The calculated metrics from the earliest available year.
+ * @param endMetrics - The calculated metrics from the most recent available year.
+ * @returns A list of strings summarizing the key changes.
  */
 export function generateAffordabilitySummary(
   startMetrics: AffordabilityMetrics,
   endMetrics: AffordabilityMetrics,
-): string {
+): string[] {
   if (!startMetrics || !endMetrics) {
-    return "Insufficient data to generate a summary.";
+    return [];
   }
 
-  const ptiChange =
+  const ptiChange = endMetrics.pti - startMetrics.pti;
+  const ptiPercentageChange =
     ((endMetrics.pti - startMetrics.pti) / startMetrics.pti) * 100;
-  const ydpChange = endMetrics.ydp - startMetrics.ydp;
 
-  let summary = `Between ${startMetrics.year} and ${endMetrics.year}, key affordability metrics have shifted. `;
+  const insights: string[] = [];
 
-  // PTI sentence
-  if (Math.abs(ptiChange) < 1) {
-    summary += `The price-to-income ratio remained stable. `;
-  } else {
-    summary += `The price-to-income ratio ${
-      ptiChange > 0 ? "increased" : "decreased"
-    } by ${Math.abs(ptiChange).toFixed(0)}%, from ${startMetrics.pti.toFixed(
-      1,
-    )} to ${endMetrics.pti.toFixed(1)}. `;
-  }
+  // Insight 1: PTI Change
+  insights.push(
+    `The calculated Real Price-to-Income ratio has ${
+      ptiChange > 0 ? "worsened" : "improved"
+    } from **${startMetrics.pti.toFixed(1)}** in ${
+      startMetrics.year
+    } to **${endMetrics.pti.toFixed(1)}** in ${endMetrics.year}.`,
+  );
 
-  // YDP sentence
-  if (Math.abs(ydpChange) < 0.5) {
-    summary += `The time required to save for a down payment has not changed significantly.`;
-  } else {
-    summary += `The time to save for a down payment has ${
-      ydpChange > 0 ? "lengthened" : "shortened"
-    }, changing from ${startMetrics.ydp.toFixed(
-      1,
-    )} years to ${endMetrics.ydp.toFixed(1)} years.`;
-  }
+  // Insight 2: Contextualize the change
+  insights.push(
+    `This indicates that, in inflation-adjusted terms, housing has become **${Math.abs(
+      ptiPercentageChange,
+    ).toFixed(0)}%** ${
+      ptiChange > 0 ? "less affordable" : "more affordable"
+    } for the average household.`,
+  );
 
-  return summary;
+  return insights;
 }
 
 /**
- * A helper function to calculate metrics for a specific year from the dataset.
+ * A helper function to get calculated metrics for a specific year from the dataset.
  */
 export function getMetricsForYear(
   countryData: CountryData,
   year: number,
-  ltv: number,
-  savingsRate: number,
+  countryCode: string,
 ): AffordabilityMetrics | null {
-  const ptiPoint = countryData.pti.find((p) => p.year === year);
-  const incomePoint = countryData.income.find((i) => i.year === year);
+  const basePrice = BASE_HOUSE_PRICES_2015[countryCode];
+  if (!basePrice) return null;
 
-  if (!ptiPoint || !incomePoint) return null;
+  const incomePoint = countryData.realIncome.find((p) => p.year === year);
+  if (!incomePoint || incomePoint.value === 0) return null;
 
-  const housePrice = ptiPoint.value * incomePoint.value;
-  const ydp = calcYDP(housePrice, ltv, incomePoint.value, savingsRate);
+  const housePrice = calculateHousePrice(year, countryData, basePrice);
+  if (housePrice === null) return null;
 
   return {
-    pti: ptiPoint.value,
-    ydp,
     year,
+    housePrice,
+    income: incomePoint.value,
+    pti: housePrice / incomePoint.value,
   };
 }
