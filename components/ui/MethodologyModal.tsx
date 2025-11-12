@@ -42,44 +42,69 @@ export function MethodologyModal({
         <div className="space-y-4">
           <section>
             <h3 className="text-lg font-semibold text-[--color-label] mb-2">
-              Data Source & Philosophy
+              Primary Data Sources
             </h3>
             <p>
-              All core data is sourced from the{" "}
+              All core time-series data is sourced from the{" "}
               <a
                 href="https://data.oecd.org"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline hover:text-[--color-accent]"
+                className="text-blue-400 underline hover:text-[--color-accent]"
               >
-                OECD database
+                OECD Data Explorer
               </a>
-              . To ensure a consistent and meaningful comparison over time, this
-              entire analysis is based on **real (inflation-adjusted)** data.
+              . The analysis is based on a consistent set of{" "}
+              <strong>real (inflation-adjusted)</strong> metrics to provide a
+              meaningful comparison over time. The specific datasets and series
+              used are detailed below.
             </p>
-            <ul className="list-disc list-inside mt-2 space-y-1">
-              <li>
-                <strong>Real House Price Index:</strong> Tracks house prices
-                after removing the effect of general inflation (2015=100).
-              </li>
-              <li>
-                <strong>Real Household Income:</strong> Disposable income per
-                household, adjusted for inflation.
-              </li>
-              <li>
-                <strong>Mortgage Rate:</strong> Representative long-term mortgage
-                interest rates (nominal).
-              </li>
-            </ul>
+            <div className="mt-4 space-y-1 p-4 border border-[--color-border] rounded-lg bg-[--color-bg]">
+              {/* Table Header */}
+              <div className="grid grid-cols-3 gap-4 text-sm font-semibold text-[--color-label] pb-2">
+                <div>Dataset Name</div>
+                <div>Series Used</div>
+                <div>Data as of</div>
+              </div>
+
+              {/* Row 1: Housing */}
+              <div className="grid grid-cols-3 gap-4 text-sm border-t border-[--color-border] pt-3">
+                <div className="font-medium">
+                  Analytical house prices indicators
+                </div>
+                <div>
+                  <ul className="list-disc list-inside">
+                    <li>Real house price index</li>
+                    <li>Nominal rent price index</li>
+                  </ul>
+                </div>
+                <div>November 10, 2025</div>
+              </div>
+
+              {/* Row 2: Income */}
+              <div className="grid grid-cols-3 gap-4 text-sm border-t border-[--color-border] pt-3">
+                <div className="font-medium">NAAG Chapter 5: Households</div>
+                <div>Real net disposable income</div>
+                <div>November 10, 2025</div>
+              </div>
+
+              {/* Row 3: Interest Rates */}
+              <div className="grid grid-cols-3 gap-4 text-sm border-t border-[--color-border] pt-3">
+                <div className="font-medium">Financial market</div>
+                <div>Long-term interest rates</div>
+                <div>November 07, 2025</div>
+              </div>
+            </div>
           </section>
 
           <section>
             <h3 className="text-lg font-semibold text-[--color-label] mb-2">
-              Core Calculated Metrics
+              Calculated Metrics & Assumptions
             </h3>
             <p>
-              The snapshot figures are derived from the source data to create a
-              standardized view of affordability in real terms.
+              The application calculates key affordability metrics based on the
+              source data. This requires an assumption for a base house price to
+              anchor the index data to a real-world value.
             </p>
             <div className="mt-2 space-y-3 p-4 border border-[--color-border] rounded-lg bg-[--color-bg]">
               <div>
@@ -92,63 +117,14 @@ export function MethodologyModal({
                     Index for 2015)
                   </code>
                   <br />
-                  This converts the price index into an estimated,
-                  inflation-adjusted monetary value. A representative base price
-                  for 2015 is used as a consistent anchor for each country.
-                </p>
-              </div>
-              <div>
-                <h4 className="font-semibold text-[--color-label]">
-                  Real Price-to-Income Ratio
-                </h4>
-                <p className="text-sm">
-                  <code>
-                    Est. Real House Price &divide; Real Annual Income
-                  </code>
-                  <br />
-                  Measures how many years of real income it would take to buy an
-                  average home. This is the core affordability metric.
-                </p>
-              </div>
-              <div>
-                <h4 className="font-semibold text-[--color-label]">
-                  Mortgage Burden (%)
-                </h4>
-                <p className="text-sm">
-                  <code>
-                    (Monthly Payment &divide; (Real Annual Income &divide; 12))
-                    &times; 100
-                  </code>
-                  <br />
-                  Shows the percentage of real monthly income required to cover
-                  the mortgage on the estimated real house price.
+                  The "Base Price 2015" is a representative estimate for a
+                  typical home, grounded in sources like national statistical
+                  offices (e.g., FRED, ONS) and economic reports from that
+                  period. This value gives scale to the trend provided by the
+                  OECD index.
                 </p>
               </div>
             </div>
-          </section>
-
-          <section>
-            <h3 className="text-lg font-semibold text-[--color-label] mb-2">
-              Limitations
-            </h3>
-            <ul className="list-disc list-inside space-y-1">
-              <li>
-                <strong>National Averages:</strong> The data reflects a national
-                average and does not account for significant variations in
-                regional or local housing markets.
-              </li>
-              <li>
-                <strong>Simplified Costs:</strong> Calculations do not include
-                property taxes, insurance, maintenance, or other costs of
-                homeownership.
-              </li>
-              <li>
-                <strong>Interest Rate Type:</strong> The mortgage rate used is
-                nominal, as this reflects the rate available in the market. This
-                is the one component not adjusted for inflation, as it's the
-                actual rate borrowers face.
-              </li>
-            </ul>
           </section>
         </div>
       </div>
