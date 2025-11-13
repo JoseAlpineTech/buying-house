@@ -57,6 +57,38 @@ export function MethodologyModal({
               . The analysis relies on combining several key indicators to
               construct a consistent, inflation-adjusted view of affordability.
             </p>
+            <div className="mt-4 space-y-3 p-4 border border-[--color-border] rounded-lg bg-[#061522]">
+              <div>
+                <h4 className="font-semibold text-[--color-title]">
+                  Analytical House Prices Indicators
+                </h4>
+                <p className="text-sm">
+                  Provides Residential Property Price Indices (RPPIs) used to
+                  calculate real house prices, rental prices, and
+                  price-to-income ratios. (Last updated: Nov 13, 2025)
+                </p>
+              </div>
+              <div>
+                <h4 className="font-semibold text-[--color-title]">
+                  Income Distribution Database (IDD)
+                </h4>
+                <p className="text-sm">
+                  Source for the "Equivalised Household Disposable Income"
+                  metric, offering data on income levels, inequality, and
+                  poverty. (Last updated: June 16, 2025)
+                </p>
+              </div>
+              <div>
+                <h4 className="font-semibold text-[--color-title]">
+                  Financial Market Indicators
+                </h4>
+                <p className="text-sm">
+                  The long-term interest rate from this dataset is used as a
+                  consistent proxy for mortgage rates across all countries.
+                  (Last updated: Nov 10, 2025)
+                </p>
+              </div>
+            </div>
           </section>
 
           <section>
@@ -124,7 +156,7 @@ export function MethodologyModal({
                   renting one. A higher value suggests that house prices are
                   high relative to rental costs, potentially indicating lower
                   profitability for landlords or that it is more financially
--advantageous to rent.
+                  advantageous to rent.
                 </p>
               </div>
             </div>
