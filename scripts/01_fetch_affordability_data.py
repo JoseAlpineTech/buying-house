@@ -1,108 +1,101 @@
 import pandas as pd
-import numpy as np
 import json
 import os
 
 # --- Configuration ---
 
-# Final configuration based on exhaustive data inspection.
-# We will use real house prices, real income, mortgage rates,
-# and include the nominal rent price index as requested.
+# Updated configuration using specific, smaller CSV files for each metric.
+# Added "rentPriceIndex" to pull the Rent-to-Price Index (RPI).
 METRIC_CONFIG = {
-    "realHousePriceIndex": {"file": "_artifacts/HousingPricesRents.csv", "measure": "RHP"},
-    "rentPriceIndex": {"file": "_artifacts/HousingPricesRents.csv", "measure": "RPI"},
-    "realIncome": {"file": "_artifacts/Income.csv", "measure": "B6N_R_PPP_P31S14"},
-    "mortgageRate": {"file": "_artifacts/MortgageRate.csv", "measure": "IRLT"},
+    "realHousePriceIndex": {
+        "file": "_artifacts/RHP_RPI_HPI.csv",
+        "measure": "RHP",
+    },
+    "rentPriceIndex": {
+        "file": "_artifacts/RHP_RPI_HPI.csv",
+        "measure": "RPI",
+    },
+    "nominalIncome": {
+        "file": "_artifacts/INC_DISP.csv",
+        "measure": "INC_DISP",
+    },
+    "cpi": {
+        "file": "_artifacts/CPI_HSH.csv",
+        "measure": "CPI",
+    },
+    "numberOfHouseholds": {
+        "file": "_artifacts/CPI_HSH.csv",
+        "measure": "HSH",
+    },
+    "mortgageRate": {
+        "file": "_artifacts/IRLT.csv",
+        "measure": "IRLT",
+    },
 }
 
-# The target year range for the project.
-TARGET_YEAR_START = 1985
-TARGET_YEAR_END = 2025
-TARGET_YEARS = set(range(TARGET_YEAR_START, TARGET_YEAR_END + 1))
-
 COUNTRIES = [
-  "AUS", "AUT", "BEL", "CAN", "CHL", "COL", "CRI", "CZE", "DNK", "EST",
-  "FIN", "FRA", "DEU", "GRC", "HUN", "ISL", "IRL", "ISR", "ITA", "JPN",
-  "KOR", "LVA", "LTU", "LUX", "MEX", "NLD", "NZL", "NOR", "POL", "PRT",
-  "SVK", "SVN", "ESP", "SWE", "CHE", "TUR", "GBR", "USA",
+  "AUS", "AUT", "BEL", "CAN", "CHL", "CRI", "CZE", "DNK", "EST", "FIN", "FRA", "DEU",
+  "GRC", "HUN", "ISL", "IRL", "ISR", "ITA", "JPN", "KOR", "LVA", "LTU", "LUX", "MEX",
+  "NLD", "NZL", "NOR", "POL", "PRT", "SVK", "SVN", "ESP", "SWE", "CHE", "TUR", "GBR", "USA",
 ]
 
 # --- Data Processing Functions ---
 
 def parse_time_period(series):
-    """Converts a time period column (which may be object/string) to integer year."""
     return pd.to_numeric(series.astype(str).str[:4], errors='coerce')
 
-def extrapolate_series(data_points):
-    """
-    Fills missing years in a time series using interpolation and conservative extrapolation.
-    - Interpolates missing years within the known data range.
-    - Back-fills years before the first data point with the first available value.
-    - Forward-fills years after the last data point with the last available value.
-    """
-    if not data_points:
-        return []
-
-    df = pd.DataFrame(data_points).drop_duplicates(subset='year').set_index('year')
-    series = df['value']
-    
-    # Reindex to the full target year range, creating NaNs for missing years
-    series = series.reindex(range(TARGET_YEAR_START, TARGET_YEAR_END + 1))
-    
-    # 1. Interpolate to fill gaps *between* the first and last valid data points
-    series = series.interpolate(method='linear')
-    
-    # 2. Back-fill and Forward-fill to handle extrapolation at the ends
-    # This conservatively carries the earliest and latest known values to the edges of the timeline
-    series = series.bfill().ffill()
-    
-    # Convert back to the desired list of dictionaries format
+def process_series(data_points):
+    if not data_points: return []
+    df = pd.DataFrame(data_points).drop_duplicates(subset=['year']).set_index('year')
+    min_year, max_year = df.index.min(), df.index.max()
+    series = df['value'].reindex(range(int(min_year), int(max_year) + 1))
+    series = series.interpolate(method='linear').dropna()
     final_df = series.reset_index()
     final_df.columns = ['year', 'value']
     final_df['value'] = final_df['value'].round(4)
-    
+    final_df['year'] = final_df['year'].astype(int)
     return final_df.to_dict('records')
 
-
 def process_files():
-    """Reads all CSV files, processes them, and combines them into a single data structure."""
     all_data = {country: {} for country in COUNTRIES}
     loaded_dfs = {}
-
     for metric, config in METRIC_CONFIG.items():
-        file_path = config["file"]
-        
+        file_path, measure = config["file"], config["measure"]
+        print(f"\nProcessing metric '{metric}' with measure '{measure}'...")
         try:
             if file_path not in loaded_dfs:
                 if not os.path.exists(file_path):
-                    print(f"  - WARNING: File not found: {file_path}. Skipping metric '{metric}'.")
+                    print(f"  - WARNING: File not found: {file_path}. Skipping.")
                     continue
                 loaded_dfs[file_path] = pd.read_csv(file_path, low_memory=False)
             
             df = loaded_dfs[file_path]
-            country_col = 'REF_AREA'
+            df_metric = pd.DataFrame()
 
-            df_metric = df[
-                (df['MEASURE'] == config['measure']) &
-                (df[country_col].isin(COUNTRIES))
-            ].copy()
-            
+            if metric == "nominalIncome":
+                df_metric = df[(df['MEASURE'] == measure) & (df['STATISTICAL_OPERATION'] == 'MEDIAN') & (df['REF_AREA'].isin(COUNTRIES))].copy()
+            else:
+                df_metric = df[(df['MEASURE'] == measure) & (df['REF_AREA'].isin(COUNTRIES))].copy()
+
+            print(f"  - Found {len(df_metric)} relevant rows.")
+
             df_metric['year'] = parse_time_period(df_metric['TIME_PERIOD'])
             df_metric = df_metric.dropna(subset=['year', 'OBS_VALUE'])
             df_metric['year'] = df_metric['year'].astype(int)
 
-            for country, group in df_metric.groupby(country_col):
+            for country, group in df_metric.groupby('REF_AREA'):
                 series = group[['year', 'OBS_VALUE']].rename(columns={'OBS_VALUE': 'value'}).to_dict('records')
-                series.sort(key=lambda x: x['year'])
-                all_data[country][metric] = series
-        
+                if metric == "nominalIncome":
+                    if country not in all_data: all_data[country] = {}
+                    if metric not in all_data[country]: all_data[country][metric] = []
+                    all_data[country][metric].extend(series)
+                else:
+                    all_data[country][metric] = series
         except Exception as e:
-            print(f"  - WARNING: An error occurred while processing {metric} from {file_path}: {e}")
-            
+            print(f"  - CRITICAL ERROR during processing for '{metric}': {e}")
     return all_data
 
 def generate_typescript_file(data):
-    """Generates the TypeScript file content from the final data object."""
     data_as_string = json.dumps(data, indent=2)
     return f"""// This file is generated by scripts/01_fetch_affordability_data.py. Do not edit manually.
 
@@ -112,14 +105,11 @@ export type TimeSeriesDataPoint = {{
 }};
 
 export type CountryData = {{
-  // Core metrics for a consistent real-vs-real analysis
   readonly realHousePriceIndex: readonly TimeSeriesDataPoint[];
+  readonly rentPriceIndex: readonly TimeSeriesDataPoint[];
   readonly realIncome: readonly TimeSeriesDataPoint[];
   readonly mortgageRate: readonly TimeSeriesDataPoint[];
-
-  // Nominal rent index. Kept for potential future use or display,
-  // but should not be directly compared with real indices.
-  readonly rentPriceIndex: readonly TimeSeriesDataPoint[];
+  readonly numberOfHouseholds: readonly TimeSeriesDataPoint[];
 }};
 
 export type AffordabilityData = {{
@@ -131,32 +121,61 @@ export const affordabilityData = {data_as_string} as const;
 
 if __name__ == "__main__":
     print("Starting data processing from local CSV files...")
-    
     raw_data = process_files()
-    
-    print("Extrapolating data to fill target range (1985-2025)...")
-    final_data = {}
-    for country, data in raw_data.items():
-        # A country is valid only if it has the core metrics for our real-vs-real analysis.
-        if data.get("realHousePriceIndex") and data.get("realIncome"):
-            final_data[country] = {}
-            for metric in METRIC_CONFIG.keys():
-                final_data[country][metric] = extrapolate_series(data.get(metric, []))
 
+    print("\nConverting nominal household income to real income using CPI...")
+    BASE_YEAR = 2015
+    for country, data in raw_data.items():
+        if "nominalIncome" in data and "cpi" in data:
+            try:
+                income_df = pd.DataFrame(data["nominalIncome"]).drop_duplicates(subset='year').sort_values('year')
+                cpi_df = pd.DataFrame(data["cpi"]).drop_duplicates(subset='year').sort_values('year')
+                
+                # --- Robust Base CPI Value Logic ---
+                cpi_base_value_series = cpi_df[cpi_df['year'] == BASE_YEAR]['value']
+                cpi_base_value = 100.0 # Default to 100 as per the standard
+
+                if cpi_base_value_series.empty:
+                    print(f"  - INFO: No CPI data for base year {BASE_YEAR} for {country}. Assuming index base of 100.0.")
+                else:
+                    cpi_base_value = cpi_base_value_series.iloc[0]
+
+                merged_df = pd.merge(income_df, cpi_df, on="year", suffixes=('_income', '_cpi'))
+                
+                merged_df['value'] = merged_df['value_income'] / (merged_df['value_cpi'] / cpi_base_value)
+                
+                real_income_series = merged_df[['year', 'value']].to_dict('records')
+                data['realIncome'] = real_income_series
+                del data['nominalIncome']
+                del data['cpi']
+                print(f"  - Successfully converted income for {country}")
+            except Exception as e:
+                print(f"  - WARNING: Could not convert income for {country}. Reason: {e}")
+        else:
+            print(f"  - WARNING: Skipping income conversion for {country} due to missing nominalIncome or CPI data.")
+
+    print("\nProcessing and interpolating final data series...")
+    final_data = {}
+    REQUIRED_METRICS = [
+        "realHousePriceIndex", "rentPriceIndex", "realIncome", 
+        "mortgageRate", "numberOfHouseholds"
+    ]
+    
+    for country, data in raw_data.items():
+        if all(k in data for k in REQUIRED_METRICS):
+            final_data[country] = {}
+            for metric in REQUIRED_METRICS:
+                final_data[country][metric] = process_series(data[metric])
+    
     if not final_data:
-        print("\n❌ No complete data could be processed. Aborting file generation.")
-        print("   Please ensure 'realHousePriceIndex' and 'realIncome' data exist for at least one country.")
+        print("\n❌ No complete data could be processed for any country. Aborting file generation.")
         exit(1)
 
-    print("\nGenerating TypeScript data file...")
-    file_content = generate_typescript_file(final_data)
-    
     output_path = os.path.join(os.getcwd(), "data", "affordability.ts")
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    
     with open(output_path, "w", encoding="utf-8") as f:
-        f.write(file_content)
+        f.write(generate_typescript_file(final_data))
 
     countries_found = ", ".join(sorted(final_data.keys()))
-    print(f"✅ Data successfully written to {output_path}")
+    print(f"\n✅ Data successfully written to {output_path}")
     print(f"Included countries ({len(final_data.keys())}): {countries_found}")

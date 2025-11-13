@@ -1,6 +1,7 @@
 "use client";
 
 interface SnapshotProps {
+  startYear: number;
   endYear: number;
   selectedCountryName: string;
   housePrice: number;
@@ -9,9 +10,11 @@ interface SnapshotProps {
   ydp: number;
   monthlyPayment: number;
   insightSummary: string[];
+  currency: string;
 }
 
 export default function Snapshot({
+  startYear,
   endYear,
   selectedCountryName,
   housePrice,
@@ -19,12 +22,19 @@ export default function Snapshot({
   mps,
   ydp,
   insightSummary,
+  currency,
 }: SnapshotProps) {
   return (
-    <section className="rounded-xl border border-[--color-border] bg-[--color-card] p-8 mt-12 min-h-[280px]">
-      <h2 className="text-4xl font-bold text-[--color-title] mb-6">
-        Snapshot for {selectedCountryName} in {endYear} (Real Terms)
-      </h2>
+    <div>
+      <div className="mb-6">
+        <h2 className="text-4xl font-bold text-[--color-title]">
+          Snapshot for {selectedCountryName} in {endYear}
+        </h2>
+        <p className="text-sm text-[--color-text] mt-1">
+          Based on available data from {startYear} to {endYear}.
+        </p>
+      </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Representative House Price */}
         <div>
@@ -33,7 +43,7 @@ export default function Snapshot({
             {housePrice > 0
               ? new Intl.NumberFormat("en-US", {
                   style: "currency",
-                  currency: "USD",
+                  currency: currency,
                   maximumFractionDigits: 0,
                   minimumFractionDigits: 0,
                 }).format(housePrice)
@@ -88,6 +98,6 @@ export default function Snapshot({
           ))}
         </ul>
       </div>
-    </section>
+    </div>
   );
 }

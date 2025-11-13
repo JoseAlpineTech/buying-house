@@ -17,6 +17,17 @@ interface ControlPanelProps {
   setScenarioIndex: (index: number) => void;
 }
 
+/**
+ * Converts a two-letter ISO country code to its corresponding flag emoji.
+ */
+function getFlagEmoji(countryCode: string): string {
+  const codePoints = countryCode
+    .toUpperCase()
+    .split("")
+    .map((char) => 127397 + char.charCodeAt(0));
+  return String.fromCodePoint(...codePoints);
+}
+
 export default function ControlPanel({
   selectedCountry,
   setSelectedCountry,
@@ -27,7 +38,7 @@ export default function ControlPanel({
   setScenarioIndex,
 }: ControlPanelProps) {
   return (
-    <section className="flex flex-col lg:flex-row justify-between items-center gap-8 rounded-xl border border-[--color-border] bg-[--color-card] p-8">
+    <div className="flex flex-col lg:flex-row justify-between items-center gap-8">
       {/* Country Selector */}
       <div className="flex flex-col items-center lg:items-start w-full lg:w-1/2">
         <label
@@ -40,14 +51,11 @@ export default function ControlPanel({
           id="country"
           value={selectedCountry}
           onChange={(e) => setSelectedCountry(e.target.value)}
-          className="w-48 rounded-md bg-[--color-card] border border-[--color-border] text-[--color-title] text-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[--color-accent]"
+          className="w-96 rounded-md bg-[--color-card] border border-[--color-border] text-[--color-title] text-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[--color-accent]"
         >
           {countries.map((countryCode) => (
-            <option
-              key={countryCode}
-              value={countryCode}
-              className="bg-[--color-card] text-[--color-title]"
-            >
+            <option key={countryCode} value={countryCode}>
+              {getFlagEmoji(countryCode.substring(0, 2))}{" "}
               {countryDisplayNames[countryCode] ?? countryCode}
             </option>
           ))}
@@ -76,6 +84,6 @@ export default function ControlPanel({
           ))}
         </div>
       </div>
-    </section>
+    </div>
   );
 }

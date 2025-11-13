@@ -10,29 +10,46 @@ export interface AffordabilityMetrics {
 
 /**
  * Calculates a representative house price for a given year using the index.
- * @param year - The target year.
+ * This function is now robust and uses the first available year as the base
+ * if the default base year (2015) is not present in the data.
+ *
+ * @param year - The target year for the calculation.
  * @param countryData - The dataset for the selected country.
- * @param basePrice - The anchor house price for the base year (2015).
- * @returns The calculated representative house price.
+ * @param basePrice2015 - The anchor house price for the year 2015.
+ * @returns The calculated representative house price, or null if data is insufficient.
  */
 function calculateHousePrice(
   year: number,
   countryData: CountryData,
-  basePrice: number,
+  basePrice2015: number,
 ): number | null {
   const priceIndexCurrentYear = countryData.realHousePriceIndex.find(
     (p) => p.year === year,
   );
-  const priceIndexBaseYear = countryData.realHousePriceIndex.find(
+
+  // Try to find the 2015 base year index.
+  let priceIndexBaseYear = countryData.realHousePriceIndex.find(
     (p) => p.year === 2015,
   );
 
-  if (!priceIndexCurrentYear || !priceIndexBaseYear || priceIndexBaseYear.value === 0) {
+  // --- Fallback Mechanism ---
+  // If 2015 data is not available, use the first year in the dataset as the base.
+  // This makes the calculation resilient for countries with different data ranges.
+  if (!priceIndexBaseYear && countryData.realHousePriceIndex.length > 0) {
+    priceIndexBaseYear = countryData.realHousePriceIndex[0];
+  }
+
+  if (
+    !priceIndexCurrentYear ||
+    !priceIndexBaseYear ||
+    priceIndexBaseYear.value === 0
+  ) {
     return null;
   }
 
+  // The logic remains the same: scale the 2015 base price by the index change.
   return (
-    basePrice * (priceIndexCurrentYear.value / priceIndexBaseYear.value)
+    basePrice2015 * (priceIndexCurrentYear.value / priceIndexBaseYear.value)
   );
 }
 
@@ -85,13 +102,17 @@ export function getMetricsForYear(
   year: number,
   countryCode: string,
 ): AffordabilityMetrics | null {
-  const basePrice = BASE_HOUSE_PRICES_2015[countryCode];
-  if (!basePrice) return null;
+  const basePriceData = BASE_HOUSE_PRICES_2015[countryCode];
+  if (!basePriceData) return null;
 
   const incomePoint = countryData.realIncome.find((p) => p.year === year);
   if (!incomePoint || incomePoint.value === 0) return null;
 
-  const housePrice = calculateHousePrice(year, countryData, basePrice);
+  const housePrice = calculateHousePrice(
+    year,
+    countryData,
+    basePriceData.price,
+  );
   if (housePrice === null) return null;
 
   return {

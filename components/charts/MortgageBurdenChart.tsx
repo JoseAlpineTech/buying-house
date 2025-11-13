@@ -21,6 +21,7 @@ interface MortgageBurdenChartProps {
   countryCode: string;
   ltv: number;
   term: number;
+  rate: number;
   isMini?: boolean;
 }
 
@@ -29,18 +30,17 @@ const processBurdenData = (
   countryCode: string,
   ltv: number,
   term: number,
+  rate: number, // Use a single rate for all calculations
 ) => {
   if (!countryData?.realIncome) return [];
 
   return countryData.realIncome
     .map(({ year }) => {
       const metrics = getMetricsForYear(countryData, year, countryCode);
-      const rateData = countryData.mortgageRate.find((r) => r.year === year);
-
-      if (!metrics || !rateData) return null;
+      if (!metrics) return null;
 
       const payment = calcMortgagePayment(
-        rateData.value,
+        rate, // Use the provided latest rate
         metrics.housePrice,
         ltv,
         term,
@@ -57,9 +57,10 @@ export function MortgageBurdenChart({
   countryCode,
   ltv,
   term,
+  rate,
   isMini = false,
 }: MortgageBurdenChartProps) {
-  const data = processBurdenData(countryData, countryCode, ltv, term);
+  const data = processBurdenData(countryData, countryCode, ltv, term, rate);
 
   return (
     <div className={isMini ? "h-60" : "h-96"}>
@@ -86,7 +87,7 @@ export function MortgageBurdenChart({
           </XAxis>
           <YAxis stroke="var(--color-text)" unit="%">
             <Label
-              value="Mortgage Burden (%)"
+              value="Mortgage Burden (at current rates)"
               angle={-90}
               position="insideLeft"
               fill="var(--color-text)"
@@ -116,9 +117,11 @@ export function MortgageBurdenChart({
               strokeDasharray="4 4"
             >
               <Label
-                value="30% affordability threshold"
+                value="30% threshold"
+                position="right"
                 fill="var(--color-accent)"
-                dy={-4}
+                fontSize={12}
+                dx={10}
               />
             </ReferenceLine>
           )}

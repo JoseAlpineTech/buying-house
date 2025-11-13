@@ -15,7 +15,7 @@ export function MethodologyModal({
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-3xl rounded-xl border border-[--color-border] bg-[--color-card] p-8 shadow-lg text-[--color-text] max-h-[90vh] overflow-y-auto"
+        className="relative w-full max-w-3xl rounded-xl border border-[--color-border] bg-[#0d2538] p-8 shadow-lg text-[--color-text] max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -54,74 +54,77 @@ export function MethodologyModal({
               >
                 OECD Data Explorer
               </a>
-              . The analysis is based on a consistent set of{" "}
-              <strong>real (inflation-adjusted)</strong> metrics to provide a
-              meaningful comparison over time. The specific datasets and series
-              used are detailed below.
+              . The analysis relies on combining several key indicators to
+              construct a consistent, inflation-adjusted view of affordability.
             </p>
-            <div className="mt-4 space-y-1 p-4 border border-[--color-border] rounded-lg bg-[--color-bg]">
-              {/* Table Header */}
-              <div className="grid grid-cols-3 gap-4 text-sm font-semibold text-[--color-label] pb-2">
-                <div>Dataset Name</div>
-                <div>Series Used</div>
-                <div>Data as of</div>
-              </div>
-
-              {/* Row 1: Housing */}
-              <div className="grid grid-cols-3 gap-4 text-sm border-t border-[--color-border] pt-3">
-                <div className="font-medium">
-                  Analytical house prices indicators
-                </div>
-                <div>
-                  <ul className="list-disc list-inside">
-                    <li>Real house price index</li>
-                    <li>Nominal rent price index</li>
-                  </ul>
-                </div>
-                <div>November 10, 2025</div>
-              </div>
-
-              {/* Row 2: Income */}
-              <div className="grid grid-cols-3 gap-4 text-sm border-t border-[--color-border] pt-3">
-                <div className="font-medium">NAAG Chapter 5: Households</div>
-                <div>Real net disposable income</div>
-                <div>November 10, 2025</div>
-              </div>
-
-              {/* Row 3: Interest Rates */}
-              <div className="grid grid-cols-3 gap-4 text-sm border-t border-[--color-border] pt-3">
-                <div className="font-medium">Financial market</div>
-                <div>Long-term interest rates</div>
-                <div>November 07, 2025</div>
-              </div>
-            </div>
           </section>
 
           <section>
             <h3 className="text-lg font-semibold text-[--color-label] mb-2">
-              Calculated Metrics & Assumptions
+              Data Series Explained
             </h3>
             <p>
-              The application calculates key affordability metrics based on the
-              source data. This requires an assumption for a base house price to
-              anchor the index data to a real-world value.
+              The application calculates key affordability metrics by combining
+              these sources. All metrics are presented in{" "}
+              <strong>real (inflation-adjusted)</strong> terms using 2015 as
+              the baseline year.
             </p>
-            <div className="mt-2 space-y-3 p-4 border border-[--color-border] rounded-lg bg-[--color-bg]">
+            <div className="mt-2 space-y-4 p-4 border border-[--color-border] rounded-lg bg-[#061522]">
+              <div>
+                <h4 className="font-semibold text-[--color-label]">
+                  Real Median Income (Equivalised)
+                </h4>
+                <p className="text-sm">
+                  This series uses "Equivalised Household Disposable Income." It
+                  adjusts total household income by the number of people in the
+                  household to better represent the economic resources available
+                  to each member. While the resulting number may appear lower
+                  than raw household income, it provides a more accurate
+                  comparison of living standards between countries with
+                  different average household sizes. The nominal income is then
+                  adjusted for inflation using the CPI.
+                </p>
+              </div>
               <div>
                 <h4 className="font-semibold text-[--color-label]">
                   Estimated Real House Price
                 </h4>
                 <p className="text-sm">
+                  This value is calculated from the OECD's Real House Price
+                  Index, which is anchored to a representative base price for a
+                  typical home in 2015. The formula is:{" "}
                   <code>
-                    (Base Price 2015) &times; (Real Index for Year &divide; Real
-                    Index for 2015)
+                    (Base Price 2015) &times; (Index for Year &divide; Index for
+                    2015)
                   </code>
-                  <br />
-                  The "Base Price 2015" is a representative estimate for a
-                  typical home, grounded in sources like national statistical
-                  offices (e.g., FRED, ONS) and economic reports from that
-                  period. This value gives scale to the trend provided by the
-                  OECD index.
+                  . This converts the index into an estimated monetary value
+                  while maintaining the integrity of the inflation-adjusted
+                  trend.
+                </p>
+              </div>
+              <div>
+                <h4 className="font-semibold text-[--color-label]">
+                  Mortgage Rate Proxy (Long-Term Interest Rate)
+                </h4>
+                <p className="text-sm">
+                  To ensure consistency across countries, the app uses the
+                  long-term government bond yield (typically 10-year bonds) as
+                  a proxy for mortgage rates. This is a standard macroeconomic
+                  indicator that moves in close harmony with consumer mortgage
+                  rates and accurately reflects changes in borrowing costs over
+                  time.
+                </p>
+              </div>
+              <div>
+                <h4 className="font-semibold text-[--color-label]">
+                  Rent-to-Price Index
+                </h4>
+                <p className="text-sm">
+                  This index measures the relative cost of buying a home versus
+                  renting one. A higher value suggests that house prices are
+                  high relative to rental costs, potentially indicating lower
+                  profitability for landlords or that it is more financially
+-advantageous to rent.
                 </p>
               </div>
             </div>

@@ -1,5 +1,6 @@
 /* === Imports (must come first) === */
 @import url("https://fonts.googleapis.com/css2?family=Tektur:wght@400;600;700&display=swap");
+@import "flag-icons/css/flag-icons.min.css";
 @import "tailwindcss";
 
 /* === Theme Variables === */
@@ -89,6 +90,12 @@ small {
   font-weight: 400;
   color: var(--color-text);
   letter-spacing: 0.2px;
+}
+
+/* === Form Elements === */
+select option {
+  background-color: var(--color-card);
+  color: var(--color-title);
 }
 
 /* === Cards / Sections === */
