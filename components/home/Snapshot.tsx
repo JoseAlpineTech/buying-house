@@ -76,7 +76,7 @@ export default function Snapshot({
           <p className="text-[--color-label] text-xl mt-1">
             {ydp > 0 && isFinite(ydp) ? `${ydp.toFixed(1)}` : "N/A"}
           </p>
-          <small>Based on selected scenario.</small>
+          <small>For an average homebuyer profile.</small>
         </div>
       </div>
 

@@ -13,7 +13,6 @@ import { BASE_HOUSE_PRICES_2015 } from "../lib/constants";
 import { MethodologyModal } from "../components/ui/MethodologyModal";
 import { AssumptionsModal } from "../components/ui/AssumptionsModal";
 import Hero from "../components/home/Hero";
-import ControlPanel from "../components/home/ControlPanel";
 import Snapshot from "../components/home/Snapshot";
 import Footer from "../components/home/Footer";
 import SectionCard from "../components/ui/SectionCard";
@@ -25,15 +24,16 @@ import ComparisonTable, {
 } from "../components/home/ComparisonTable";
 import { AffordabilityTrendsChart } from "../components/charts/AffordabilityTrendsChart";
 import { MortgageBurdenChart } from "../components/charts/MortgageBurdenChart";
+import { PriceToRentChart } from "../components/charts/PriceToRentChart";
+import { TotalHouseholdsChart } from "../components/charts/TotalHouseholdsChart";
 import FloatingFlag from "../components/ui/FloatingFlag";
 
 export const runtime = "edge";
 
-const scenarios = [
-  { name: "High Saver", ltv: 80, term: 30, savingsRate: 15 },
-  { name: "Average Homebuyer", ltv: 90, term: 30, savingsRate: 10 },
-  { name: "Stretched Buyer", ltv: 95, term: 30, savingsRate: 5 },
-] as const;
+// Scenarios removed, using "Average Homebuyer" profile as default
+const ltv = 90;
+const term = 30;
+const savingsRate = 10;
 
 const countryDisplayNames: { [key: string]: string } = {
   AUS: "Australia",
@@ -93,17 +93,17 @@ const InfoIcon = () => (
 
 export default function Home() {
   const [selectedCountry, setSelectedCountry] = useState<string>("CAN");
-  const [scenarioIndex, setScenarioIndex] = useState(1);
   const [isMethodologyModalOpen, setIsMethodologyModalOpen] = useState(false);
   const [isAssumptionsModalOpen, setIsAssumptionsModalOpen] = useState(false);
   const [isPtiExplanationVisible, setIsPtiExplanationVisible] = useState(true);
   const [isMbExplanationVisible, setIsMbExplanationVisible] = useState(true);
+  const [isPtrExplanationVisible, setIsPtrExplanationVisible] = useState(true);
+  const [isThhExplanationVisible, setIsThhExplanationVisible] = useState(true);
   const [sortConfig, setSortConfig] = useState<{
     key: SortKey;
     direction: SortDirection;
   } | null>({ key: "pti", direction: "ascending" });
 
-  const { ltv, term, savingsRate } = scenarios[scenarioIndex];
   const countryData =
     affordabilityData[selectedCountry as keyof typeof affordabilityData];
   const countries = Object.keys(affordabilityData);
@@ -162,7 +162,7 @@ export default function Home() {
         };
       })
       .filter((item): item is ComparisonData => item !== null);
-  }, [ltv, term, savingsRate]);
+  }, []);
 
   const comparisonSubtitle = useMemo(() => {
     if (!sortConfig) return "";
@@ -184,24 +184,23 @@ export default function Home() {
     !countryData.realIncome?.length ||
     !countryData.realHousePriceIndex?.length ||
     !countryData.mortgageRate?.length ||
+    !countryData.rentPriceIndex?.length ||
+    !countryData.numberOfHouseholds?.length ||
     !BASE_HOUSE_PRICES_2015[selectedCountry]
   ) {
     return (
       <main className="container mx-auto p-4 sm:p-6 lg:p-10">
-        <Hero />
-        <ControlPanel
+        <FloatingFlag
           selectedCountry={selectedCountry}
           setSelectedCountry={setSelectedCountry}
           countries={countries}
           countryDisplayNames={countryDisplayNames}
-          scenarios={scenarios}
-          scenarioIndex={scenarioIndex}
-          setScenarioIndex={setScenarioIndex}
         />
+        <Hero />
         <div className="mt-12 text-center text-xl text-[--color-label]">
           <p>
             Sorry, complete inflation-adjusted affordability data is not
-            available for {selectedCountryName}.
+            available for {selectedCountryName}. Please select another country.
           </p>
         </div>
         <Footer
@@ -266,20 +265,13 @@ export default function Home() {
 
   return (
     <main className="container mx-auto p-4 sm:p-6 lg:p-10">
-      <FloatingFlag countryCode={selectedCountry} />
+      <FloatingFlag
+        selectedCountry={selectedCountry}
+        setSelectedCountry={setSelectedCountry}
+        countries={countries}
+        countryDisplayNames={countryDisplayNames}
+      />
       <Hero startYear={startYear} />
-
-      <SectionCard>
-        <ControlPanel
-          selectedCountry={selectedCountry}
-          setSelectedCountry={setSelectedCountry}
-          countries={countries}
-          countryDisplayNames={countryDisplayNames}
-          scenarios={scenarios}
-          scenarioIndex={scenarioIndex}
-          setScenarioIndex={setScenarioIndex}
-        />
-      </SectionCard>
 
       <SectionCard>
         <Snapshot
@@ -406,6 +398,118 @@ export default function Home() {
                     The <strong>30% line</strong> represents a common
                     affordability benchmark. Spending more than this is often
                     considered "housing cost-burdened."
+                  </span>
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </SectionCard>
+
+      {/* Price-to-Rent Ratio Chart Card */}
+      <SectionCard>
+        <div className="flex items-center gap-3 mb-4">
+          <h3 className="chart-title">Price-to-Rent Index</h3>
+          <button
+            onClick={() => setIsPtrExplanationVisible(!isPtrExplanationVisible)}
+            className="p-1 rounded-full text-[--color-label] hover:bg-[--color-border] transition-colors"
+            aria-label="Toggle Price-to-Rent explanation"
+          >
+            <InfoIcon />
+          </button>
+        </div>
+        <div className="flex flex-col md:flex-row gap-6 items-center">
+          <motion.div
+            layout
+            animate={{ width: isPtrExplanationVisible ? "60%" : "100%" }}
+            transition={{ duration: 0.5, type: "spring", bounce: 0.2 }}
+            className="w-full"
+          >
+            <PriceToRentChart countryData={countryData} />
+          </motion.div>
+          <AnimatePresence>
+            {isPtrExplanationVisible && (
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.3 }}
+                className="w-full md:w-[40%] p-4 rounded-lg bg-[#061522] border border-[--color-border]"
+              >
+                <h4 className="text-lg font-semibold text-[--color-label] mb-2">
+                  What is this?
+                </h4>
+                <p className="text-sm text-[--color-text] space-y-2">
+                  <span>
+                    This index measures the cost of buying a home relative to
+                    renting one. It's calculated by dividing the house price
+                    index by the rent price index.
+                  </span>
+                  <span>
+                    A <strong>higher</strong> index suggests that house prices
+                    are high relative to rental costs. This can indicate that it
+                    might be more financially advantageous to rent than to buy.
+                  </span>
+                  <span>
+                    The index is set to <strong>100 in 2015</strong>. Values
+                    above 100 mean buying has become more expensive than renting
+                    compared to 2015.
+                  </span>
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </SectionCard>
+
+      {/* Total Households Chart Card */}
+      <SectionCard>
+        <div className="flex items-center gap-3 mb-4">
+          <h3 className="chart-title">Total Households</h3>
+          <button
+            onClick={() => setIsThhExplanationVisible(!isThhExplanationVisible)}
+            className="p-1 rounded-full text-[--color-label] hover:bg-[--color-border] transition-colors"
+            aria-label="Toggle Total Households explanation"
+          >
+            <InfoIcon />
+          </button>
+        </div>
+        <div className="flex flex-col md:flex-row gap-6 items-center">
+          <motion.div
+            layout
+            animate={{ width: isThhExplanationVisible ? "60%" : "100%" }}
+            transition={{ duration: 0.5, type: "spring", bounce: 0.2 }}
+            className="w-full"
+          >
+            <TotalHouseholdsChart countryData={countryData} />
+          </motion.div>
+          <AnimatePresence>
+            {isThhExplanationVisible && (
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.3 }}
+                className="w-full md:w-[40%] p-4 rounded-lg bg-[#061522] border border-[--color-border]"
+              >
+                <h4 className="text-lg font-semibold text-[--color-label] mb-2">
+                  What is this?
+                </h4>
+                <p className="text-sm text-[--color-text] space-y-2">
+                  <span>
+                    This chart shows the total number of households in the
+                    country over time.
+                  </span>
+                  <span>
+                    An <strong>increase</strong> in the number of households can
+                    be a significant driver of housing demand, often leading to
+                    upward pressure on prices and rents if supply does not keep
+                    pace.
+                  </span>
+                  <span>
+                    Factors like population growth, immigration, and changes in
+                    living arrangements (e.g., smaller household sizes) all
+                    contribute to this trend.
                   </span>
                 </p>
               </motion.div>
