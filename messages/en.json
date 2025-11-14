@@ -1,0 +1,241 @@
+{
+  "Metadata": {
+    "title": "Housing Affordability in 2025",
+    "description": "A visual journey through housing affordability dynamics."
+  },
+  "Hero": {
+    "title": "Housing Affordability",
+    "subtitle": "How has the ability to buy a home changed over time? Explore inflation-adjusted prices, incomes, and mortgage costs across OECD countries."
+  },
+  "Errors": {
+    "noData": "Sorry, complete inflation-adjusted affordability data is not available for {countryName}. Please select another country."
+  },
+  "Page": {
+    "comparisonSubtitle": "Sorted by {label} ({direction})",
+    "chartCard_RealHouseholdIncome_title": "Real Household Income",
+    "chartCard_PriceToIncomeRatio_title": "Price-to-Income Ratio",
+    "chartCard_MortgageBurden_title": "Mortgage Burden",
+    "chartCard_PriceToRentIndex_title": "Price-to-Rent Index",
+    "chartCard_TotalHouseholds_title": "Total Households",
+    "collapsible_CountryComparison_title": "Country Comparison",
+    "collapsible_AssetPerformance_title": "Asset Performance: Homeowner vs. Renter",
+    "collapsible_AssetPerformance_subtitle": "Compares which choice—buying or renting—could grow more wealth over time.",
+    "collapsible_PersonalOutcome_title": "Personal Outcome Simulation",
+    "collapsible_PersonalOutcome_subtitle": "Project your net worth based on your income"
+  },
+  "ChartCard": {
+    "toggleExplanation": "Toggle {title} explanation",
+    "explanationTitle": "What is this?",
+    "incomeExplanation": {
+      "p1": "This chart shows the inflation-adjusted <strong>disposable household income</strong> over time.",
+      "p2": "An <strong>upward trend</strong> indicates that household purchasing power is increasing, which generally improves affordability. All figures are adjusted to 2015 currency values to provide a fair comparison across years.",
+      "p3": "The income measured is &apos;equivalised,&apos; meaning it&apos;s adjusted for household size to better compare living standards."
+    },
+    "ptiExplanation": {
+      "p1": "This ratio shows how many years of <strong>gross household income</strong> it would take to buy an average home.",
+      "p2": "A <strong>higher</strong> ratio means housing is <strong>less affordable</strong>. All data is inflation-adjusted to 2015 dollars for a fair comparison over time."
+    },
+    "mortgageBurdenExplanation": {
+      "p1": "This shows the percentage of <strong>gross household income</strong> needed to cover the monthly payment on an average home.",
+      "p2": "A <strong>higher</strong> percentage means a greater financial burden. This chart calculates the burden for every year using the same recent interest rate for a fair comparison.",
+      "p3": "The <strong>30% line</strong> represents a common affordability benchmark. Spending more than this is often considered \"housing cost-burdened.\""
+    },
+    "priceToRentExplanation": {
+      "p1": "This index measures the cost of buying a home relative to renting one. It's calculated by dividing the house price index by the rent price index.",
+      "p2": "A <strong>higher</strong> index suggests that house prices are high relative to rental costs. This can indicate that it might be more financially advantageous to rent than to buy.",
+      "p3": "The index is set to <strong>100 in 2015</strong>. Values above 100 mean buying has become more expensive than renting compared to 2015."
+    },
+    "totalHouseholdsExplanation": {
+      "p1": "This chart shows the total number of households in the country over time.",
+      "p2": "An <strong>increase</strong> in the number of households can be a significant driver of housing demand, often leading to upward pressure on prices and rents if supply does not keep pace.",
+      "p3": "Factors like population growth, immigration, and changes in living arrangements (e.g., smaller household sizes) all contribute to this trend."
+    }
+  },
+  "Charts": {
+    "year": "Year",
+    "AffordabilityTrends": {
+      "yAxisLabel": "Ratio",
+      "legend": "Real Price-to-Income Ratio"
+    },
+    "Income": {
+      "yAxisLabel": "Real Income ({currencyCode})",
+      "legend": "Real Disposable Income (Equivalised)"
+    },
+    "MortgageBurden": {
+      "yAxisLabel": "Mortgage Burden (at current rates)",
+      "legend": "Mortgage Burden",
+      "thresholdLabel": "30% threshold"
+    },
+    "PriceToRent": {
+      "yAxisLabel": "Index (2015 = 100)",
+      "legend": "Real Price-to-Rent Index"
+    },
+    "SensitivityCurve": {
+      "yAxisSubtitle": "Y-axis: Advantage (Renter – Homeowner)",
+      "xAxisSubtitle": "X-axis: Stock Market Return (%)",
+      "tooltipLabel": "Renter Advantage",
+      "tooltipTitle": "Stock Market Return: {value}%",
+      "rentingWins": "Renting Wins",
+      "buyingWins": "Buying Wins"
+    },
+    "TotalHouseholds": {
+      "yAxisLabel": "Count",
+      "legend": "Total Households"
+    }
+  },
+  "ComparisonTable": {
+    "headers": {
+      "rank": "#",
+      "country": "Country",
+      "pti": "Price-to-Income",
+      "mps": "Mortgage Burden (%)",
+      "ydp": "Years to Save"
+    },
+    "sortDirection": {
+      "ascending": "Ascending",
+      "descending": "Descending"
+    },
+    "sortKeys": {
+      "countryName": "Country Name",
+      "pti": "Price-to-Income",
+      "mps": "Mortgage Burden",
+      "ydp": "Years to Save"
+    }
+  },
+  "Snapshot": {
+    "title": "Snapshot for {countryName} in {endYear}",
+    "subtitle": "Based on available data from {startYear} to {endYear}.",
+    "housePriceLabel": "Est. Real House Price",
+    "housePriceUnit": "In local currency, inflation-adjusted.",
+    "ptiLabel": "Real Price-to-Income",
+    "ptiUnit": "Years of income to buy a home.",
+    "mpsLabel": "Mortgage Burden",
+    "mpsUnit": "% of real income for mortgage.",
+    "ydpLabel": "Years to Down Payment",
+    "ydpUnit": "For an average homebuyer profile.",
+    "explanation1": "The inflation-adjusted price of a typical home. This shows the real cost of housing, removing the effects of general price inflation.",
+    "explanation2": "A ratio of <strong>{pti}</strong> means it takes that many years of gross household income to buy a home. A higher number is less affordable.",
+    "explanation3": "The percentage of gross income needed for mortgage payments at current rates. The <strong>30%</strong> level is a common affordability benchmark.",
+    "explanation4": "The estimated time to save a <strong>10%</strong> down payment, assuming a household saves <strong>10%</strong> of its gross annual income.",
+    "insightsTitle": "Insight Summary"
+  },
+  "AssetPerformanceSimulation": {
+    "disclaimer": "This simulation projects potential long-term outcomes for buying a home versus renting and investing your savings. The numbers are based on historical averages and simplifying assumptions <strong>not</strong> predictions. Markets, housing prices, and personal circumstances can change in ways no model can fully anticipate. <strong>Nobody can predict the future.</strong>",
+    "downPaymentLabel": "Your Down Payment: ",
+    "timeHorizonLabel": "Time Horizon: ",
+    "years": " Years",
+    "homeownerPathTitle": "🏠 Homeowner Path",
+    "finalHomeValue": "Final Home Value: ",
+    "remainingMortgage": "Remaining Mortgage: ",
+    "homeEquity": "Your Home Equity: ",
+    "renterPathTitle": "📈 Renter & Investor Path",
+    "initialInvestment": "Initial Investment: ",
+    "addedMonthlySavings": "Added Monthly Savings: ",
+    "finalInvestmentValue": "Final Investment Value: ",
+    "verdictTitle": "After {yearsToSimulate} years...",
+    "verdictContent": "In this scenario, <strong_label>{choice}</strong_label> could leave you wealthier by <strong_accent>{difference}</strong_accent>.",
+    "verdictChoice_buy": "buying a home",
+    "verdictChoice_rent": "renting and investing",
+    "sensitivityTitle": "Sensitivity: Stock Market Return",
+    "advancedAssumptionsToggle_hide": "Hide",
+    "advancedAssumptionsToggle_show": "Show",
+    "advancedAssumptionsToggle_label": " Advanced Assumptions",
+    "assumption_annualHomePriceGrowth": "Annual Home Price Growth",
+    "assumption_annualStockMarketReturn": "Annual Stock Market Return",
+    "assumption_annualRentIncrease": "Annual Rent Increase",
+    "assumption_annualOwnershipCostRate": "Annual Ownership Cost Rate",
+    "assumption_initialRentalYield": "Initial Rental Yield",
+    "resetButton": "Reset to Defaults"
+  },
+  "PersonalOutcomeSimulation": {
+    "disclaimer": "This model projects your potential net worth based on your income and savings habits. It compares a homeowner&apos;s equity against a renter&apos;s invested savings. <strong>This is a simplified, experimental model.</strong>",
+    "annualIncomeLabel": "Your Annual Income: ",
+    "savingsRateLabel": "Your Savings Rate: ",
+    "downPaymentLabel": "Down Payment: ",
+    "timeHorizonLabel": "Time Horizon: ",
+    "years": " Years",
+    "homeownerPathTitle": "🏠 Homeowner Path",
+    "homeownerNetWorth": "Projected Net Worth (Equity): ",
+    "renterPathTitle": "📈 Renter & Investor Path",
+    "renterNetWorth": "Projected Net Worth (Investments): ",
+    "verdictTitle": "After {yearsToSimulate} years...",
+    "verdictContent": "Based on your inputs, <strong_label>{choice}</strong_label> could result in a higher net worth by <strong_accent>{difference}</strong_accent>.",
+    "verdictChoice_buy": "buying a home",
+    "verdictChoice_rent": "renting and investing"
+  },
+  "Footer": {
+    "source": "Source: OECD Data",
+    "methodology": "Methodology",
+    "assumptions": "Assumptions",
+    "poweredBy": "Powered by: Alpine Tech Inc."
+  },
+  "FloatingControls": {
+    "changeCountry": "Change Country",
+    "viewing": "Viewing:",
+    "flagOf": "Flag of {countryName}",
+    "changeLanguage": "Change Language",
+    "language": "Language:"
+  },
+  "AssumptionsModal": {
+    "title": "Key Assumptions for {countryName}",
+    "basePrice": {
+      "label": "Base House Price (2015)",
+      "description": "Anchor price in local currency used to convert the index. Source: {source}"
+    },
+    "mortgageRate": {
+      "label": "Latest Mortgage Rate",
+      "description": "The most recent long-term interest rate used for all mortgage burden calculations across time."
+    },
+    "timeRange": {
+      "label": "Data Time Range",
+      "description": "The start and end years for the continuous, interpolated data series."
+    },
+    "incomeRange": {
+      "label": "Real Equivalised Income Range",
+      "description": "This represents 'Equivalised Household Disposable Income,' adjusted for inflation. It modifies total household income by household size to better compare living standards across countries. This may appear lower than raw household income but is a more accurate measure for comparison."
+    },
+    "indexRange": {
+      "label": "Real House Price Index Range",
+      "description": "The 2015-based index value change from {startYear} to {endYear}."
+    }
+  },
+  "MethodologyModal": {
+    "title": "Methodology & Data Sources",
+    "primarySources": {
+      "title": "Primary Data Sources",
+      "p1": "All core time-series data is sourced from the <link>OECD Data Explorer</link>. The analysis relies on combining several key indicators to construct a consistent, inflation-adjusted view of affordability.",
+      "housePrices": {
+        "title": "Analytical House Prices Indicators",
+        "description": "Provides Residential Property Price Indices (RPPIs) used to calculate real house prices, rental prices, and price-to-income ratios. (Last updated: Nov 13, 2025)"
+      },
+      "income": {
+        "title": "Income Distribution Database (IDD)",
+        "description": "Source for the \"Equivalised Household Disposable Income\" metric, offering data on income levels, inequality, and poverty. (Last updated: June 16, 2025)"
+      },
+      "financial": {
+        "title": "Financial Market Indicators",
+        "description": "The long-term interest rate from this dataset is used as a consistent proxy for mortgage rates across all countries. (Last updated: Nov 10, 2025)"
+      }
+    },
+    "seriesExplained": {
+      "title": "Data Series Explained",
+      "p1": "The application calculates key affordability metrics by combining these sources. All metrics are presented in <strong>real (inflation-adjusted)</strong> terms using 2015 as the baseline year.",
+      "realIncome": {
+        "title": "Real Median Income (Equivalised)",
+        "description": "This series uses \"Equivalised Household Disposable Income.\" It adjusts total household income by the number of people in the household to better represent the economic resources available to each member. While the resulting number may appear lower than raw household income, it provides a more accurate comparison of living standards between countries with different average household sizes. The nominal income is then adjusted for inflation using the CPI."
+      },
+      "realHousePrice": {
+        "title": "Estimated Real House Price",
+        "description": "This value is calculated from the OECD's Real House Price Index, which is anchored to a representative base price for a typical home in 2015. The formula is: <code>(Base Price 2015) &times; (Index for Year &divide; Index for 2015)</code>. This converts the index into an estimated monetary value while maintaining the integrity of the inflation-adjusted trend."
+      },
+      "mortgageRate": {
+        "title": "Mortgage Rate Proxy (Long-Term Interest Rate)",
+        "description": "To ensure consistency across countries, the app uses the long-term government bond yield (typically 10-year bonds) as a proxy for mortgage rates. This is a standard macroeconomic indicator that moves in close harmony with consumer mortgage rates and accurately reflects changes in borrowing costs over time."
+      },
+      "rentToPrice": {
+        "title": "Rent-to-Price Index",
+        "description": "This index measures the relative cost of buying a home versus renting one. A higher value suggests that house prices are high relative to rental costs, potentially indicating lower profitability for landlords or that it is more financially advantageous to rent."
+      }
+    }
+  }
+}

@@ -1,37 +1,37 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { affordabilityData } from "../data/affordability";
-import { currencies } from "../data/currency";
-import { countryDisplayNames } from "../data/countryDisplayNames";
-import { calcMortgagePayment, calcMPS, calcYDP } from "../lib/metrics";
+import { affordabilityData } from "../../data/affordability";
+import { currencies } from "../../data/currency";
+import { countryDisplayNames } from "../../data/countryDisplayNames";
+import { calcMortgagePayment, calcMPS, calcYDP } from "../../lib/metrics";
 import {
   generateAffordabilitySummary,
   getMetricsForYear,
-} from "../lib/insights";
-import { BASE_HOUSE_PRICES_2015 } from "../lib/constants";
-import { MethodologyModal } from "../components/ui/MethodologyModal";
-import { AssumptionsModal } from "../components/ui/AssumptionsModal";
-import Hero from "../components/home/Hero";
-import Snapshot from "../components/home/Snapshot";
-import Footer from "../components/home/Footer";
-import SectionCard from "../components/ui/SectionCard";
-import AssetPerformanceSimulationCard from "../components/home/AssetPerformanceSimulationCard";
-import { PersonalOutcomeSimulationCard } from "../components/home/PersonalOutcomeSimulationCard";
-import CollapsibleSectionCard from "../components/ui/CollapsibleSectionCard";
-import ChartCard from "../components/home/ChartCard";
+} from "../../lib/insights";
+import { BASE_HOUSE_PRICES_2015 } from "../../lib/constants";
+import { MethodologyModal } from "../../components/ui/MethodologyModal";
+import { AssumptionsModal } from "../../components/ui/AssumptionsModal";
+import Hero from "../../components/home/Hero";
+import Snapshot from "../../components/home/Snapshot";
+import Footer from "../../components/home/Footer";
+import SectionCard from "../../components/ui/SectionCard";
+import AssetPerformanceSimulationCard from "../../components/home/AssetPerformanceSimulationCard";
+import { PersonalOutcomeSimulationCard } from "../../components/home/PersonalOutcomeSimulationCard";
+import CollapsibleSectionCard from "../../components/ui/CollapsibleSectionCard";
+import ChartCard from "../../components/home/ChartCard";
 import ComparisonTable, {
   ComparisonData,
   SortKey,
   SortDirection,
-} from "../components/home/ComparisonTable";
-import { IncomeChart } from "../components/charts/IncomeChart";
-import { AffordabilityTrendsChart } from "../components/charts/AffordabilityTrendsChart";
-import { MortgageBurdenChart } from "../components/charts/MortgageBurdenChart";
-import { PriceToRentChart } from "../components/charts/PriceToRentChart";
-import { TotalHouseholdsChart } from "../components/charts/TotalHouseholdsChart";
-import FloatingFlag from "../components/ui/FloatingFlag";
-import FloatingLanguageSelector from "../components/ui/FloatingLanguageSelector";
+} from "../../components/home/ComparisonTable";
+import { IncomeChart } from "../../components/charts/IncomeChart";
+import { AffordabilityTrendsChart } from "../../components/charts/AffordabilityTrendsChart";
+import { MortgageBurdenChart } from "../../components/charts/MortgageBurdenChart";
+import { PriceToRentChart } from "../../components/charts/PriceToRentChart";
+import { TotalHouseholdsChart } from "../../components/charts/TotalHouseholdsChart";
+import FloatingFlag from "../../components/ui/FloatingFlag";
+import FloatingLanguageSelector from "../../components/ui/FloatingLanguageSelector";
 
 export const runtime = "edge";
 
