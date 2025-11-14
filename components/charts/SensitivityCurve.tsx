@@ -11,6 +11,7 @@ import {
   ReferenceArea,
   ReferenceLine,
 } from "recharts";
+import { useTranslations } from "next-intl";
 import { runSimulation, SimulationAssumptions } from "../../lib/simulator";
 
 interface SensitivityCurveProps {
@@ -39,6 +40,7 @@ export default function SensitivityCurve({
   assumptions,
   currency,
 }: SensitivityCurveProps) {
+  const t = useTranslations("Charts.SensitivityCurve");
   const data: { rate: number; advantage: number }[] = [];
 
   for (let r = 0; r <= 15; r += 0.5) {
@@ -72,12 +74,14 @@ export default function SensitivityCurve({
       {/* Subtitle */}
       <div className="mb-2 text-[--color-label] text-sm">
         <p>
-          <strong className="text-[--color-accent]">Y-axis:</strong> Advantage
-          (Renter – Homeowner)
+          <strong className="text-[--color-accent]">
+            {t("yAxisSubtitle")}
+          </strong>
         </p>
         <p>
-          <strong className="text-[--color-accent]">X-axis:</strong> Stock
-          Market Return (%)
+          <strong className="text-[--color-accent]">
+            {t("xAxisSubtitle")}
+          </strong>
         </p>
       </div>
 
@@ -119,9 +123,9 @@ export default function SensitivityCurve({
               }}
               formatter={(value) => [
                 formatCompact(Number(value), currency),
-                "Renter Advantage",
+                t("tooltipLabel"),
               ]}
-              labelFormatter={(v) => `Stock Market Return: ${v}%`}
+              labelFormatter={(v) => t("tooltipTitle", { value: v })}
             />
 
             <Line
@@ -138,7 +142,7 @@ export default function SensitivityCurve({
             <ReferenceLine
               y={yMax - (yMax - 0) * 0.1}
               label={{
-                value: "Renting Wins",
+                value: t("rentingWins"),
                 position: "insideLeft",
                 fill: "rgba(255,120,120,0.95)",
                 fontSize: 12,
@@ -150,7 +154,7 @@ export default function SensitivityCurve({
             <ReferenceLine
               y={yMin + (0 - yMin) * 0.15}
               label={{
-                value: "Buying Wins",
+                value: t("buyingWins"),
                 position: "insideLeft",
                 fill: "rgba(120,255,180,0.95)",
                 fontSize: 12,

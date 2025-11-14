@@ -11,6 +11,7 @@ import {
   Label,
   Legend,
 } from "recharts";
+import { useTranslations } from "next-intl";
 import { CountryData } from "../../data/affordability";
 import { getMetricsForYear } from "../../lib/insights";
 
@@ -39,6 +40,7 @@ export function AffordabilityTrendsChart({
   countryCode,
 }: AffordabilityTrendsChartProps) {
   const chartData = processChartData(countryData, countryCode);
+  const t = useTranslations("Charts");
 
   return (
     <div className="h-96">
@@ -50,7 +52,7 @@ export function AffordabilityTrendsChart({
           <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
           <XAxis dataKey="year" stroke="var(--color-text)">
             <Label
-              value="Year"
+              value={t("year")}
               offset={-20}
               position="insideBottom"
               fill="var(--color-text)"
@@ -58,7 +60,7 @@ export function AffordabilityTrendsChart({
           </XAxis>
           <YAxis stroke="var(--color-text)">
             <Label
-              value="Ratio"
+              value={t("AffordabilityTrends.yAxisLabel")}
               angle={-90}
               position="insideLeft"
               fill="var(--color-text)"
@@ -78,7 +80,7 @@ export function AffordabilityTrendsChart({
           <Line
             type="monotone"
             dataKey="pti"
-            name="Real Price-to-Income Ratio"
+            name={t("AffordabilityTrends.legend")}
             stroke="#2563eb"
             strokeWidth={3}
             dot={{ r: 3 }}

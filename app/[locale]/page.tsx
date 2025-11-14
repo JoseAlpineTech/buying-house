@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { useTranslations } from "next-intl";
 import { affordabilityData } from "../../data/affordability";
 import { currencies } from "../../data/currency";
 import { countryDisplayNames } from "../../data/countryDisplayNames";
@@ -48,6 +49,8 @@ export default function Home() {
     key: SortKey;
     direction: SortDirection;
   } | null>({ key: "pti", direction: "ascending" });
+
+  const t = useTranslations();
 
   const countryData =
     affordabilityData[selectedCountry as keyof typeof affordabilityData];
@@ -118,17 +121,12 @@ export default function Home() {
 
   const comparisonSubtitle = useMemo(() => {
     if (!sortConfig) return "";
-    const labels: Record<SortKey, string> = {
-      countryName: "Country Name",
-      pti: "Price-to-Income",
-      mps: "Mortgage Burden",
-      ydp: "Years to Save",
-    };
-    const label = labels[sortConfig.key];
-    const direction =
-      sortConfig.direction === "ascending" ? "Ascending" : "Descending";
-    return `Sorted by ${label} (${direction})`;
-  }, [sortConfig]);
+    const label = t(`ComparisonTable.sortKeys.${sortConfig.key}`);
+    const direction = t(
+      `ComparisonTable.sortDirection.${sortConfig.direction}`,
+    );
+    return t("Page.comparisonSubtitle", { label, direction });
+  }, [sortConfig, t]);
 
   // Guard clause for missing data for the selected country
   if (
@@ -150,10 +148,7 @@ export default function Home() {
         />
         <Hero />
         <div className="mt-12 text-center text-xl text-[--color-label]">
-          <p>
-            Sorry, complete inflation-adjusted affordability data is not
-            available for {selectedCountryName}. Please select another country.
-          </p>
+          <p>{t("Errors.noData", { countryName: selectedCountryName })}</p>
         </div>
         <Footer
           onMethodologyOpen={() => setIsMethodologyModalOpen(true)}
@@ -241,61 +236,62 @@ export default function Home() {
       </SectionCard>
 
       <ChartCard
-        title="Real Household Income"
+        title={t("Page.chartCard_RealHouseholdIncome_title")}
         chartComponent={
           <IncomeChart
             countryData={countryData}
             countryCode={selectedCountry}
           />
         }
-        explanationTitle="What is this?"
+        explanationTitle={t("ChartCard.explanationTitle")}
         explanationContent={
           <>
-            <p>
-              This chart shows the inflation-adjusted{" "}
-              <strong>disposable household income</strong> over time.
-            </p>
-            <p>
-              An <strong>upward trend</strong> indicates that household
-              purchasing power is increasing, which generally improves
-              affordability. All figures are adjusted to 2015 currency values
-              to provide a fair comparison across years.
-            </p>
-            <p>
-              The income measured is &apos;equivalised,&apos; meaning it&apos;s
-              adjusted for household size to better compare living standards.
-            </p>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: t.raw("ChartCard.incomeExplanation.p1"),
+              }}
+            />
+            <p
+              dangerouslySetInnerHTML={{
+                __html: t.raw("ChartCard.incomeExplanation.p2"),
+              }}
+            />
+            <p
+              dangerouslySetInnerHTML={{
+                __html: t.raw("ChartCard.incomeExplanation.p3"),
+              }}
+            />
           </>
         }
       />
 
       <ChartCard
-        title="Price-to-Income Ratio"
+        title={t("Page.chartCard_PriceToIncomeRatio_title")}
         chartComponent={
           <AffordabilityTrendsChart
             countryData={countryData}
             countryCode={selectedCountry}
           />
         }
-        explanationTitle="What is this?"
+        explanationTitle={t("ChartCard.explanationTitle")}
         explanationContent={
           <>
-            <p>
-              This ratio shows how many years of{" "}
-              <strong>gross household income</strong> it would take to buy an
-              average home.
-            </p>
-            <p>
-              A <strong>higher</strong> ratio means housing is{" "}
-              <strong>less affordable</strong>. All data is inflation-adjusted
-              to 2015 dollars for a fair comparison over time.
-            </p>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: t.raw("ChartCard.ptiExplanation.p1"),
+              }}
+            />
+            <p
+              dangerouslySetInnerHTML={{
+                __html: t.raw("ChartCard.ptiExplanation.p2"),
+              }}
+            />
           </>
         }
       />
 
       <ChartCard
-        title="Mortgage Burden"
+        title={t("Page.chartCard_MortgageBurden_title")}
         chartComponent={
           <MortgageBurdenChart
             countryData={countryData}
@@ -305,79 +301,80 @@ export default function Home() {
             rate={latestMortgageRate}
           />
         }
-        explanationTitle="What is this?"
+        explanationTitle={t("ChartCard.explanationTitle")}
         explanationContent={
           <>
-            <p>
-              This shows the percentage of{" "}
-              <strong>gross household income</strong> needed to cover the
-              monthly payment on an average home.
-            </p>
-            <p>
-              A <strong>higher</strong> percentage means a greater financial
-              burden. This chart calculates the burden for every year using the
-              same recent interest rate for a fair comparison.
-            </p>
-            <p>
-              The <strong>30% line</strong> represents a common affordability
-              benchmark. Spending more than this is often considered "housing
-              cost-burdened."
-            </p>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: t.raw("ChartCard.mortgageBurdenExplanation.p1"),
+              }}
+            />
+            <p
+              dangerouslySetInnerHTML={{
+                __html: t.raw("ChartCard.mortgageBurdenExplanation.p2"),
+              }}
+            />
+            <p
+              dangerouslySetInnerHTML={{
+                __html: t.raw("ChartCard.mortgageBurdenExplanation.p3"),
+              }}
+            />
           </>
         }
       />
 
       <ChartCard
-        title="Price-to-Rent Index"
+        title={t("Page.chartCard_PriceToRentIndex_title")}
         chartComponent={<PriceToRentChart countryData={countryData} />}
-        explanationTitle="What is this?"
+        explanationTitle={t("ChartCard.explanationTitle")}
         explanationContent={
           <>
-            <p>
-              This index measures the cost of buying a home relative to renting
-              one. It's calculated by dividing the house price index by the rent
-              price index.
-            </p>
-            <p>
-              A <strong>higher</strong> index suggests that house prices are high
-              relative to rental costs. This can indicate that it might be more
-              financially advantageous to rent than to buy.
-            </p>
-            <p>
-              The index is set to <strong>100 in 2015</strong>. Values above 100
-              mean buying has become more expensive than renting compared to
-              2015.
-            </p>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: t.raw("ChartCard.priceToRentExplanation.p1"),
+              }}
+            />
+            <p
+              dangerouslySetInnerHTML={{
+                __html: t.raw("ChartCard.priceToRentExplanation.p2"),
+              }}
+            />
+            <p
+              dangerouslySetInnerHTML={{
+                __html: t.raw("ChartCard.priceToRentExplanation.p3"),
+              }}
+            />
           </>
         }
       />
 
       <ChartCard
-        title="Total Households"
+        title={t("Page.chartCard_TotalHouseholds_title")}
         chartComponent={<TotalHouseholdsChart countryData={countryData} />}
-        explanationTitle="What is this?"
+        explanationTitle={t("ChartCard.explanationTitle")}
         explanationContent={
           <>
-            <p>
-              This chart shows the total number of households in the country
-              over time.
-            </p>
-            <p>
-              An <strong>increase</strong> in the number of households can be a
-              significant driver of housing demand, often leading to upward
-              pressure on prices and rents if supply does not keep pace.
-            </p>
-            <p>
-              Factors like population growth, immigration, and changes in living
-              arrangements (e.g., smaller household sizes) all contribute to
-              this trend.
-            </p>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: t.raw("ChartCard.totalHouseholdsExplanation.p1"),
+              }}
+            />
+            <p
+              dangerouslySetInnerHTML={{
+                __html: t.raw("ChartCard.totalHouseholdsExplanation.p2"),
+              }}
+            />
+            <p
+              dangerouslySetInnerHTML={{
+                __html: t.raw("ChartCard.totalHouseholdsExplanation.p3"),
+              }}
+            />
           </>
         }
       />
 
       <CollapsibleSectionCard
-        title="Country Comparison"
+        title={t("Page.collapsible_CountryComparison_title")}
         subtitle={comparisonSubtitle}
       >
         <ComparisonTable
@@ -389,8 +386,8 @@ export default function Home() {
       </CollapsibleSectionCard>
 
       <CollapsibleSectionCard
-        title="Asset Performance: Homeowner vs. Renter"
-        subtitle="Compares which choice—buying or renting—could grow more wealth over time."
+        title={t("Page.collapsible_AssetPerformance_title")}
+        subtitle={t("Page.collapsible_AssetPerformance_subtitle")}
       >
         <AssetPerformanceSimulationCard
           currentHomePrice={housePrice}
@@ -400,8 +397,8 @@ export default function Home() {
       </CollapsibleSectionCard>
 
       <CollapsibleSectionCard
-        title="Personal Outcome Simulation"
-        subtitle="Project your net worth based on your income"
+        title={t("Page.collapsible_PersonalOutcome_title")}
+        subtitle={t("Page.collapsible_PersonalOutcome_subtitle")}
       >
         <PersonalOutcomeSimulationCard
           defaultIncome={income}

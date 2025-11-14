@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslations } from "next-intl";
 import SectionCard from "../ui/SectionCard";
 import ExplanationBox from "../ui/ExplanationBox";
 
@@ -34,6 +35,7 @@ export default function ChartCard({
   explanationContent,
 }: ChartCardProps) {
   const [isExplanationVisible, setIsExplanationVisible] = useState(true);
+  const t = useTranslations("ChartCard");
 
   return (
     <SectionCard>
@@ -42,7 +44,7 @@ export default function ChartCard({
         <button
           onClick={() => setIsExplanationVisible(!isExplanationVisible)}
           className="p-1 rounded-full text-[--color-label] hover:bg-[--color-border] transition-colors"
-          aria-label={`Toggle ${title} explanation`}
+          aria-label={t("toggleExplanation", { title })}
         >
           <InfoIcon />
         </button>

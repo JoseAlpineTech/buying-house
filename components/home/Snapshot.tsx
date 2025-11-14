@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 interface SnapshotProps {
   startYear: number;
   endYear: number;
@@ -30,21 +32,23 @@ export default function Snapshot({
   insightSummary,
   currency,
 }: SnapshotProps) {
+  const t = useTranslations("Snapshot");
+
   return (
     <div>
       <div className="mb-6">
         <h2 className="text-4xl font-bold text-[--color-title]">
-          Snapshot for {selectedCountryName} in {endYear}
+          {t("title", { countryName: selectedCountryName, endYear })}
         </h2>
         <p className="text-sm text-[--color-text] mt-1">
-          Based on available data from {startYear} to {endYear}.
+          {t("subtitle", { startYear, endYear })}
         </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Metric Row */}
         <div className="p-4 rounded-lg bg-[#061522] border border-[--color-border]">
-          <h3 className="metric-label">Est. Real House Price</h3>
+          <h3 className="metric-label">{t("housePriceLabel")}</h3>
           <p className="text-xl mt-1">
             <strong>
               {housePrice > 0
@@ -57,59 +61,57 @@ export default function Snapshot({
                 : "N/A"}
             </strong>
           </p>
-          <small>In local currency, inflation-adjusted.</small>
+          <small>{t("housePriceUnit")}</small>
         </div>
         <div className="p-4 rounded-lg bg-[#061522] border border-[--color-border]">
-          <h3 className="metric-label">Real Price-to-Income</h3>
+          <h3 className="metric-label">{t("ptiLabel")}</h3>
           <p className="text-xl mt-1">
             <strong>{pti > 0 ? pti.toFixed(1) : "N/A"}</strong>
           </p>
-          <small>Years of income to buy a home.</small>
+          <small>{t("ptiUnit")}</small>
         </div>
         <div className="p-4 rounded-lg bg-[#061522] border border-[--color-border]">
-          <h3 className="metric-label">Mortgage Burden</h3>
+          <h3 className="metric-label">{t("mpsLabel")}</h3>
           <p className="text-xl mt-1">
             <strong>
               {mps > 0 && isFinite(mps) ? `${mps.toFixed(1)}%` : "N/A"}
             </strong>
           </p>
-          <small>% of real income for mortgage.</small>
+          <small>{t("mpsUnit")}</small>
         </div>
         <div className="p-4 rounded-lg bg-[#061522] border border-[--color-border]">
-          <h3 className="metric-label">Years to Down Payment</h3>
+          <h3 className="metric-label">{t("ydpLabel")}</h3>
           <p className="text-xl mt-1">
             <strong>
               {ydp > 0 && isFinite(ydp) ? `${ydp.toFixed(1)}` : "N/A"}
             </strong>
           </p>
-          <small>For an average homebuyer profile.</small>
+          <small>{t("ydpUnit")}</small>
         </div>
 
         {/* Explanation Row */}
+        <ExplanationCard>{t("explanation1")}</ExplanationCard>
         <ExplanationCard>
-          The inflation-adjusted price of a typical home. This shows the real
-          cost of housing, removing the effects of general price inflation.
+          {t.rich("explanation2", {
+            pti: pti > 0 ? pti.toFixed(1) : "N/A",
+            strong: (chunks) => <strong>{chunks}</strong>,
+          })}
         </ExplanationCard>
         <ExplanationCard>
-          A ratio of <strong>{pti > 0 ? pti.toFixed(1) : "N/A"}</strong> means
-          it takes that many years of gross household income to buy a home. A
-          higher number is less affordable.
+          {t.rich("explanation3", {
+            strong: (chunks) => <strong>{chunks}</strong>,
+          })}
         </ExplanationCard>
         <ExplanationCard>
-          The percentage of gross income needed for mortgage payments at current
-          rates. The <strong>30%</strong> level is a common affordability
-          benchmark.
-        </ExplanationCard>
-        <ExplanationCard>
-          The estimated time to save a <strong>10%</strong> down payment,
-          assuming a household saves <strong>10%</strong> of its gross annual
-          income.
+          {t.rich("explanation4", {
+            strong: (chunks) => <strong>{chunks}</strong>,
+          })}
         </ExplanationCard>
       </div>
 
       <div className="mt-6 border border-[--color-border] rounded-lg bg-[#061522] p-6">
         <h3 className="text-2xl font-semibold text-[--color-label] mb-2">
-          Insight Summary
+          {t("insightsTitle")}
         </h3>
         <ul className="list-disc list-inside space-y-2">
           {insightSummary.map((item, index) => (

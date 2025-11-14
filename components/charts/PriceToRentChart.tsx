@@ -12,6 +12,7 @@ import {
   Legend,
   ReferenceLine,
 } from "recharts";
+import { useTranslations } from "next-intl";
 import { CountryData } from "../../data/affordability";
 
 interface PriceToRentChartProps {
@@ -31,6 +32,7 @@ const processChartData = (countryData: CountryData) => {
 
 export function PriceToRentChart({ countryData }: PriceToRentChartProps) {
   const chartData = processChartData(countryData);
+  const t = useTranslations("Charts");
 
   return (
     <div className="h-96">
@@ -42,7 +44,7 @@ export function PriceToRentChart({ countryData }: PriceToRentChartProps) {
           <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
           <XAxis dataKey="year" stroke="var(--color-text)">
             <Label
-              value="Year"
+              value={t("year")}
               offset={-20}
               position="insideBottom"
               fill="var(--color-text)"
@@ -50,7 +52,7 @@ export function PriceToRentChart({ countryData }: PriceToRentChartProps) {
           </XAxis>
           <YAxis stroke="var(--color-text)">
             <Label
-              value="Index (2015 = 100)"
+              value={t("PriceToRent.yAxisLabel")}
               angle={-90}
               position="insideLeft"
               fill="var(--color-text)"
@@ -83,7 +85,7 @@ export function PriceToRentChart({ countryData }: PriceToRentChartProps) {
           <Line
             type="monotone"
             dataKey="ptr"
-            name="Real Price-to-Rent Index"
+            name={t("PriceToRent.legend")}
             stroke="#16a34a"
             strokeWidth={3}
             dot={{ r: 3 }}

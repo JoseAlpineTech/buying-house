@@ -1,7 +1,8 @@
-"use client";
+"use a client";
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { countryCodeMap } from "../../data/countryCodes";
 import { countryDisplayNames } from "../../data/countryDisplayNames";
 
@@ -17,8 +18,13 @@ export default function FloatingFlag({
   countries,
 }: FloatingFlagProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const t = useTranslations("FloatingControls");
   const twoLetterCode = countryCodeMap[selectedCountry] ?? "";
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const selectedCountryName =
+    countryDisplayNames[
+      selectedCountry as keyof typeof countryDisplayNames
+    ] ?? selectedCountry;
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -49,23 +55,15 @@ export default function FloatingFlag({
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-3 p-2 rounded-lg bg-[--color-card] border border-[--color-border] shadow-2xl hover:bg-[--color-border] transition-colors"
-        title="Change Country"
+        title={t("changeCountry")}
       >
-        <span className="text-sm text-[--color-label]">Viewing:</span>
+        <span className="text-sm text-[--color-label]">{t("viewing")}</span>
         <span
           className={`fi fi-${twoLetterCode} w-8 h-5 rounded-sm`}
-          title={`Flag of ${
-            countryDisplayNames[
-              selectedCountry as keyof typeof countryDisplayNames
-            ]
-          }`}
+          title={t("flagOf", { countryName: selectedCountryName })}
         />
         <span className="font-semibold text-[--color-title] pr-2">
-          {
-            countryDisplayNames[
-              selectedCountry as keyof typeof countryDisplayNames
-            ]
-          }
+          {selectedCountryName}
         </span>
       </button>
 

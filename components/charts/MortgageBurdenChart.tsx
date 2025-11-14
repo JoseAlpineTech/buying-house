@@ -12,6 +12,7 @@ import {
   Label,
   Legend,
 } from "recharts";
+import { useTranslations } from "next-intl";
 import { CountryData } from "../../data/affordability";
 import { calcMortgagePayment, calcMPS } from "../../lib/metrics";
 import { getMetricsForYear } from "../../lib/insights";
@@ -61,6 +62,7 @@ export function MortgageBurdenChart({
   isMini = false,
 }: MortgageBurdenChartProps) {
   const data = processBurdenData(countryData, countryCode, ltv, term, rate);
+  const t = useTranslations("Charts");
 
   return (
     <div className={isMini ? "h-60" : "h-96"}>
@@ -78,7 +80,7 @@ export function MortgageBurdenChart({
           )}
           <XAxis dataKey="year" stroke="var(--color-text)">
             <Label
-              value="Year"
+              value={t("year")}
               offset={isMini ? -15 : -20}
               position="insideBottom"
               fill="var(--color-text)"
@@ -87,7 +89,7 @@ export function MortgageBurdenChart({
           </XAxis>
           <YAxis stroke="var(--color-text)" unit="%">
             <Label
-              value="Mortgage Burden (at current rates)"
+              value={t("MortgageBurden.yAxisLabel")}
               angle={-90}
               position="insideLeft"
               fill="var(--color-text)"
@@ -117,7 +119,7 @@ export function MortgageBurdenChart({
               strokeDasharray="4 4"
             >
               <Label
-                value="30% threshold"
+                value={t("MortgageBurden.thresholdLabel")}
                 position="right"
                 fill="var(--color-accent)"
                 fontSize={12}
@@ -128,7 +130,7 @@ export function MortgageBurdenChart({
           <Line
             type="monotone"
             dataKey="mps"
-            name="Mortgage Burden"
+            name={t("MortgageBurden.legend")}
             stroke={isMini ? "#ffb703" : "#f97316"}
             strokeWidth={3}
             dot={!isMini}

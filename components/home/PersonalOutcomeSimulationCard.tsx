@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslations } from "next-intl";
 import {
   runPersonalOutcomeSimulation,
   PersonalOutcomeResult,
@@ -39,6 +40,9 @@ export function PersonalOutcomeSimulationCard({
     DEFAULT_SIMULATION_ASSUMPTIONS,
   );
   const [isAdvancedVisible, setIsAdvancedVisible] = useState(false);
+
+  const t = useTranslations("PersonalOutcomeSimulation");
+  const tAsset = useTranslations("AssetPerformanceSimulation");
 
   useEffect(() => {
     setDownPayment(currentHomePrice * 0.2);
@@ -83,21 +87,24 @@ export function PersonalOutcomeSimulationCard({
   const difference = Math.abs(homeownerNetWorth - renterNetWorth);
   const buyingIsBetter = homeownerNetWorth > renterNetWorth;
 
+  const assumptionLabels: { [key in keyof SimulationAssumptions]?: string } = {
+    annualHomePriceGrowth: tAsset("assumption_annualHomePriceGrowth"),
+    annualStockMarketReturn: tAsset("assumption_annualStockMarketReturn"),
+  };
+
   return (
     <div className="p-4 rounded-lg bg-[#061522] border border-[--color-border]">
-      <p className="text-sm text-[--color-text] mb-6">
-        This model projects your potential net worth based on your income and
-        savings habits. It compares a homeowner&apos;s equity against a
-        renter&apos;s invested savings.{" "}
-        <strong>This is a simplified, experimental model.</strong>
-      </p>
+      <p
+        className="text-sm text-[--color-text] mb-6"
+        dangerouslySetInnerHTML={{ __html: t.raw("disclaimer") }}
+      />
 
       {/* --- User Controls --- */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
         {/* Custom Income, Savings Rate, Down Payment, Time Horizon */}
         <div>
           <label className="block text-lg font-semibold text-[--color-label] mb-2">
-            Your Annual Income:{" "}
+            {t("annualIncomeLabel")}
             <strong className="text-[--color-accent]">
               {formatCurrency(customIncome, currency)}
             </strong>
@@ -114,7 +121,7 @@ export function PersonalOutcomeSimulationCard({
         </div>
         <div>
           <label className="block text-lg font-semibold text-[--color-label] mb-2">
-            Your Savings Rate:{" "}
+            {t("savingsRateLabel")}
             <strong className="text-[--color-accent]">{savingsRate}%</strong>
           </label>
           <input
@@ -129,7 +136,7 @@ export function PersonalOutcomeSimulationCard({
         </div>
         <div>
           <label className="block text-lg font-semibold text-[--color-label] mb-2">
-            Down Payment:{" "}
+            {t("downPaymentLabel")}
             <strong className="text-[--color-accent]">
               {formatCurrency(downPayment, currency)}
             </strong>
@@ -146,9 +153,9 @@ export function PersonalOutcomeSimulationCard({
         </div>
         <div>
           <label className="block text-lg font-semibold text-[--color-label] mb-2">
-            Time Horizon:{" "}
+            {t("timeHorizonLabel")}
             <strong className="text-[--color-accent]">
-              {yearsToSimulate} Years
+              {yearsToSimulate} {t("years")}
             </strong>
           </label>
           <div className="flex gap-2 flex-wrap">
@@ -173,10 +180,10 @@ export function PersonalOutcomeSimulationCard({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 rounded-lg bg-[#061522] border border-[--color-border]">
         <div className="p-4">
           <h3 className="text-2xl font-bold text-[--color-title] mb-3">
-            🏠 Homeowner Path
+            {t("homeownerPathTitle")}
           </h3>
           <p className="text-xl pt-2">
-            Projected Net Worth (Equity):{" "}
+            {t("homeownerNetWorth")}
             <strong className="text-[--color-accent] text-2xl">
               {formatCurrency(homeownerNetWorth, currency)}
             </strong>
@@ -184,10 +191,10 @@ export function PersonalOutcomeSimulationCard({
         </div>
         <div className="p-4">
           <h3 className="text-2xl font-bold text-[--color-title] mb-3">
-            📈 Renter & Investor Path
+            {t("renterPathTitle")}
           </h3>
           <p className="text-xl pt-2">
-            Projected Net Worth (Investments):{" "}
+            {t("renterNetWorth")}
             <strong className="text-[--color-accent] text-2xl">
               {formatCurrency(renterNetWorth, currency)}
             </strong>
@@ -198,18 +205,21 @@ export function PersonalOutcomeSimulationCard({
       {/* --- Verdict --- */}
       <div className="mt-6 p-4 text-center rounded-lg bg-[#061522] border border-[--color-border]">
         <h3 className="text-xl font-semibold text-[--color-title]">
-          After {yearsToSimulate} years...
+          {t("verdictTitle", { yearsToSimulate })}
         </h3>
         <p className="text-lg text-[--color-text] mt-1">
-          Based on your inputs,{" "}
-          <strong className="text-[--color-label]">
-            {buyingIsBetter ? "buying a home" : "renting and investing"}
-          </strong>{" "}
-          could result in a higher net worth by{" "}
-          <strong className="text-[--color-accent]">
-            {formatCurrency(difference, currency)}
-          </strong>
-          .
+          {t.rich("verdictContent", {
+            choice: t(
+              buyingIsBetter ? "verdictChoice_buy" : "verdictChoice_rent",
+            ),
+            difference: formatCurrency(difference, currency),
+            strong_label: (chunks) => (
+              <strong className="text-[--color-label]">{chunks}</strong>
+            ),
+            strong_accent: (chunks) => (
+              <strong className="text-[--color-accent]">{chunks}</strong>
+            ),
+          })}
         </p>
       </div>
 
@@ -219,7 +229,10 @@ export function PersonalOutcomeSimulationCard({
           onClick={() => setIsAdvancedVisible(!isAdvancedVisible)}
           className="text-sm text-[--color-label] underline hover:text-[--color-accent] bg-transparent border-none p-0"
         >
-          {isAdvancedVisible ? "Hide" : "Show"} Advanced Assumptions
+          {isAdvancedVisible
+            ? tAsset("advancedAssumptionsToggle_hide")
+            : tAsset("advancedAssumptionsToggle_show")}
+          {tAsset("advancedAssumptionsToggle_label")}
         </button>
         <AnimatePresence>
           {isAdvancedVisible && (
@@ -243,7 +256,7 @@ export function PersonalOutcomeSimulationCard({
                   .map((key) => (
                     <div key={key}>
                       <label className="block text-sm font-semibold text-[--color-label] capitalize">
-                        {key.replace(/([A-Z])/g, " $1")} (
+                        {assumptionLabels[key]} (
                         <strong className="text-[--color-accent]">
                           {assumptions[key]}%
                         </strong>
@@ -269,7 +282,7 @@ export function PersonalOutcomeSimulationCard({
                     }
                     className="px-4 py-2 rounded-md border border-[--color-border] text-[--color-label] hover:bg-[--color-border] transition"
                   >
-                    Reset to Defaults
+                    {tAsset("resetButton")}
                   </button>
                 </div>
               </div>

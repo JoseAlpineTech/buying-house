@@ -11,6 +11,7 @@ import {
   Label,
   Legend,
 } from "recharts";
+import { useTranslations } from "next-intl";
 import { CountryData } from "../../data/affordability";
 
 interface TotalHouseholdsChartProps {
@@ -42,6 +43,7 @@ export function TotalHouseholdsChart({
   countryData,
 }: TotalHouseholdsChartProps) {
   const chartData = processChartData(countryData);
+  const t = useTranslations("Charts");
 
   return (
     <div className="h-96">
@@ -53,7 +55,7 @@ export function TotalHouseholdsChart({
           <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
           <XAxis dataKey="year" stroke="var(--color-text)">
             <Label
-              value="Year"
+              value={t("year")}
               offset={-20}
               position="insideBottom"
               fill="var(--color-text)"
@@ -61,7 +63,7 @@ export function TotalHouseholdsChart({
           </XAxis>
           <YAxis stroke="var(--color-text)" tickFormatter={formatNumber}>
             <Label
-              value="Count"
+              value={t("TotalHouseholds.yAxisLabel")}
               offset={-20}
               angle={-90}
               position="insideLeft"
@@ -83,7 +85,7 @@ export function TotalHouseholdsChart({
           <Line
             type="monotone"
             dataKey="households"
-            name="Total Households"
+            name={t("TotalHouseholds.legend")}
             stroke="#8b5cf6"
             strokeWidth={3}
             dot={{ r: 3 }}

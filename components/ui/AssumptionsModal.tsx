@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 interface AssumptionData {
   label: string;
   value: string | number;
@@ -43,11 +45,13 @@ export function AssumptionsModal({
   endIndexValue,
   currency,
 }: AssumptionsModalProps) {
+  const t = useTranslations("AssumptionsModal");
+
   if (!isOpen) return null;
 
   const assumptions: AssumptionData[] = [
     {
-      label: "Base House Price (2015)",
+      label: t("basePrice.label"),
       value: baseHousePrice
         ? formatNumber(baseHousePrice.price, {
             style: "currency",
@@ -55,26 +59,25 @@ export function AssumptionsModal({
             maximumFractionDigits: 0,
           })
         : "N/A",
-      description: `Anchor price in local currency used to convert the index. Source: ${
-        baseHousePrice?.source ?? "N/A"
-      }`,
+      description: t("basePrice.description", {
+        source: baseHousePrice?.source ?? "N/A",
+      }),
     },
     {
-      label: "Latest Mortgage Rate",
+      label: t("mortgageRate.label"),
       value: `${formatNumber(latestMortgageRate, {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
       })}%`,
-      description: `The most recent long-term interest rate used for all mortgage burden calculations across time.`,
+      description: t("mortgageRate.description"),
     },
     {
-      label: "Data Time Range",
+      label: t("timeRange.label"),
       value: `${dataStartYear} - ${dataEndYear}`,
-      description:
-        "The start and end years for the continuous, interpolated data series.",
+      description: t("timeRange.description"),
     },
     {
-      label: "Real Equivalised Income Range",
+      label: t("incomeRange.label"),
       value: `${formatNumber(startIncome ?? 0, {
         style: "currency",
         currency: currency,
@@ -84,17 +87,19 @@ export function AssumptionsModal({
         currency: currency,
         maximumFractionDigits: 0,
       })}`,
-      description:
-        "This represents 'Equivalised Household Disposable Income,' adjusted for inflation. It modifies total household income by household size to better compare living standards across countries. This may appear lower than raw household income but is a more accurate measure for comparison.",
+      description: t("incomeRange.description"),
     },
     {
-      label: "Real House Price Index Range",
+      label: t("indexRange.label"),
       value: `${formatNumber(startIndexValue ?? 0, {
         minimumFractionDigits: 2,
       })} -> ${formatNumber(endIndexValue ?? 0, {
         minimumFractionDigits: 2,
       })}`,
-      description: `The 2015-based index value change from ${dataStartYear} to ${dataEndYear}.`,
+      description: t("indexRange.description", {
+        startYear: dataStartYear,
+        endYear: dataEndYear,
+      }),
     },
   ];
 
@@ -126,7 +131,7 @@ export function AssumptionsModal({
           </svg>
         </button>
         <h2 className="text-2xl font-semibold text-[--color-title] mb-4">
-          Key Assumptions for {countryName}
+          {t("title", { countryName })}
         </h2>
         <div className="mt-6 space-y-4">
           {assumptions.map((item, index) => (

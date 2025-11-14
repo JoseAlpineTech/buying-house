@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { countryCodeMap } from "../../data/countryCodes";
 
 export interface ComparisonData {
@@ -40,6 +41,8 @@ export default function ComparisonTable({
   sortConfig,
   setSortConfig,
 }: ComparisonTableProps) {
+  const t = useTranslations("ComparisonTable");
+
   const sortedData = useMemo(() => {
     let sortableItems = [...data];
     if (sortConfig !== null) {
@@ -78,11 +81,11 @@ export default function ComparisonTable({
     label: string;
     isSortable: boolean;
   }[] = [
-    { key: "rank", label: "#", isSortable: false },
-    { key: "countryName", label: "Country", isSortable: true },
-    { key: "pti", label: "Price-to-Income", isSortable: true },
-    { key: "mps", label: "Mortgage Burden (%)", isSortable: true },
-    { key: "ydp", label: "Years to Save", isSortable: true },
+    { key: "rank", label: t("headers.rank"), isSortable: false },
+    { key: "countryName", label: t("headers.country"), isSortable: true },
+    { key: "pti", label: t("headers.pti"), isSortable: true },
+    { key: "mps", label: t("headers.mps"), isSortable: true },
+    { key: "ydp", label: t("headers.ydp"), isSortable: true },
   ];
 
   return (

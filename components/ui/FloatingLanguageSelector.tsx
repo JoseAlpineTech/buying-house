@@ -2,16 +2,23 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLocale, useTranslations } from "next-intl";
 import { languages } from "../../data/languages";
+import { usePathname, useRouter } from "../../navigation";
 
 type Language = (typeof languages)[number];
 
 export default function FloatingLanguageSelector() {
   const [isOpen, setIsOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const [selectedLanguage, setSelectedLanguage] = useState<Language>(
-    languages[0],
-  );
+  const t = useTranslations("FloatingControls");
+
+  const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const selectedLanguage =
+    languages.find((lang) => lang.code === locale) ?? languages[0];
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -29,9 +36,8 @@ export default function FloatingLanguageSelector() {
   }, [wrapperRef]);
 
   const handleLanguageSelect = (lang: Language) => {
-    setSelectedLanguage(lang);
+    router.push(pathname, { locale: lang.code });
     setIsOpen(false);
-    // Placeholder for future functionality
   };
 
   return (
@@ -42,9 +48,9 @@ export default function FloatingLanguageSelector() {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 p-2 rounded-lg bg-[--color-card] border border-[--color-border] shadow-2xl hover:bg-[--color-border] transition-colors"
-        title="Change Language"
+        title={t("changeLanguage")}
       >
-        <span className="text-sm text-[--color-label]">Language:</span>
+        <span className="text-sm text-[--color-label]">{t("language")}</span>
         <span className="font-semibold text-[--color-title] pr-1">
           {selectedLanguage.nativeName}
         </span>

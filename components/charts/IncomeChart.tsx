@@ -11,6 +11,7 @@ import {
   Label,
   Legend,
 } from "recharts";
+import { useTranslations } from "next-intl";
 import { CountryData } from "../../data/affordability";
 import { currencies } from "../../data/currency";
 
@@ -39,6 +40,7 @@ export function IncomeChart({ countryData, countryCode }: IncomeChartProps) {
   const chartData = processChartData(countryData);
   const currency =
     currencies[countryCode as keyof typeof currencies] ?? currencies.USA;
+  const t = useTranslations("Charts");
 
   return (
     <div className="h-96">
@@ -50,7 +52,7 @@ export function IncomeChart({ countryData, countryCode }: IncomeChartProps) {
           <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
           <XAxis dataKey="year" stroke="var(--color-text)">
             <Label
-              value="Year"
+              value={t("year")}
               offset={-20}
               position="insideBottom"
               fill="var(--color-text)"
@@ -66,7 +68,7 @@ export function IncomeChart({ countryData, countryCode }: IncomeChartProps) {
             }
           >
             <Label
-              value={`Real Income (${currency.code})`}
+              value={t("Income.yAxisLabel", { currencyCode: currency.code })}
               angle={-90}
               position="insideLeft"
               fill="var(--color-text)"
@@ -87,7 +89,7 @@ export function IncomeChart({ countryData, countryCode }: IncomeChartProps) {
           <Line
             type="monotone"
             dataKey="income"
-            name="Real Disposable Income (Equivalised)"
+            name={t("Income.legend")}
             stroke="var(--color-accent)"
             strokeWidth={3}
             dot={{ r: 3 }}

@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslations } from "next-intl";
 import {
   runSimulation,
   SimulationAssumptions,
@@ -42,6 +43,8 @@ export default function AssetPerformanceSimulationCard({
   );
   const [isAdvancedVisible, setIsAdvancedVisible] = useState(false);
 
+  const t = useTranslations("AssetPerformanceSimulation");
+
   const simulationResult: SimulationResult = useMemo(() => {
     return runSimulation({
       downPayment,
@@ -74,23 +77,27 @@ export default function AssetPerformanceSimulationCard({
     }
   };
 
+  const assumptionLabels: { [key in keyof SimulationAssumptions]: string } = {
+    annualHomePriceGrowth: t("assumption_annualHomePriceGrowth"),
+    annualStockMarketReturn: t("assumption_annualStockMarketReturn"),
+    annualRentIncrease: t("assumption_annualRentIncrease"),
+    annualOwnershipCostRate: t("assumption_annualOwnershipCostRate"),
+    initialRentalYield: t("assumption_initialRentalYield"),
+  };
+
   return (
     <div className="pt-8">
-      <p className="text-sm text-[--color-text] mb-6">
-        This simulation projects potential long-term outcomes for buying a home
-        versus renting and investing your savings. The numbers are based on
-        historical averages and simplifying assumptions <strong>not</strong>{" "}
-        predictions. Markets, housing prices, and personal circumstances can
-        change in ways no model can fully anticipate.{" "}
-        <strong>Nobody can predict the future.</strong>
-      </p>
+      <p
+        className="text-sm text-[--color-text] mb-6"
+        dangerouslySetInnerHTML={{ __html: t.raw("disclaimer") }}
+      />
 
       {/* --- User Controls --- */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
         {/* Down payment */}
         <div>
           <label className="block text-lg font-semibold text-[--color-label] mb-2">
-            Your Down Payment:{" "}
+            {t("downPaymentLabel")}
             <strong className="text-[--color-accent]">
               {formatCurrency(downPayment, currency)}
             </strong>
@@ -109,9 +116,10 @@ export default function AssetPerformanceSimulationCard({
         {/* Time horizon */}
         <div>
           <label className="block text-lg font-semibold text-[--color-label] mb-2">
-            Time Horizon:{" "}
+            {t("timeHorizonLabel")}
             <strong className="text-[--color-accent]">
-              {yearsToSimulate} Years
+              {yearsToSimulate}
+              {t("years")}
             </strong>
           </label>
           <div className="flex gap-2 flex-wrap">
@@ -137,11 +145,11 @@ export default function AssetPerformanceSimulationCard({
         {/* Homeowner */}
         <div className="p-4">
           <h3 className="text-2xl font-bold text-[--color-title] mb-3">
-            🏠 Homeowner Path
+            {t("homeownerPathTitle")}
           </h3>
           <div className="space-y-2 text-base">
             <p>
-              Final Home Value:{" "}
+              {t("finalHomeValue")}
               <strong className="text-[--color-label]">
                 {formatCurrency(
                   simulationResult.homeowner.finalHomeValue,
@@ -150,7 +158,7 @@ export default function AssetPerformanceSimulationCard({
               </strong>
             </p>
             <p>
-              Remaining Mortgage:{" "}
+              {t("remainingMortgage")}
               <strong className="text-[--color-label]">
                 {formatCurrency(
                   simulationResult.homeowner.remainingMortgage,
@@ -159,7 +167,7 @@ export default function AssetPerformanceSimulationCard({
               </strong>
             </p>
             <p className="text-xl pt-2">
-              Your Home Equity:{" "}
+              {t("homeEquity")}
               <strong className="text-[--color-accent] text-2xl">
                 {formatCurrency(homeownerWealth, currency)}
               </strong>
@@ -170,11 +178,11 @@ export default function AssetPerformanceSimulationCard({
         {/* Renter */}
         <div className="p-4">
           <h3 className="text-2xl font-bold text-[--color-title] mb-3">
-            📈 Renter & Investor Path
+            {t("renterPathTitle")}
           </h3>
           <div className="space-y-2 text-base">
             <p>
-              Initial Investment:{" "}
+              {t("initialInvestment")}
               <strong className="text-[--color-label]">
                 {formatCurrency(
                   simulationResult.renter.initialInvestment,
@@ -183,7 +191,7 @@ export default function AssetPerformanceSimulationCard({
               </strong>
             </p>
             <p>
-              Added Monthly Savings:{" "}
+              {t("addedMonthlySavings")}
               <strong className="text-[--color-label]">
                 {formatCurrency(
                   simulationResult.renter.extraMonthlyInvestment,
@@ -192,7 +200,7 @@ export default function AssetPerformanceSimulationCard({
               </strong>
             </p>
             <p className="text-xl pt-2">
-              Final Investment Value:{" "}
+              {t("finalInvestmentValue")}
               <strong className="text-[--color-accent] text-2xl">
                 {formatCurrency(renterWealth, currency)}
               </strong>
@@ -204,25 +212,26 @@ export default function AssetPerformanceSimulationCard({
       {/* --- Verdict --- */}
       <div className="mt-6 p-4 text-center rounded-lg bg-[#061522] border border-[--color-border]">
         <h3 className="text-xl font-semibold text-[--color-title]">
-          After {yearsToSimulate} years...
+          {t("verdictTitle", { yearsToSimulate })}
         </h3>
         <p className="text-lg text-[--color-text] mt-1">
-          In this scenario,{" "}
-          <strong className="text-[--color-label]">
-            {buyingIsBetter ? "buying a home" : "renting and investing"}
-          </strong>{" "}
-          could leave you wealthier by{" "}
-          <strong className="text-[--color-accent]">
-            {formatCurrency(difference, currency)}
-          </strong>
-          .
+          {t.rich("verdictContent", {
+            choice: t(buyingIsBetter ? "verdictChoice_buy" : "verdictChoice_rent"),
+            difference: formatCurrency(difference, currency),
+            strong_label: (chunks) => (
+              <strong className="text-[--color-label]">{chunks}</strong>
+            ),
+            strong_accent: (chunks) => (
+              <strong className="text-[--color-accent]">{chunks}</strong>
+            ),
+          })}
         </p>
       </div>
 
       {/* --- Sensitivity Chart (stacked below verdict) --- */}
       <div className="mt-6 p-4 rounded-lg bg-[#061522] border border-[--color-border]">
         <h3 className="text-lg font-semibold text-[--color-title] mb-2">
-          Sensitivity: Stock Market Return
+          {t("sensitivityTitle")}
         </h3>
         <SensitivityCurve
           currentHomePrice={currentHomePrice}
@@ -240,7 +249,10 @@ export default function AssetPerformanceSimulationCard({
           onClick={() => setIsAdvancedVisible(!isAdvancedVisible)}
           className="text-sm text-[--color-label] underline hover:text-[--color-accent] bg-transparent border-none p-0"
         >
-          {isAdvancedVisible ? "Hide" : "Show"} Advanced Assumptions
+          {isAdvancedVisible
+            ? t("advancedAssumptionsToggle_hide")
+            : t("advancedAssumptionsToggle_show")}
+          {t("advancedAssumptionsToggle_label")}
         </button>
 
         <AnimatePresence>
@@ -252,12 +264,16 @@ export default function AssetPerformanceSimulationCard({
               className="overflow-hidden mt-4"
             >
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 rounded-lg bg-[#061522] border border-[--color-border]">
-                {Object.entries(assumptions).map(([key, value]) => (
+                {(
+                  Object.keys(assumptions) as Array<
+                    keyof SimulationAssumptions
+                  >
+                ).map((key) => (
                   <div key={key}>
                     <label className="block text-sm font-semibold text-[--color-label] capitalize">
-                      {key.replace(/([A-Z])/g, " $1")} (
+                      {assumptionLabels[key]} (
                       <strong className="text-[--color-accent]">
-                        {value}%
+                        {assumptions[key]}%
                       </strong>
                       )
                     </label>
@@ -266,12 +282,9 @@ export default function AssetPerformanceSimulationCard({
                       min={key === "annualStockMarketReturn" ? 1 : 0}
                       max={12}
                       step={0.1}
-                      value={value}
+                      value={assumptions[key]}
                       onChange={(e) =>
-                        handleAssumptionChange(
-                          key as keyof SimulationAssumptions,
-                          e.target.value,
-                        )
+                        handleAssumptionChange(key, e.target.value)
                       }
                       className="w-full"
                     />
@@ -288,7 +301,7 @@ export default function AssetPerformanceSimulationCard({
                     }
                     className="px-4 py-2 rounded-md border border-[--color-border] text-[--color-label] hover:bg-[--color-border] transition"
                   >
-                    Reset to Defaults
+                    {t("resetButton")}
                   </button>
                 </div>
               </div>
