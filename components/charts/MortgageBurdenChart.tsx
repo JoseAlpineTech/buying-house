@@ -123,7 +123,8 @@ export function MortgageBurdenChart({
                 position="right"
                 fill="var(--color-accent)"
                 fontSize={12}
-                dx={10}
+                dy={-10}
+                dx={-90}
               />
             </ReferenceLine>
           )}

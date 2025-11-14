@@ -21,6 +21,11 @@
   --color-accent: var(--color-accent);
 }
 
+html {
+  font-size: 19px;
+  /* Base font size: adjust this value to scale the entire app */
+}
+
 body {
   color: var(--color-text);
   background-color: var(--color-bg);
