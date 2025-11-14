@@ -3,19 +3,18 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { countryCodeMap } from "../../data/countryCodes";
+import { countryDisplayNames } from "../../data/countryDisplayNames";
 
 interface FloatingFlagProps {
   selectedCountry: string;
   setSelectedCountry: (country: string) => void;
   countries: string[];
-  countryDisplayNames: { [key: string]: string };
 }
 
 export default function FloatingFlag({
   selectedCountry,
   setSelectedCountry,
   countries,
-  countryDisplayNames,
 }: FloatingFlagProps) {
   const [isOpen, setIsOpen] = useState(false);
   const twoLetterCode = countryCodeMap[selectedCountry] ?? "";
@@ -55,10 +54,18 @@ export default function FloatingFlag({
         <span className="text-sm text-[--color-label]">Viewing:</span>
         <span
           className={`fi fi-${twoLetterCode} w-8 h-5 rounded-sm`}
-          title={`Flag of ${countryDisplayNames[selectedCountry]}`}
+          title={`Flag of ${
+            countryDisplayNames[
+              selectedCountry as keyof typeof countryDisplayNames
+            ]
+          }`}
         />
         <span className="font-semibold text-[--color-title] pr-2">
-          {countryDisplayNames[selectedCountry]}
+          {
+            countryDisplayNames[
+              selectedCountry as keyof typeof countryDisplayNames
+            ]
+          }
         </span>
       </button>
 
@@ -69,7 +76,7 @@ export default function FloatingFlag({
             animate={{ opacity: 1, y: 0, height: "auto" }}
             exit={{ opacity: 0, y: -10, height: 0 }}
             transition={{ type: "spring", stiffness: 400, damping: 30 }}
-            className="mt-2 w-64 max-h-80 overflow-y-auto rounded-lg bg-[--color-card] border border-[--color-border] shadow-2xl"
+            className="mt-2 w-64 max-h-80 overflow-y-auto rounded-lg border border-[--color-border] shadow-2xl bg-[--color-card]/95 backdrop-blur-lg"
           >
             <ul className="p-2">
               {countries.map((code) => (
@@ -83,10 +90,12 @@ export default function FloatingFlag({
                     }`}
                   >
                     <span
-                      className={`fi fi-${countryCodeMap[code] ?? ""} w-6 h-4 rounded-sm`}
+                      className={`fi fi-${countryCodeMap[code as keyof typeof countryCodeMap] ?? ""} w-6 h-4 rounded-sm`}
                     />
                     <span className="font-semibold">
-                      {countryDisplayNames[code] ?? code}
+                      {countryDisplayNames[
+                        code as keyof typeof countryDisplayNames
+                      ] ?? code}
                     </span>
                   </button>
                 </li>

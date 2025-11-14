@@ -37,50 +37,56 @@ export default function Snapshot({
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Representative House Price */}
-        <div>
+        <div className="p-4 rounded-lg bg-[#061522] border border-[--color-border]">
           <h3 className="metric-label">Est. Real House Price</h3>
-          <p className="text-[--color-label] text-xl mt-1">
-            {housePrice > 0
-              ? new Intl.NumberFormat("en-US", {
-                  style: "currency",
-                  currency: currency,
-                  maximumFractionDigits: 0,
-                  minimumFractionDigits: 0,
-                }).format(housePrice)
-              : "N/A"}
+          <p className="text-xl mt-1">
+            <strong>
+              {housePrice > 0
+                ? new Intl.NumberFormat("en-US", {
+                    style: "currency",
+                    currency: currency,
+                    maximumFractionDigits: 0,
+                    minimumFractionDigits: 0,
+                  }).format(housePrice)
+                : "N/A"}
+            </strong>
           </p>
           <small>In local currency, inflation-adjusted.</small>
         </div>
 
         {/* Price-to-Income Ratio */}
-        <div>
+        <div className="p-4 rounded-lg bg-[#061522] border border-[--color-border]">
           <h3 className="metric-label">Real Price-to-Income</h3>
-          <p className="text-[--color-label] text-xl mt-1">
-            {pti > 0 ? pti.toFixed(1) : "N/A"}
+          <p className="text-xl mt-1">
+            <strong>{pti > 0 ? pti.toFixed(1) : "N/A"}</strong>
           </p>
           <small>Years of income to buy a home.</small>
         </div>
 
         {/* Mortgage Burden */}
-        <div>
+        <div className="p-4 rounded-lg bg-[#061522] border border-[--color-border]">
           <h3 className="metric-label">Mortgage Burden</h3>
-          <p className="text-[--color-label] text-xl mt-1">
-            {mps > 0 && isFinite(mps) ? `${mps.toFixed(1)}%` : "N/A"}
+          <p className="text-xl mt-1">
+            <strong>
+              {mps > 0 && isFinite(mps) ? `${mps.toFixed(1)}%` : "N/A"}
+            </strong>
           </p>
           <small>% of real income for mortgage.</small>
         </div>
 
         {/* Years to Save */}
-        <div>
+        <div className="p-4 rounded-lg bg-[#061522] border border-[--color-border]">
           <h3 className="metric-label">Years to Down Payment</h3>
-          <p className="text-[--color-label] text-xl mt-1">
-            {ydp > 0 && isFinite(ydp) ? `${ydp.toFixed(1)}` : "N/A"}
+          <p className="text-xl mt-1">
+            <strong>
+              {ydp > 0 && isFinite(ydp) ? `${ydp.toFixed(1)}` : "N/A"}
+            </strong>
           </p>
           <small>For an average homebuyer profile.</small>
         </div>
       </div>
 
-      <div className="mt-6 border border-[--color-border] rounded-lg bg-[--color-bg] p-6">
+      <div className="mt-6 border border-[--color-border] rounded-lg bg-[#061522] p-6">
         <h3 className="text-2xl font-semibold text-[--color-label] mb-2">
           Insight Summary
         </h3>
