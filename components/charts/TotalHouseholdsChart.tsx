@@ -61,7 +61,8 @@ export function TotalHouseholdsChart({
           </XAxis>
           <YAxis stroke="var(--color-text)" tickFormatter={formatNumber}>
             <Label
-              value="Number of Households"
+              value="Count"
+              offset={-20}
               angle={-90}
               position="insideLeft"
               fill="var(--color-text)"

@@ -13,6 +13,12 @@ interface SnapshotProps {
   currency: string;
 }
 
+const ExplanationCard = ({ children }: { children: React.ReactNode }) => (
+  <div className="p-4 rounded-lg bg-[#061522] border border-[--color-border] text-sm text-[--color-text] h-full">
+    {children}
+  </div>
+);
+
 export default function Snapshot({
   startYear,
   endYear,
@@ -36,7 +42,7 @@ export default function Snapshot({
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {/* Representative House Price */}
+        {/* Metric Row */}
         <div className="p-4 rounded-lg bg-[#061522] border border-[--color-border]">
           <h3 className="metric-label">Est. Real House Price</h3>
           <p className="text-xl mt-1">
@@ -53,8 +59,6 @@ export default function Snapshot({
           </p>
           <small>In local currency, inflation-adjusted.</small>
         </div>
-
-        {/* Price-to-Income Ratio */}
         <div className="p-4 rounded-lg bg-[#061522] border border-[--color-border]">
           <h3 className="metric-label">Real Price-to-Income</h3>
           <p className="text-xl mt-1">
@@ -62,8 +66,6 @@ export default function Snapshot({
           </p>
           <small>Years of income to buy a home.</small>
         </div>
-
-        {/* Mortgage Burden */}
         <div className="p-4 rounded-lg bg-[#061522] border border-[--color-border]">
           <h3 className="metric-label">Mortgage Burden</h3>
           <p className="text-xl mt-1">
@@ -73,8 +75,6 @@ export default function Snapshot({
           </p>
           <small>% of real income for mortgage.</small>
         </div>
-
-        {/* Years to Save */}
         <div className="p-4 rounded-lg bg-[#061522] border border-[--color-border]">
           <h3 className="metric-label">Years to Down Payment</h3>
           <p className="text-xl mt-1">
@@ -84,6 +84,27 @@ export default function Snapshot({
           </p>
           <small>For an average homebuyer profile.</small>
         </div>
+
+        {/* Explanation Row */}
+        <ExplanationCard>
+          The inflation-adjusted price of a typical home. This shows the real
+          cost of housing, removing the effects of general price inflation.
+        </ExplanationCard>
+        <ExplanationCard>
+          A ratio of <strong>{pti > 0 ? pti.toFixed(1) : "N/A"}</strong> means
+          it takes that many years of gross household income to buy a home. A
+          higher number is less affordable.
+        </ExplanationCard>
+        <ExplanationCard>
+          The percentage of gross income needed for mortgage payments at current
+          rates. The <strong>30%</strong> level is a common affordability
+          benchmark.
+        </ExplanationCard>
+        <ExplanationCard>
+          The estimated time to save a <strong>10%</strong> down payment,
+          assuming a household saves <strong>10%</strong> of its gross annual
+          income.
+        </ExplanationCard>
       </div>
 
       <div className="mt-6 border border-[--color-border] rounded-lg bg-[#061522] p-6">

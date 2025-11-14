@@ -10,7 +10,7 @@ import {
 import { DEFAULT_SIMULATION_ASSUMPTIONS } from "../../lib/simulationConstants";
 import SensitivityCurve from "../charts/SensitivityCurve";
 
-interface SimulationCardProps {
+interface AssetPerformanceSimulationCardProps {
   currentHomePrice: number;
   mortgageRate: number;
   currency: string;
@@ -30,13 +30,13 @@ const formatCurrency = (
   }).format(value);
 };
 
-export default function SimulationCard({
+export default function AssetPerformanceSimulationCard({
   currentHomePrice,
   mortgageRate,
   currency,
-}: SimulationCardProps) {
+}: AssetPerformanceSimulationCardProps) {
   const [downPayment, setDownPayment] = useState(currentHomePrice * 0.2);
-  const [yearsToSimulate, setYearsToSimulate] = useState(25); // typical horizon
+  const [yearsToSimulate, setYearsToSimulate] = useState(25);
   const [assumptions, setAssumptions] = useState<SimulationAssumptions>(
     DEFAULT_SIMULATION_ASSUMPTIONS,
   );
@@ -75,14 +75,14 @@ export default function SimulationCard({
   };
 
   return (
-    <section className="relative rounded-xl border border-[--color-border] bg-[--color-card] p-8 mt-12">
-      <h2 className="text-4xl font-bold text-[--color-title] mb-2">
-        Your Financial Future: Homeowner vs. Renter
-      </h2>
-
-      {/* Updated description with disclaimer */}
+    <div className="pt-8">
       <p className="text-sm text-[--color-text] mb-6">
-        This simulation projects potential long-term outcomes for buying a home versus renting and investing your savings. The numbers are based on historical averages and simplifying assumptions <strong>not</strong>{" "} predictions. Markets, housing prices, and personal circumstances can change in ways no model can fully anticipate. <strong>Nobody can predict the future.</strong>
+        This simulation projects potential long-term outcomes for buying a home
+        versus renting and investing your savings. The numbers are based on
+        historical averages and simplifying assumptions <strong>not</strong>{" "}
+        predictions. Markets, housing prices, and personal circumstances can
+        change in ways no model can fully anticipate.{" "}
+        <strong>Nobody can predict the future.</strong>
       </p>
 
       {/* --- User Controls --- */}
@@ -256,7 +256,9 @@ export default function SimulationCard({
                   <div key={key}>
                     <label className="block text-sm font-semibold text-[--color-label] capitalize">
                       {key.replace(/([A-Z])/g, " $1")} (
-                      <strong className="text-[--color-accent]">{value}%</strong>
+                      <strong className="text-[--color-accent]">
+                        {value}%
+                      </strong>
                       )
                     </label>
                     <input
@@ -280,7 +282,9 @@ export default function SimulationCard({
                 <div className="col-span-full flex justify-end pt-4">
                   <button
                     onClick={() =>
-                      setAssumptions({ ...DEFAULT_SIMULATION_ASSUMPTIONS })
+                      setAssumptions({
+                        ...DEFAULT_SIMULATION_ASSUMPTIONS,
+                      })
                     }
                     className="px-4 py-2 rounded-md border border-[--color-border] text-[--color-label] hover:bg-[--color-border] transition"
                   >
@@ -292,6 +296,6 @@ export default function SimulationCard({
           )}
         </AnimatePresence>
       </div>
-    </section>
+    </div>
   );
 }

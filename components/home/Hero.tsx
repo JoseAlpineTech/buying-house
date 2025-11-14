@@ -11,7 +11,7 @@ export default function Hero() {
         Housing Affordability
       </h1>
       <p className="mt-6 text-[--color-label] text-xl max-w-3xl mx-auto">
-        How has the ability to buy a home changed in time? Explore
+        How has the ability to buy a home changed over time? Explore
         inflation-adjusted prices, incomes, and mortgage costs across OECD
         countries.
       </p>

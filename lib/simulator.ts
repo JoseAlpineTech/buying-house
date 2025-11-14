@@ -36,6 +36,31 @@ export interface SimulationResult {
 }
 
 /**
+ * Calculates the future value of a present sum.
+ */
+function futureValue(
+  presentValue: number,
+  monthlyRate: number,
+  months: number,
+): number {
+  return presentValue * Math.pow(1 + monthlyRate, months);
+}
+
+/**
+ * Calculates the future value of a series of regular payments (annuity).
+ */
+function futureValueOfAnnuity(
+  payment: number,
+  monthlyRate: number,
+  months: number,
+): number {
+  if (monthlyRate === 0) {
+    return payment * months;
+  }
+  return payment * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate);
+}
+
+/**
  * Calculates the remaining loan balance after a certain number of payments.
  */
 function calculateRemainingMortgageBalance(
@@ -183,5 +208,80 @@ export function runSimulation(params: SimulationParams): SimulationResult {
   return {
     homeowner: homeownerResult,
     renter: renterResult,
+  };
+}
+
+// --- NEW: Personal Outcome Simulation ---
+
+export interface PersonalOutcomeParams {
+  customIncome: number;
+  savingsRate: number; // as a percentage, e.g., 15
+  downPayment: number;
+  yearsToSimulate: number;
+  currentHomePrice: number;
+  mortgageRate: number;
+  mortgageTerm: number;
+  assumptions: SimulationAssumptions;
+}
+
+export interface PersonalOutcomeResult {
+  homeownerNetWorth: number;
+  renterNetWorth: number;
+}
+
+/**
+ * Runs a simulation based on a user's income and savings rate.
+ * This compares the net worth of a homeowner (equity) vs. a renter (investments).
+ */
+export function runPersonalOutcomeSimulation(
+  params: PersonalOutcomeParams,
+): PersonalOutcomeResult {
+  const {
+    customIncome,
+    savingsRate,
+    downPayment,
+    yearsToSimulate,
+    currentHomePrice,
+    mortgageRate,
+    mortgageTerm,
+    assumptions,
+  } = params;
+
+  // --- 1. Renter's Path ---
+  // The renter invests their down payment plus a percentage of their income every month.
+  const monthlySavings = (customIncome * (savingsRate / 100)) / 12;
+  const monthlyMarketReturn = assumptions.annualStockMarketReturn / 100 / 12;
+  const numberOfMonths = yearsToSimulate * 12;
+
+  const fvOfDownPayment = futureValue(
+    downPayment,
+    monthlyMarketReturn,
+    numberOfMonths,
+  );
+  const fvOfSavings = futureValueOfAnnuity(
+    monthlySavings,
+    monthlyMarketReturn,
+    numberOfMonths,
+  );
+  const renterNetWorth = fvOfDownPayment + fvOfSavings;
+
+  // --- 2. Homeowner's Path ---
+  // The homeowner's net worth is primarily their home equity. This model assumes
+  // their savings are directed towards the mortgage and homeownership costs.
+  const principal = currentHomePrice - downPayment;
+  const finalHomeValue =
+    currentHomePrice *
+    Math.pow(1 + assumptions.annualHomePriceGrowth / 100, yearsToSimulate);
+  const remainingMortgage = calculateRemainingMortgageBalance(
+    principal,
+    mortgageRate,
+    mortgageTerm,
+    numberOfMonths,
+  );
+  const homeownerNetWorth = finalHomeValue - remainingMortgage;
+
+  return {
+    homeownerNetWorth,
+    renterNetWorth,
   };
 }

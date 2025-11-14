@@ -16,7 +16,8 @@ import Hero from "../components/home/Hero";
 import Snapshot from "../components/home/Snapshot";
 import Footer from "../components/home/Footer";
 import SectionCard from "../components/ui/SectionCard";
-import SimulationCard from "../components/home/SimulationCard";
+import AssetPerformanceSimulationCard from "../components/home/AssetPerformanceSimulationCard";
+import { PersonalOutcomeSimulationCard } from "../components/home/PersonalOutcomeSimulationCard";
 import CollapsibleSectionCard from "../components/ui/CollapsibleSectionCard";
 import ChartCard from "../components/home/ChartCard";
 import ComparisonTable, {
@@ -387,11 +388,28 @@ export default function Home() {
         />
       </CollapsibleSectionCard>
 
-      <SimulationCard
-        currentHomePrice={housePrice}
-        mortgageRate={latestMortgageRate}
-        currency={currency.code}
-      />
+      <CollapsibleSectionCard
+        title="Asset Performance: Homeowner vs. Renter"
+        subtitle="Compares which choice—buying or renting—could grow more wealth over time."
+      >
+        <AssetPerformanceSimulationCard
+          currentHomePrice={housePrice}
+          mortgageRate={latestMortgageRate}
+          currency={currency.code}
+        />
+      </CollapsibleSectionCard>
+
+      <CollapsibleSectionCard
+        title="Personal Outcome Simulation"
+        subtitle="Project your net worth based on your income"
+      >
+        <PersonalOutcomeSimulationCard
+          defaultIncome={income}
+          currentHomePrice={housePrice}
+          mortgageRate={latestMortgageRate}
+          currency={currency.code}
+        />
+      </CollapsibleSectionCard>
 
       <Footer
         onMethodologyOpen={() => setIsMethodologyModalOpen(true)}
