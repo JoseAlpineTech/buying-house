@@ -132,7 +132,7 @@ export function MortgageBurdenChart({
             type="monotone"
             dataKey="mps"
             name={t("MortgageBurden.legend")}
-            stroke={isMini ? "#ffb703" : "#f97316"}
+            stroke="var(--color-accent)"
             strokeWidth={3}
             dot={!isMini}
           />

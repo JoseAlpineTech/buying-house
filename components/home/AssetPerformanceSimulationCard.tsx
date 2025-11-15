@@ -141,7 +141,7 @@ export default function AssetPerformanceSimulationCard({
       </div>
 
       {/* --- Results --- */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 rounded-lg bg-[#061522] border border-[--color-border]">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 rounded-lg bg-[--color-card] border border-[--color-border]">
         {/* Homeowner */}
         <div className="p-4">
           <h3 className="text-2xl font-bold text-[--color-title] mb-3">
@@ -210,7 +210,7 @@ export default function AssetPerformanceSimulationCard({
       </div>
 
       {/* --- Verdict --- */}
-      <div className="mt-6 p-4 text-center rounded-lg bg-[#061522] border border-[--color-border]">
+      <div className="mt-6 p-4 text-center rounded-lg bg-[--color-card] border border-[--color-border]">
         <h3 className="text-xl font-semibold text-[--color-title]">
           {t("verdictTitle", { yearsToSimulate })}
         </h3>
@@ -229,7 +229,7 @@ export default function AssetPerformanceSimulationCard({
       </div>
 
       {/* --- Sensitivity Chart (stacked below verdict) --- */}
-      <div className="mt-6 p-4 rounded-lg bg-[#061522] border border-[--color-border]">
+      <div className="mt-6 p-4 rounded-lg bg-[--color-card] border border-[--color-border]">
         <h3 className="text-lg font-semibold text-[--color-title] mb-2">
           {t("sensitivityTitle")}
         </h3>
@@ -263,7 +263,7 @@ export default function AssetPerformanceSimulationCard({
               exit={{ height: 0, opacity: 0 }}
               className="overflow-hidden mt-4"
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 rounded-lg bg-[#061522] border border-[--color-border]">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 rounded-lg bg-[--color-card] border border-[--color-border]">
                 {(
                   Object.keys(assumptions) as Array<
                     keyof SimulationAssumptions

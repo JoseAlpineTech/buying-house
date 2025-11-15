@@ -94,8 +94,8 @@ export default function SensitivityCurve({
             <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
 
             {/* Shaded regions */}
-            <ReferenceArea y1={0} y2={yMax} fill="rgba(255,80,80,0.12)" />
-            <ReferenceArea y1={yMin} y2={0} fill="rgba(80,200,120,0.12)" />
+            <ReferenceArea y1={0} y2={yMax} fill="rgba(255, 80, 249, 0.2)" />
+            <ReferenceArea y1={yMin} y2={0} fill="rgba(51, 184, 95, 0.2)" />
 
             <ReferenceLine
               y={0}
@@ -144,7 +144,7 @@ export default function SensitivityCurve({
               label={{
                 value: t("rentingWins"),
                 position: "insideLeft",
-                fill: "rgba(255,120,120,0.95)",
+                fill: "rgba(120, 194, 255, 0.95)",
                 fontSize: 12,
                 offset: 10,
               }}
@@ -156,7 +156,7 @@ export default function SensitivityCurve({
               label={{
                 value: t("buyingWins"),
                 position: "insideLeft",
-                fill: "rgba(120,255,180,0.95)",
+                fill: "rgba(51, 166, 102, 0.95)",
                 fontSize: 12,
                 offset: 10,
               }}

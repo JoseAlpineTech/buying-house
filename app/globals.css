@@ -11,6 +11,16 @@
   --color-accent: #ffb703;
 }
 
+html.light {
+  --color-bg: #ffffff;
+  --color-card: #fffed0;
+  --color-border: #043915;
+  --color-title: #043915;
+  --color-label: #596946;
+  --color-text: #1e2f18;
+  --color-accent: #31500b;
+}
+
 @theme inline {
   --color-bg: var(--color-bg);
   --color-card: var(--color-card);
@@ -23,7 +33,6 @@
 
 html {
   font-size: 19px;
-  /* Base font size: adjust this value to scale the entire app */
 }
 
 body {
@@ -60,7 +69,7 @@ h2 {
 h3,
 .metric-label,
 .chart-title {
-  color: var(--color-label);
+  color: var(--color-title);
   font-size: 1.5rem;
   font-weight: 600;
   letter-spacing: 0.3px;
@@ -154,6 +163,6 @@ button {
 }
 
 button:hover {
-  background-color: var(--color-border);
+  background-color: var(--color-card);
   color: var(--color-title);
 }

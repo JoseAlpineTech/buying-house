@@ -86,7 +86,7 @@ export function PriceToRentChart({ countryData }: PriceToRentChartProps) {
             type="monotone"
             dataKey="ptr"
             name={t("PriceToRent.legend")}
-            stroke="#16a34a"
+            stroke="var(--color-accent)"
             strokeWidth={3}
             dot={{ r: 3 }}
           />

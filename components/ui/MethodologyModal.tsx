@@ -19,7 +19,7 @@ export function MethodologyModal({
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-3xl rounded-xl border border-[--color-border] bg-[#0d2538] p-8 shadow-lg text-[--color-text] max-h-[90vh] overflow-y-auto"
+        className="relative w-full max-w-3xl rounded-xl border border-[--color-border] bg-[--color-card] p-8 shadow-lg text-[--color-text] max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -62,7 +62,7 @@ export function MethodologyModal({
                 ),
               })}
             </p>
-            <div className="mt-4 space-y-3 p-4 border border-[--color-border] rounded-lg bg-[#061522]">
+            <div className="mt-4 space-y-3 p-4 border border-[--color-border] rounded-lg bg-[--color-card]">
               <div>
                 <h4 className="font-semibold text-[--color-title]">
                   {t("primarySources.housePrices.title")}
@@ -97,7 +97,7 @@ export function MethodologyModal({
             <p
               dangerouslySetInnerHTML={{ __html: t.raw("seriesExplained.p1") }}
             />
-            <div className="mt-2 space-y-4 p-4 border border-[--color-border] rounded-lg bg-[#061522]">
+            <div className="mt-2 space-y-4 p-4 border border-[--color-border] rounded-lg bg-[--color-card]">
               <div>
                 <h4 className="font-semibold text-[--color-label]">
                   {t("seriesExplained.realIncome.title")}

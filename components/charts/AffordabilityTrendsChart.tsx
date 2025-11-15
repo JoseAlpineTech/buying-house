@@ -81,7 +81,7 @@ export function AffordabilityTrendsChart({
             type="monotone"
             dataKey="pti"
             name={t("AffordabilityTrends.legend")}
-            stroke="#2563eb"
+            stroke="var(--color-accent)"
             strokeWidth={3}
             dot={{ r: 3 }}
           />

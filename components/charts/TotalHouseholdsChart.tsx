@@ -86,7 +86,7 @@ export function TotalHouseholdsChart({
             type="monotone"
             dataKey="households"
             name={t("TotalHouseholds.legend")}
-            stroke="#8b5cf6"
+            stroke="var(--color-accent)"
             strokeWidth={3}
             dot={{ r: 3 }}
           />

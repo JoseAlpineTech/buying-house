@@ -1,4 +1,4 @@
-"use a client";
+"use client";
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -26,7 +26,6 @@ export default function FloatingFlag({
       selectedCountry as keyof typeof countryDisplayNames
     ] ?? selectedCountry;
 
-  // Close dropdown on outside click
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -40,7 +39,7 @@ export default function FloatingFlag({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [wrapperRef]);
+  }, []);
 
   const handleCountrySelect = (countryCode: string) => {
     setSelectedCountry(countryCode);
@@ -50,14 +49,16 @@ export default function FloatingFlag({
   return (
     <div
       ref={wrapperRef}
-      className="fixed top-6 right-6 z-50 flex flex-col items-end"
+      className="relative flex flex-col items-end"
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-3 p-2 rounded-lg bg-[--color-card] border border-[--color-border] shadow-2xl hover:bg-[--color-border] transition-colors"
         title={t("changeCountry")}
       >
-        <span className="text-sm text-[--color-label]">{t("viewing")}</span>
+        <span className="text-sm text-[--color-label]">
+          {t("viewing")}
+        </span>
         <span
           className={`fi fi-${twoLetterCode} w-8 h-5 rounded-sm`}
           title={t("flagOf", { countryName: selectedCountryName })}
@@ -74,7 +75,7 @@ export default function FloatingFlag({
             animate={{ opacity: 1, y: 0, height: "auto" }}
             exit={{ opacity: 0, y: -10, height: 0 }}
             transition={{ type: "spring", stiffness: 400, damping: 30 }}
-            className="mt-2 w-64 max-h-80 overflow-y-auto rounded-lg border border-[--color-border] shadow-2xl bg-[--color-card]/95 backdrop-blur-lg"
+            className="absolute mt-2 w-64 max-h-80 overflow-y-auto rounded-lg border border-[--color-border] shadow-2xl bg-[--color-card]/95 backdrop-blur-lg"
           >
             <ul className="p-2">
               {countries.map((code) => (
@@ -88,7 +89,11 @@ export default function FloatingFlag({
                     }`}
                   >
                     <span
-                      className={`fi fi-${countryCodeMap[code as keyof typeof countryCodeMap] ?? ""} w-6 h-4 rounded-sm`}
+                      className={`fi fi-${
+                        countryCodeMap[
+                          code as keyof typeof countryCodeMap
+                        ] ?? ""
+                      } w-6 h-4 rounded-sm`}
                     />
                     <span className="font-semibold">
                       {countryDisplayNames[

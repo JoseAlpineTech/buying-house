@@ -93,7 +93,7 @@ export function PersonalOutcomeSimulationCard({
   };
 
   return (
-    <div className="p-4 rounded-lg bg-[#061522] border border-[--color-border]">
+    <div className="p-4 rounded-lg bg-[--color-card] border border-[--color-border]">
       <p
         className="text-sm text-[--color-text] mb-6"
         dangerouslySetInnerHTML={{ __html: t.raw("disclaimer") }}
@@ -177,7 +177,7 @@ export function PersonalOutcomeSimulationCard({
       </div>
 
       {/* --- Results --- */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 rounded-lg bg-[#061522] border border-[--color-border]">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 rounded-lg bg-[--color-card] border border-[--color-border]">
         <div className="p-4">
           <h3 className="text-2xl font-bold text-[--color-title] mb-3">
             {t("homeownerPathTitle")}
@@ -203,7 +203,7 @@ export function PersonalOutcomeSimulationCard({
       </div>
 
       {/* --- Verdict --- */}
-      <div className="mt-6 p-4 text-center rounded-lg bg-[#061522] border border-[--color-border]">
+      <div className="mt-6 p-4 text-center rounded-lg bg-[--color-card] border border-[--color-border]">
         <h3 className="text-xl font-semibold text-[--color-title]">
           {t("verdictTitle", { yearsToSimulate })}
         </h3>
@@ -242,7 +242,7 @@ export function PersonalOutcomeSimulationCard({
               exit={{ height: 0, opacity: 0 }}
               className="overflow-hidden mt-4"
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 rounded-lg bg-[#061522] border border-[--color-border]">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 rounded-lg bg-[--color-card] border border-[--color-border]">
                 {(
                   Object.keys(assumptions) as Array<
                     keyof SimulationAssumptions

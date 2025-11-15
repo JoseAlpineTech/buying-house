@@ -33,7 +33,7 @@ export default function FloatingLanguageSelector() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [wrapperRef]);
+  }, []);
 
   const handleLanguageSelect = (lang: Language) => {
     router.push(pathname, { locale: lang.code });
@@ -43,14 +43,16 @@ export default function FloatingLanguageSelector() {
   return (
     <div
       ref={wrapperRef}
-      className="fixed top-20 right-6 z-50 flex flex-col items-end"
+      className="relative flex flex-col items-end"
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 p-2 rounded-lg bg-[--color-card] border border-[--color-border] shadow-2xl hover:bg-[--color-border] transition-colors"
         title={t("changeLanguage")}
       >
-        <span className="text-sm text-[--color-label]">{t("language")}</span>
+        <span className="text-sm text-[--color-label]">
+          {t("language")}
+        </span>
         <span className="font-semibold text-[--color-title] pr-1">
           {selectedLanguage.nativeName}
         </span>
@@ -63,7 +65,7 @@ export default function FloatingLanguageSelector() {
             animate={{ opacity: 1, y: 0, height: "auto" }}
             exit={{ opacity: 0, y: -10, height: 0 }}
             transition={{ type: "spring", stiffness: 400, damping: 30 }}
-            className="mt-2 w-48 max-h-80 overflow-y-auto rounded-lg border border-[--color-border] shadow-2xl bg-[--color-card]/95 backdrop-blur-lg"
+            className="absolute mt-2 w-48 max-h-80 overflow-y-auto rounded-lg border border-[--color-border] shadow-2xl bg-[--color-card]/95 backdrop-blur-lg"
           >
             <ul className="p-2">
               {languages.map((lang) => (

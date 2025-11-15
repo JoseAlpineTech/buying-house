@@ -109,7 +109,7 @@ export function AssumptionsModal({
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-2xl rounded-xl border border-[--color-border] bg-[#0d2538] p-8 shadow-lg text-[--color-text] max-h-[90vh] overflow-y-auto"
+        className="relative w-full max-w-2xl rounded-xl border border-[--color-border] bg-[--color-card] p-8 shadow-lg text-[--color-text] max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <button
