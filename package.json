@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "deploy:cf": "next-on-pages --source .next --platform pages",
     "start": "next start",
     "lint": "eslint"
   },
@@ -19,6 +20,7 @@
     "recharts": "^2.12.7"
   },
   "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.13.16",
     "@next/bundle-analyzer": "^14.2.5",
     "@next/eslint-plugin-next": "^16.0.3",
     "@tailwindcss/postcss": "^4",
