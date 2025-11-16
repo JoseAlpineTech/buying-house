@@ -11,7 +11,7 @@ import {
   ReferenceLine,
   Label,
   Legend,
-} from "recharts";
+} from "../../lib/recharts";
 import { useTranslations } from "next-intl";
 import { CountryData } from "../../data/affordability";
 import { calcMortgagePayment, calcMPS } from "../../lib/metrics";

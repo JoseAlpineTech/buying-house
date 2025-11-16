@@ -19,6 +19,7 @@
     "recharts": "^2.12.7"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^14.2.5",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

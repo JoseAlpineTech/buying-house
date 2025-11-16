@@ -1,17 +1,17 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
   CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
   Label,
   Legend,
-} from "recharts";
-import { useTranslations } from "next-intl";
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "../../lib/recharts";
 import { CountryData } from "../../data/affordability";
 import { getMetricsForYear } from "../../lib/insights";
 

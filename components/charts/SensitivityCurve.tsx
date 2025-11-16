@@ -10,7 +10,7 @@ import {
   CartesianGrid,
   ReferenceArea,
   ReferenceLine,
-} from "recharts";
+} from "../../lib/recharts";
 import { useTranslations } from "next-intl";
 import { runSimulation, SimulationAssumptions } from "../../lib/simulator";
 
