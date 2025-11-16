@@ -2,10 +2,6 @@
 
 import { useTranslations } from "next-intl";
 
-interface HeroProps {
-  startYear?: number;
-}
-
 export default function Hero() {
   const t = useTranslations("Hero");
   return (
