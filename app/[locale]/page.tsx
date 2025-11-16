@@ -88,11 +88,7 @@ export default function Home() {
           return null;
 
         const endYear = cData.realIncome.slice(-1)[0].year;
-        const metrics = getMetricsForYear(
-          cData,
-          endYear,
-          countryCode,
-        );
+        const metrics = getMetricsForYear(cData, endYear, countryCode);
         const rate = cData.mortgageRate.slice(-1)[0]?.value ?? 0;
 
         if (!metrics) {
@@ -105,6 +101,7 @@ export default function Home() {
             pti: null,
             mps: null,
             ydp: null,
+            year: endYear,
           };
         }
 
@@ -112,14 +109,14 @@ export default function Home() {
           rate,
           metrics.housePrice,
           ltv,
-          term,
+          term
         );
         const mps = calcMPS(metrics.income, payment);
         const ydp = calcYDP(
           metrics.housePrice,
           ltv,
           metrics.income,
-          savingsRate,
+          savingsRate
         );
 
         return {
@@ -131,10 +128,12 @@ export default function Home() {
           pti: metrics.pti,
           mps,
           ydp,
+          year: endYear,
         };
       })
       .filter((x): x is ComparisonData => x !== null);
   }, []);
+
 
   const comparisonSubtitle = useMemo(() => {
     if (!sortConfig) return "";
@@ -161,11 +160,11 @@ export default function Home() {
   ) {
     return (
       <main className="container mx-auto p-4 sm:p-6 lg:p-10">
-        <FloatingControls>
+        <FloatingControls selectedCountry={selectedCountry}>
           <FloatingFlag
             selectedCountry={selectedCountry}
-          setSelectedCountry={setSelectedCountry}
-          countries={countries}
+            setSelectedCountry={setSelectedCountry}
+            countries={countries}
           />
           <FloatingLanguageSelector />
           <FloatingThemeSelector />
@@ -261,7 +260,7 @@ export default function Home() {
 
   return (
     <main className="container mx-auto p-4 sm:p-6 lg:p-10">
-      <FloatingControls>
+      <FloatingControls selectedCountry={selectedCountry}>
         <FloatingFlag
           selectedCountry={selectedCountry}
           setSelectedCountry={setSelectedCountry}

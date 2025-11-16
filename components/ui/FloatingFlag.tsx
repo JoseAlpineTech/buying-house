@@ -47,18 +47,13 @@ export default function FloatingFlag({
   };
 
   return (
-    <div
-      ref={wrapperRef}
-      className="relative flex flex-col items-end"
-    >
+    <div ref={wrapperRef} className="relative flex flex-col items-end">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-3 p-2 rounded-lg bg-[--color-card] border border-[--color-border] shadow-2xl hover:bg-[--color-border] transition-colors"
         title={t("changeCountry")}
       >
-        <span className="text-sm text-[--color-label]">
-          {t("viewing")}
-        </span>
+        <span className="text-sm text-[--color-label]">{t("viewing")}</span>
         <span
           className={`fi fi-${twoLetterCode} w-8 h-5 rounded-sm`}
           title={t("flagOf", { countryName: selectedCountryName })}
@@ -75,7 +70,11 @@ export default function FloatingFlag({
             animate={{ opacity: 1, y: 0, height: "auto" }}
             exit={{ opacity: 0, y: -10, height: 0 }}
             transition={{ type: "spring", stiffness: 400, damping: 30 }}
-            className="absolute mt-2 w-64 max-h-80 overflow-y-auto rounded-lg border border-[--color-border] shadow-2xl bg-[--color-card]/95 backdrop-blur-lg"
+            style={{
+              backgroundColor: "var(--color-card)",
+              backdropFilter: "none",
+            }}
+            className="absolute z-50 mt-2 w-64 max-h-80 overflow-y-auto rounded-lg border border-[--color-border] shadow-2xl"
           >
             <ul className="p-2">
               {countries.map((code) => (

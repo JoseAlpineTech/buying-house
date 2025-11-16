@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { countryCodeMap } from "../../data/countryCodes";
@@ -11,6 +11,7 @@ export interface ComparisonData {
   pti: number | null;
   mps: number | null;
   ydp: number | null;
+  year: number;
 }
 
 export type SortKey = "countryName" | "pti" | "mps" | "ydp";
@@ -21,7 +22,7 @@ interface ComparisonTableProps {
   selectedCountryCode: string;
   sortConfig: { key: SortKey; direction: SortDirection } | null;
   setSortConfig: (
-    config: { key: SortKey; direction: SortDirection } | null,
+    config: { key: SortKey; direction: SortDirection } | null
   ) => void;
 }
 
@@ -42,16 +43,44 @@ export default function ComparisonTable({
   setSortConfig,
 }: ComparisonTableProps) {
   const t = useTranslations("ComparisonTable");
+  const [yearMode, setYearMode] = useState<"latest" | "common">("latest");
+
+  const commonYear = useMemo(() => {
+    const years = data
+      .map((d) => d.year)
+      .filter((y) => typeof y === "number" && !Number.isNaN(y));
+    if (!years.length) return null;
+
+    const yearCounts = years.reduce(
+      (acc, year) => {
+        acc[year] = (acc[year] || 0) + 1;
+        return acc;
+      },
+      {} as Record<number, number>
+    );
+
+    const mostCommonYear = Object.keys(yearCounts)
+      .map(Number)
+      .reduce((a, b) => (yearCounts[a] > yearCounts[b] ? a : b));
+
+    return mostCommonYear;
+  }, [data]);
+
+  const alignedData = useMemo(() => {
+    if (yearMode === "latest" || commonYear === null) return data;
+    return data.filter((d) => d.year === commonYear);
+  }, [data, yearMode, commonYear]);
 
   const sortedData = useMemo(() => {
-    let sortableItems = [...data];
+    const rows = [...alignedData];
     if (sortConfig !== null) {
-      sortableItems.sort((a, b) => {
+      rows.sort((a, b) => {
         const aValue = a[sortConfig.key];
         const bValue = b[sortConfig.key];
 
         if (aValue === null) return 1;
         if (bValue === null) return -1;
+
         if (aValue < bValue) {
           return sortConfig.direction === "ascending" ? -1 : 1;
         }
@@ -61,8 +90,8 @@ export default function ComparisonTable({
         return 0;
       });
     }
-    return sortableItems;
-  }, [data, sortConfig]);
+    return rows;
+  }, [alignedData, sortConfig]);
 
   const requestSort = (key: SortKey) => {
     let direction: SortDirection = "ascending";
@@ -77,12 +106,21 @@ export default function ComparisonTable({
   };
 
   const headers: {
-    key: SortKey | "rank";
+    key: SortKey | "rank" | "year";
     label: string;
     isSortable: boolean;
   }[] = [
     { key: "rank", label: t("headers.rank"), isSortable: false },
     { key: "countryName", label: t("headers.country"), isSortable: true },
+    ...(yearMode === "latest"
+      ? [
+          {
+            key: "year",
+            label: t("headers.year"),
+            isSortable: false,
+          } as const,
+        ]
+      : []),
     { key: "pti", label: t("headers.pti"), isSortable: true },
     { key: "mps", label: t("headers.mps"), isSortable: true },
     { key: "ydp", label: t("headers.ydp"), isSortable: true },
@@ -90,6 +128,34 @@ export default function ComparisonTable({
 
   return (
     <div className="overflow-x-auto">
+      <div className="flex gap-4 items-center mb-4">
+        <span className="text-[--color-label] text-sm">
+          {t("alignToggle.label")}:
+        </span>
+        <button
+          onClick={() => setYearMode("latest")}
+          className={`px-3 py-1 rounded-md text-sm border ${
+            yearMode === "latest"
+              ? "bg-[--color-accent] border-[--color-accent] text-[--color-bg] font-semibold"
+              : "border-[--color-border] text-[--color-text]"
+          }`}
+        >
+          {t("alignToggle.latest")}
+        </button>
+        <button
+          onClick={() => setYearMode("common")}
+          className={`px-3 py-1 rounded-md text-sm border ${
+            yearMode === "common"
+              ? "bg-[--color-accent] border-[--color-accent] text-[--color-bg] font-semibold"
+              : "border-[--color-border] text-[--color-text]"
+          }`}
+          disabled={commonYear === null}
+        >
+          {t("alignToggle.common")}
+          {commonYear !== null && ` (${commonYear})`}
+        </button>
+      </div>
+
       <table className="w-full text-left">
         <thead>
           <tr className="border-b border-[--color-border]">
@@ -114,6 +180,7 @@ export default function ComparisonTable({
             ))}
           </tr>
         </thead>
+
         <tbody>
           {sortedData.map((item, index) => (
             <motion.tr
@@ -123,12 +190,12 @@ export default function ComparisonTable({
                   ? "bg-[--color-accent]/10 border-l-[--color-accent] shadow-[0_0_15px_-5px_var(--color-accent)]"
                   : "border-l-transparent hover:bg-[--color-border]/20"
               }`}
-              layout
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
             >
               <td className="py-2 px-4 text-[--color-label]">
                 {index + 1}
               </td>
+
               <td className="py-2 px-4 whitespace-nowrap">
                 <div className="flex items-center gap-3">
                   <span
@@ -141,14 +208,25 @@ export default function ComparisonTable({
                   </span>
                 </div>
               </td>
+
+              {yearMode === "latest" && (
+                <td className="py-2 px-4 text-[--color-label]">
+                  {typeof item.year === "number" && !Number.isNaN(item.year)
+                    ? item.year
+                    : "—"}
+                </td>
+              )}
+
               <td className="py-2 px-4">
                 {item.pti !== null ? item.pti.toFixed(1) : "N/A"}
               </td>
+
               <td className="py-2 px-4">
                 {item.mps !== null && isFinite(item.mps)
                   ? item.mps.toFixed(1)
                   : "N/A"}
               </td>
+
               <td className="py-2 px-4">
                 {item.ydp !== null && isFinite(item.ydp)
                   ? item.ydp.toFixed(1)

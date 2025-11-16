@@ -5,7 +5,7 @@
   },
   "Hero": {
     "title": "Housing Affordability",
-    "subtitle": "How has the ability to buy a home changed over time? Explore inflation-adjusted prices, incomes, and mortgage costs across OECD countries."
+    "subtitle": "How has the ability to buy a home changed over time? Explore inflation-adjusted prices, incomes, and mortgage costs across OECD countries. <strong>Click on the floating flag to view other countries</strong>"
   },
   "Errors": {
     "noData": "Sorry, complete inflation-adjusted affordability data is not available for {countryName}. Please select another country."
@@ -89,7 +89,8 @@
       "country": "Country",
       "pti": "Price-to-Income",
       "mps": "Mortgage Burden (%)",
-      "ydp": "Years to Save"
+      "ydp": "Years to Save",
+      "year": "Year"
     },
     "sortDirection": {
       "ascending": "Ascending",
@@ -100,6 +101,11 @@
       "pti": "Price-to-Income",
       "mps": "Mortgage Burden",
       "ydp": "Years to Save"
+    },
+    "alignToggle": {
+      "label": "Year mode",
+      "latest": "Show latest available year",
+      "common": "Align to common year"
     }
   },
   "Snapshot": {
@@ -148,7 +154,7 @@
     "resetButton": "Reset to Defaults"
   },
   "PersonalOutcomeSimulation": {
-    "disclaimer": "This model projects your potential net worth based on your income and savings habits. It compares a homeowner&apos;s equity against a renter&apos;s invested savings. <strong>This is a simplified, experimental model.</strong>",
+    "disclaimer": "This model projects your potential net worth based on your income and savings habits. It compares a homeowner&apos;s equity against a renter&apos;s invested savings. This is a simplified model, nobody can predict the future in a problem like this.",
     "annualIncomeLabel": "Your Annual Income: ",
     "savingsRateLabel": "Your Savings Rate: ",
     "downPaymentLabel": "Down Payment: ",

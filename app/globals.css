@@ -2,6 +2,16 @@
 @import "tailwindcss";
 
 :root {
+  --color-bg: #ffffff;
+  --color-card: #fffed0;
+  --color-border: #043915;
+  --color-title: #043915;
+  --color-label: #596946;
+  --color-text: #1e2f18;
+  --color-accent: #31500b;
+}
+
+html.dark {
   --color-bg: #061522;
   --color-card: #0d2538;
   --color-border: #1b3b5c;
@@ -11,15 +21,6 @@
   --color-accent: #ffb703;
 }
 
-html.light {
-  --color-bg: #ffffff;
-  --color-card: #fffed0;
-  --color-border: #043915;
-  --color-title: #043915;
-  --color-label: #596946;
-  --color-text: #1e2f18;
-  --color-accent: #31500b;
-}
 
 @theme inline {
   --color-bg: var(--color-bg);

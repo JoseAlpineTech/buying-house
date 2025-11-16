@@ -15,11 +15,19 @@ export function MethodologyModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[--color-bg]/80 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center"
       onClick={onClose}
     >
+      {/* Backdrop layer */}
+      <div className="absolute inset-0 bg-[--color-bg]/80 backdrop-blur-sm" />
+
+      {/* Modal panel */}
       <div
-        className="relative w-full max-w-3xl rounded-xl border border-[--color-border] bg-[--color-card] p-8 shadow-lg text-[--color-text] max-h-[90vh] overflow-y-auto"
+        style={{
+          backgroundColor: "var(--color-card)",
+          backdropFilter: "none",
+        }}
+        className="relative w-full max-w-3xl rounded-xl border border-[--color-border] p-8 shadow-lg text-[--color-text] max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -40,11 +48,13 @@ export function MethodologyModal({
             />
           </svg>
         </button>
+
         <h2 className="text-2xl font-semibold text-[--color-title] mb-4">
           {t("title")}
         </h2>
+
         <div className="space-y-4">
-          <section>
+          <div>
             <h3 className="text-lg font-semibold text-[--color-label] mb-2">
               {t("primarySources.title")}
             </h3>
@@ -62,7 +72,7 @@ export function MethodologyModal({
                 ),
               })}
             </p>
-            <div className="mt-4 space-y-3 p-4 border border-[--color-border] rounded-lg bg-[--color-card]">
+            <div className="mt-4 space-y-3 p-4 border border-[--color-border] rounded-lg">
               <div>
                 <h4 className="font-semibold text-[--color-title]">
                   {t("primarySources.housePrices.title")}
@@ -88,16 +98,18 @@ export function MethodologyModal({
                 </p>
               </div>
             </div>
-          </section>
+          </div>
 
-          <section>
+          <div>
             <h3 className="text-lg font-semibold text-[--color-label] mb-2">
               {t("seriesExplained.title")}
             </h3>
             <p
-              dangerouslySetInnerHTML={{ __html: t.raw("seriesExplained.p1") }}
+              dangerouslySetInnerHTML={{
+                __html: t.raw("seriesExplained.p1"),
+              }}
             />
-            <div className="mt-2 space-y-4 p-4 border border-[--color-border] rounded-lg bg-[--color-card]">
+            <div className="mt-2 space-y-4 p-4 border border-[--color-border] rounded-lg">
               <div>
                 <h4 className="font-semibold text-[--color-label]">
                   {t("seriesExplained.realIncome.title")}
@@ -133,7 +145,7 @@ export function MethodologyModal({
                 </p>
               </div>
             </div>
-          </section>
+          </div>
         </div>
       </div>
     </div>

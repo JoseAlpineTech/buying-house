@@ -105,11 +105,19 @@ export function AssumptionsModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[--color-bg]/80 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center"
       onClick={onClose}
     >
+      {/* Backdrop */}
+      <div className="absolute inset-0 bg-[--color-bg]/80 backdrop-blur-sm" />
+
+      {/* Modal Panel */}
       <div
-        className="relative w-full max-w-2xl rounded-xl border border-[--color-border] bg-[--color-card] p-8 shadow-lg text-[--color-text] max-h-[90vh] overflow-y-auto"
+        style={{
+          backgroundColor: "var(--color-card)",
+          backdropFilter: "none",
+        }}
+        className="relative w-full max-w-2xl rounded-xl border border-[--color-border] p-8 shadow-lg text-[--color-text] max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -130,9 +138,11 @@ export function AssumptionsModal({
             />
           </svg>
         </button>
+
         <h2 className="text-2xl font-semibold text-[--color-title] mb-4">
           {t("title", { countryName })}
         </h2>
+
         <div className="mt-6 space-y-4">
           {assumptions.map((item, index) => (
             <div
@@ -142,9 +152,12 @@ export function AssumptionsModal({
               <div className="font-semibold text-[--color-label] md:col-span-1">
                 {item.label}
               </div>
-              <div className="font-mono text-lg text-[--color-title] md:col-span-2">
-                {item.value}
+
+              {/* Highlighted figure */}
+              <div className="font-mono text-lg md:col-span-2">
+                <strong>{item.value}</strong>
               </div>
+
               <div className="mt-1 text-sm text-[--color-text] md:col-span-3 md:pl-0">
                 {item.description}
               </div>

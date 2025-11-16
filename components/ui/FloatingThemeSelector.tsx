@@ -5,25 +5,26 @@ import { Sun, Moon } from "lucide-react";
 
 export default function FloatingThemeSelector() {
   const [mounted, setMounted] = useState(false);
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState("light");
 
   useEffect(() => {
     setMounted(true);
     const stored = window.localStorage.getItem("theme");
-    if (stored === "light") {
-      document.documentElement.classList.add("light");
-      setTheme("light");
+
+    if (stored === "dark") {
+      document.documentElement.classList.add("dark");
+      setTheme("dark");
     }
   }, []);
 
   const toggleTheme = () => {
-    const next = theme === "dark" ? "light" : "dark";
+    const next = theme === "light" ? "dark" : "light";
     setTheme(next);
 
-    if (next === "light") {
-      document.documentElement.classList.add("light");
+    if (next === "dark") {
+      document.documentElement.classList.add("dark");
     } else {
-      document.documentElement.classList.remove("light");
+      document.documentElement.classList.remove("dark");
     }
 
     window.localStorage.setItem("theme", next);
@@ -38,10 +39,10 @@ export default function FloatingThemeSelector() {
         className="p-2 rounded-lg bg-[--color-card] border border-[--color-border] shadow-2xl hover:bg-[--color-border] transition-colors"
         title="Toggle theme"
       >
-        {theme === "dark" ? (
-          <Sun size={20} className="text-[--color-title]" />
-        ) : (
+        {theme === "light" ? (
           <Moon size={20} className="text-[--color-title]" />
+        ) : (
+          <Sun size={20} className="text-[--color-title]" />
         )}
       </button>
     </div>
