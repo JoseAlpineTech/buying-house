@@ -4,7 +4,7 @@ import { locales, localePrefix } from "./navigation";
 export default createMiddleware({
   defaultLocale: "en",
   locales,
-  localePrefix
+  localePrefix: "as-needed"
 });
 
 export const config = {
