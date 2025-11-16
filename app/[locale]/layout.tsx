@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Forum } from "next/font/google";
-import "../globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 
@@ -25,21 +24,21 @@ export async function generateMetadata({
   };
 }
 
-export default async function RootLayout(props: {
+export default async function LocaleLayout({
+  children,
+  params,
+}: {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
 }) {
-  const { children } = props;
-  const { locale } = await props.params;
+  const { locale } = await params;
   const messages = await getMessages({ locale });
 
   return (
-    <html lang={locale}>
-      <body className={`${instrumentSerif.className} antialiased`}>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      <div className={`${instrumentSerif.className} antialiased`}>
+        {children}
+      </div>
+    </NextIntlClientProvider>
   );
 }

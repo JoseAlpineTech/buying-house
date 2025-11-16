@@ -5,20 +5,25 @@ import { Sun, Moon } from "lucide-react";
 
 export default function FloatingThemeSelector() {
   const [mounted, setMounted] = useState(false);
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState<"light" | "dark">("light");
 
   useEffect(() => {
     setMounted(true);
-    const stored = window.localStorage.getItem("theme");
 
-    if (stored === "dark") {
+    const stored = window.localStorage.getItem("theme");
+    const initial: "light" | "dark" = stored === "dark" ? "dark" : "light";
+
+    setTheme(initial);
+
+    if (initial === "dark") {
       document.documentElement.classList.add("dark");
-      setTheme("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
     }
   }, []);
 
   const toggleTheme = () => {
-    const next = theme === "light" ? "dark" : "light";
+    const next: "light" | "dark" = theme === "light" ? "dark" : "light";
     setTheme(next);
 
     if (next === "dark") {

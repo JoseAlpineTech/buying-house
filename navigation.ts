@@ -1,14 +1,16 @@
 import { createNavigation } from "next-intl/navigation";
 
 export const locales = ["en", "es"] as const;
+export type Locale = (typeof locales)[number];
+
+export const defaultLocale: Locale = "en";
 export const localePrefix = "as-needed";
 
-// The `pathnames` object holds pairs of page paths and their translations.
-// We don't have any translated paths yet, so this is just an empty object.
 export const pathnames = {};
 
 export const { Link, redirect, usePathname, useRouter } = createNavigation({
   locales,
+  defaultLocale,
   localePrefix,
   pathnames,
 });
