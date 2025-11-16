@@ -31,6 +31,9 @@ import FloatingFlag from "../../components/ui/FloatingFlag";
 import FloatingLanguageSelector from "../../components/ui/FloatingLanguageSelector";
 import FloatingThemeSelector from "../../components/ui/FloatingThemeSelector";
 import FloatingControls from "../../components/ui/FloatingControls";
+import MobileControls from "../../components/ui/MobileControls";
+import MobileCountrySelector from "../../components/ui/MobileCountrySelector";
+import MobileLanguageSelector from "../../components/ui/MobileLanguageSelector";
 
 // Dynamically import chart components to code-split them
 const IncomeChart = dynamic(
@@ -77,6 +80,8 @@ export default function Home() {
   const [selectedCountry, setSelectedCountry] = useState<string>("CAN");
   const [isMethodologyModalOpen, setIsMethodologyModalOpen] = useState(false);
   const [isAssumptionsModalOpen, setIsAssumptionsModalOpen] = useState(false);
+  const [isCountrySelectorOpen, setIsCountrySelectorOpen] = useState(false);
+  const [isLanguageSelectorOpen, setIsLanguageSelectorOpen] = useState(false);
   const [sortConfig, setSortConfig] = useState<{
     key: SortKey;
     direction: SortDirection;
@@ -209,6 +214,23 @@ export default function Home() {
           dataEndYear={0}
           currency={currency.code}
         />
+        <MobileControls
+          onCountryClick={() => setIsCountrySelectorOpen(true)}
+          onLanguageClick={() => setIsLanguageSelectorOpen(true)}
+          countryCode={selectedCountry}
+        />
+
+        <MobileCountrySelector
+          isOpen={isCountrySelectorOpen}
+          onClose={() => setIsCountrySelectorOpen(false)}
+          countries={countries}
+          selectedCountry={selectedCountry}
+          onSelect={setSelectedCountry}
+        />
+        <MobileLanguageSelector
+          isOpen={isLanguageSelectorOpen}
+          onClose={() => setIsLanguageSelectorOpen(false)}
+        />
       </main>
     );
   }
@@ -251,7 +273,7 @@ export default function Home() {
   const endIndexValue = countryData.realHousePriceIndex.slice(-1)[0]?.value;
 
   return (
-    <main className="container mx-auto p-4 sm:p-6 lg:p-10">
+    <main className="container mx-auto p-4 sm:p-6 lg:p-10 pb-24 md:pb-10">
       <FloatingControls selectedCountry={selectedCountry}>
         <FloatingFlag
           selectedCountry={selectedCountry}
@@ -475,6 +497,23 @@ export default function Home() {
         startIndexValue={startIndexValue}
         endIndexValue={endIndexValue}
         currency={currency.code}
+      />
+      <MobileControls
+        onCountryClick={() => setIsCountrySelectorOpen(true)}
+        onLanguageClick={() => setIsLanguageSelectorOpen(true)}
+        countryCode={selectedCountry}
+      />
+
+      <MobileCountrySelector
+        isOpen={isCountrySelectorOpen}
+        onClose={() => setIsCountrySelectorOpen(false)}
+        countries={countries}
+        selectedCountry={selectedCountry}
+        onSelect={setSelectedCountry}
+      />
+      <MobileLanguageSelector
+        isOpen={isLanguageSelectorOpen}
+        onClose={() => setIsLanguageSelectorOpen(false)}
       />
     </main>
   );

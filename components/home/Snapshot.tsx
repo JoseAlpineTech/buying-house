@@ -21,6 +21,24 @@ const ExplanationCard = ({ children }: { children: React.ReactNode }) => (
   </div>
 );
 
+const MetricCard = ({
+  label,
+  value,
+  unit,
+}: {
+  label: string;
+  value: string;
+  unit: string;
+}) => (
+  <div className="p-4 rounded-lg bg-[--color-card] border border-[--color-border] h-full">
+    <h3 className="metric-label">{label}</h3>
+    <p className="text-xl mt-1">
+      <strong>{value}</strong>
+    </p>
+    <small>{unit}</small>
+  </div>
+);
+
 export default function Snapshot({
   startYear,
   endYear,
@@ -37,7 +55,7 @@ export default function Snapshot({
   return (
     <div>
       <div className="mb-6">
-        <h2 className="text-4xl font-bold text-[--color-title]">
+        <h2 className="text-3xl md:text-4xl font-bold text-[--color-title]">
           {t("title", { countryName: selectedCountryName, endYear })}
         </h2>
         <p className="text-sm text-[--color-text] mt-1">
@@ -46,67 +64,67 @@ export default function Snapshot({
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {/* Metric Row */}
-        <div className="p-4 rounded-lg bg-[--color-card] border border-[--color-border]">
-          <h3 className="metric-label">{t("housePriceLabel")}</h3>
-          <p className="text-xl mt-1">
-            <strong>
-              {housePrice > 0
+        {/* Group 1: House Price */}
+        <div className="flex flex-col gap-6">
+          <MetricCard
+            label={t("housePriceLabel")}
+            value={
+              housePrice > 0
                 ? new Intl.NumberFormat("en-US", {
                     style: "currency",
                     currency: currency,
                     maximumFractionDigits: 0,
                     minimumFractionDigits: 0,
                   }).format(housePrice)
-                : "N/A"}
-            </strong>
-          </p>
-          <small>{t("housePriceUnit")}</small>
-        </div>
-        <div className="p-4 rounded-lg bg-[--color-card] border border-[--color-border]">
-          <h3 className="metric-label">{t("ptiLabel")}</h3>
-          <p className="text-xl mt-1">
-            <strong>{pti > 0 ? pti.toFixed(1) : "N/A"}</strong>
-          </p>
-          <small>{t("ptiUnit")}</small>
-        </div>
-        <div className="p-4 rounded-lg bg-[--color-card] border border-[--color-border]">
-          <h3 className="metric-label">{t("mpsLabel")}</h3>
-          <p className="text-xl mt-1">
-            <strong>
-              {mps > 0 && isFinite(mps) ? `${mps.toFixed(1)}%` : "N/A"}
-            </strong>
-          </p>
-          <small>{t("mpsUnit")}</small>
-        </div>
-        <div className="p-4 rounded-lg bg-[--color-card] border border-[--color-border]">
-          <h3 className="metric-label">{t("ydpLabel")}</h3>
-          <p className="text-xl mt-1">
-            <strong>
-              {ydp > 0 && isFinite(ydp) ? `${ydp.toFixed(1)}` : "N/A"}
-            </strong>
-          </p>
-          <small>{t("ydpUnit")}</small>
+                : "N/A"
+            }
+            unit={t("housePriceUnit")}
+          />
+          <ExplanationCard>{t("explanation1")}</ExplanationCard>
         </div>
 
-        {/* Explanation Row */}
-        <ExplanationCard>{t("explanation1")}</ExplanationCard>
-        <ExplanationCard>
-          {t.rich("explanation2", {
-            pti: pti > 0 ? pti.toFixed(1) : "N/A",
-            strong: (chunks) => <strong>{chunks}</strong>,
-          })}
-        </ExplanationCard>
-        <ExplanationCard>
-          {t.rich("explanation3", {
-            strong: (chunks) => <strong>{chunks}</strong>,
-          })}
-        </ExplanationCard>
-        <ExplanationCard>
-          {t.rich("explanation4", {
-            strong: (chunks) => <strong>{chunks}</strong>,
-          })}
-        </ExplanationCard>
+        {/* Group 2: PTI */}
+        <div className="flex flex-col gap-6">
+          <MetricCard
+            label={t("ptiLabel")}
+            value={pti > 0 ? pti.toFixed(1) : "N/A"}
+            unit={t("ptiUnit")}
+          />
+          <ExplanationCard>
+            {t.rich("explanation2", {
+              pti: pti > 0 ? pti.toFixed(1) : "N/A",
+              strong: (chunks) => <strong>{chunks}</strong>,
+            })}
+          </ExplanationCard>
+        </div>
+
+        {/* Group 3: MPS */}
+        <div className="flex flex-col gap-6">
+          <MetricCard
+            label={t("mpsLabel")}
+            value={mps > 0 && isFinite(mps) ? `${mps.toFixed(1)}%` : "N/A"}
+            unit={t("mpsUnit")}
+          />
+          <ExplanationCard>
+            {t.rich("explanation3", {
+              strong: (chunks) => <strong>{chunks}</strong>,
+            })}
+          </ExplanationCard>
+        </div>
+
+        {/* Group 4: YDP */}
+        <div className="flex flex-col gap-6">
+          <MetricCard
+            label={t("ydpLabel")}
+            value={ydp > 0 && isFinite(ydp) ? `${ydp.toFixed(1)}` : "N/A"}
+            unit={t("ydpUnit")}
+          />
+          <ExplanationCard>
+            {t.rich("explanation4", {
+              strong: (chunks) => <strong>{chunks}</strong>,
+            })}
+          </ExplanationCard>
+        </div>
       </div>
 
       <div className="mt-6 border border-[--color-border] rounded-lg bg-[--color-card] p-6">

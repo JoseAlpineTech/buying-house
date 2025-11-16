@@ -16,7 +16,7 @@ export default function FloatingControls({
   const twoLetterCode = countryCodeMap[selectedCountry] ?? "";
 
   return (
-    <div className="fixed top-5 right-6 z-50 pointer-events-auto">
+    <div className="hidden md:block fixed top-5 right-6 z-50 pointer-events-auto">
       <div className="flex flex-col items-end gap-3">
         {/* Toggle button */}
         <button

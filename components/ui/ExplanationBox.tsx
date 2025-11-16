@@ -17,7 +17,7 @@ export default function ExplanationBox({
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -20 }}
       transition={{ duration: 0.3 }}
-      className="w-full md:w-[40%] p-4 rounded-lg bg-[--color-card] border border-[--color-border]"
+      className="w-full lg:w-[40%] p-4 rounded-lg bg-[--color-card] border border-[--color-border]"
     >
       <h4 className="text-lg font-semibold text-[--color-label] mb-2">
         {title}

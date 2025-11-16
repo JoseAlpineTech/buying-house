@@ -21,7 +21,6 @@ html.dark {
   --color-accent: #ffb703;
 }
 
-
 @theme inline {
   --color-bg: var(--color-bg);
   --color-card: var(--color-card);
@@ -143,8 +142,10 @@ section {
   border: 1px solid var(--color-border);
   border-radius: 1rem;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
-  padding: 2.5rem;
-  margin-bottom: 2rem;
+  /* Let components control padding /
+/ padding: 2.5rem; /
+/ Let components control margins /
+/ margin-bottom: 2rem; */
 }
 
 strong,
@@ -166,4 +167,11 @@ button {
 button:hover {
   background-color: var(--color-card);
   color: var(--color-title);
+}
+
+/* Base font-size adjustment for smaller screens */
+@media (max-width: 768px) {
+  html {
+    font-size: 17px;
+  }
 }

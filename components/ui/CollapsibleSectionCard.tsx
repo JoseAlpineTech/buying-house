@@ -69,13 +69,15 @@ export default function CollapsibleSectionCard({
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <section className="relative rounded-xl border border-[--color-border] bg-[--color-card] mt-12">
+    <section className="relative rounded-xl border border-[--color-border] bg-[--color-card] mt-8 md:mt-12">
       <header
-        className="flex justify-between items-center p-8 cursor-pointer"
+        className="flex justify-between items-center p-4 md:p-8 cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
       >
         <div>
-          <h2 className="text-4xl font-bold text-[--color-title]">{title}</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-[--color-title]">
+            {title}
+          </h2>
           {subtitle && (
             <p className="text-sm text-[--color-text] mt-1">{subtitle}</p>
           )}
@@ -91,7 +93,7 @@ export default function CollapsibleSectionCard({
             transition={{ type: "spring", duration: 0.6, bounce: 0.1 }}
             className="overflow-hidden"
           >
-            <div className="p-8 pt-0">{children}</div>
+            <div className="p-4 pt-0 md:p-8 md:pt-0">{children}</div>
           </motion.div>
         )}
       </AnimatePresence>

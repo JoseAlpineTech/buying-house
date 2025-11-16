@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslations } from "next-intl";
 import SectionCard from "../ui/SectionCard";
@@ -12,6 +12,20 @@ interface ChartCardProps {
   explanationTitle: string;
   explanationContent: React.ReactNode;
 }
+
+const useMediaQuery = (query: string) => {
+  const [matches, setMatches] = useState(false);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const media = window.matchMedia(query);
+      const updateMatch = () => setMatches(media.matches);
+      updateMatch();
+      media.addEventListener("change", updateMatch);
+      return () => media.removeEventListener("change", updateMatch);
+    }
+  }, [query]);
+  return matches;
+};
 
 const InfoIcon = () => (
   <svg
@@ -34,8 +48,13 @@ export default function ChartCard({
   explanationTitle,
   explanationContent,
 }: ChartCardProps) {
-  const [isExplanationVisible, setIsExplanationVisible] = useState(true);
+  const [isExplanationVisible, setIsExplanationVisible] = useState(false);
   const t = useTranslations("ChartCard");
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
+
+  useEffect(() => {
+    setIsExplanationVisible(isDesktop);
+  }, [isDesktop]);
 
   return (
     <SectionCard>
@@ -49,7 +68,7 @@ export default function ChartCard({
           <InfoIcon />
         </button>
       </div>
-      <div className="flex flex-col md:flex-row gap-6 items-center">
+      <div className="flex flex-col lg:flex-row gap-6 items-center">
         <motion.div
           layout
           animate={{ width: isExplanationVisible ? "60%" : "100%" }}

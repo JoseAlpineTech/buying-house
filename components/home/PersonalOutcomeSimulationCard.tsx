@@ -100,7 +100,7 @@ export function PersonalOutcomeSimulationCard({
       />
 
       {/* --- User Controls --- */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-8">
         {/* Custom Income, Savings Rate, Down Payment, Time Horizon */}
         <div>
           <label className="block text-lg font-semibold text-[--color-label] mb-2">
@@ -177,7 +177,7 @@ export function PersonalOutcomeSimulationCard({
       </div>
 
       {/* --- Results --- */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 rounded-lg bg-[--color-card] border border-[--color-border]">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 md:p-6 rounded-lg bg-[--color-card] border border-[--color-border]">
         <div className="p-4">
           <h3 className="text-2xl font-bold text-[--color-title] mb-3">
             {t("homeownerPathTitle")}
@@ -242,7 +242,7 @@ export function PersonalOutcomeSimulationCard({
               exit={{ height: 0, opacity: 0 }}
               className="overflow-hidden mt-4"
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 rounded-lg bg-[--color-card] border border-[--color-border]">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 p-4 rounded-lg bg-[--color-card] border border-[--color-border]">
                 {(
                   Object.keys(assumptions) as Array<
                     keyof SimulationAssumptions

@@ -162,7 +162,7 @@ export default function ComparisonTable({
             {headers.map(({ key, label, isSortable }) => (
               <th
                 key={key}
-                className="py-3 px-4 text-sm font-semibold text-[--color-label] uppercase tracking-wider"
+                className="py-3 px-2 md:px-4 text-sm font-semibold text-[--color-label] uppercase tracking-wider"
                 onClick={() => isSortable && requestSort(key as SortKey)}
                 style={{ cursor: isSortable ? "pointer" : "default" }}
               >
@@ -192,11 +192,11 @@ export default function ComparisonTable({
               }`}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
             >
-              <td className="py-2 px-4 text-[--color-label]">
+              <td className="py-2 px-2 md:px-4 text-[--color-label]">
                 {index + 1}
               </td>
 
-              <td className="py-2 px-4 whitespace-nowrap">
+              <td className="py-2 px-2 md:px-4 whitespace-nowrap">
                 <div className="flex items-center gap-3">
                   <span
                     className={`fi fi-${
@@ -210,24 +210,24 @@ export default function ComparisonTable({
               </td>
 
               {yearMode === "latest" && (
-                <td className="py-2 px-4 text-[--color-label]">
+                <td className="py-2 px-2 md:px-4 text-[--color-label]">
                   {typeof item.year === "number" && !Number.isNaN(item.year)
                     ? item.year
                     : "—"}
                 </td>
               )}
 
-              <td className="py-2 px-4">
+              <td className="py-2 px-2 md:px-4">
                 {item.pti !== null ? item.pti.toFixed(1) : "N/A"}
               </td>
 
-              <td className="py-2 px-4">
+              <td className="py-2 px-2 md:px-4">
                 {item.mps !== null && isFinite(item.mps)
                   ? item.mps.toFixed(1)
                   : "N/A"}
               </td>
 
-              <td className="py-2 px-4">
+              <td className="py-2 px-2 md:px-4">
                 {item.ydp !== null && isFinite(item.ydp)
                   ? item.ydp.toFixed(1)
                   : "N/A"}
