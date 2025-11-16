@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { Forum } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
@@ -35,8 +34,8 @@ export async function generateMetadata({
           alt: t("title"),
         },
       ],
-      type: "website",
       locale,
+      type: "website",
     },
 
     twitter: {
