@@ -14,13 +14,37 @@ export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: string }>;
-}): Promise<Metadata> {
+}) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Metadata" });
 
   return {
     title: t("title"),
     description: t("description"),
+
+    openGraph: {
+      title: t("title"),
+      description: t("description"),
+      url: "https://buying-house.pages.dev",
+      siteName: "Buying House",
+      images: [
+        {
+          url: "/og-image.png",
+          width: 1200,
+          height: 630,
+          alt: t("title"),
+        },
+      ],
+      type: "website",
+      locale,
+    },
+
+    twitter: {
+      card: "summary_large_image",
+      title: t("title"),
+      description: t("description"),
+      images: ["/og-image.png"],
+    },
   };
 }
 
