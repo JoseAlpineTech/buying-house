@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
 import { affordabilityData } from "../../data/affordability";
 import { currencies } from "../../data/currency";
@@ -26,15 +27,45 @@ import ComparisonTable, {
   SortKey,
   SortDirection,
 } from "../../components/home/ComparisonTable";
-import { IncomeChart } from "../../components/charts/IncomeChart";
-import { AffordabilityTrendsChart } from "../../components/charts/AffordabilityTrendsChart";
-import { MortgageBurdenChart } from "../../components/charts/MortgageBurdenChart";
-import { PriceToRentChart } from "../../components/charts/PriceToRentChart";
-import { TotalHouseholdsChart } from "../../components/charts/TotalHouseholdsChart";
 import FloatingFlag from "../../components/ui/FloatingFlag";
 import FloatingLanguageSelector from "../../components/ui/FloatingLanguageSelector";
 import FloatingThemeSelector from "../../components/ui/FloatingThemeSelector";
 import FloatingControls from "../../components/ui/FloatingControls";
+
+// Dynamically import chart components to code-split them
+const IncomeChart = dynamic(
+  () =>
+    import("../../components/charts/IncomeChart").then((mod) => mod.IncomeChart),
+  { ssr: false, loading: () => <div className="h-96" /> },
+);
+const AffordabilityTrendsChart = dynamic(
+  () =>
+    import("../../components/charts/AffordabilityTrendsChart").then(
+      (mod) => mod.AffordabilityTrendsChart,
+    ),
+  { ssr: false, loading: () => <div className="h-96" /> },
+);
+const MortgageBurdenChart = dynamic(
+  () =>
+    import("../../components/charts/MortgageBurdenChart").then(
+      (mod) => mod.MortgageBurdenChart,
+    ),
+  { ssr: false, loading: () => <div className="h-96" /> },
+);
+const PriceToRentChart = dynamic(
+  () =>
+    import("../../components/charts/PriceToRentChart").then(
+      (mod) => mod.PriceToRentChart,
+    ),
+  { ssr: false, loading: () => <div className="h-96" /> },
+);
+const TotalHouseholdsChart = dynamic(
+  () =>
+    import("../../components/charts/TotalHouseholdsChart").then(
+      (mod) => mod.TotalHouseholdsChart,
+    ),
+  { ssr: false, loading: () => <div className="h-96" /> },
+);
 
 export const runtime = "edge";
 
@@ -44,10 +75,8 @@ const savingsRate = 10;
 
 export default function Home() {
   const [selectedCountry, setSelectedCountry] = useState<string>("CAN");
-  const [isMethodologyModalOpen, setIsMethodologyModalOpen] =
-    useState(false);
-  const [isAssumptionsModalOpen, setIsAssumptionsModalOpen] =
-    useState(false);
+  const [isMethodologyModalOpen, setIsMethodologyModalOpen] = useState(false);
+  const [isAssumptionsModalOpen, setIsAssumptionsModalOpen] = useState(false);
   const [sortConfig, setSortConfig] = useState<{
     key: SortKey;
     direction: SortDirection;
@@ -59,27 +88,21 @@ export default function Home() {
   const t = useTranslations();
 
   const countryData =
-    affordabilityData[
-      selectedCountry as keyof typeof affordabilityData
-    ];
+    affordabilityData[selectedCountry as keyof typeof affordabilityData];
   const countries = Object.keys(affordabilityData);
 
   const selectedCountryName =
-    countryDisplayNames[
-      selectedCountry as keyof typeof countryDisplayNames
-    ] ?? selectedCountry;
+    countryDisplayNames[selectedCountry as keyof typeof countryDisplayNames] ??
+    selectedCountry;
 
   const currency =
-    currencies[selectedCountry as keyof typeof currencies] ??
-    currencies.USA;
+    currencies[selectedCountry as keyof typeof currencies] ?? currencies.USA;
 
   const comparisonData: ComparisonData[] = useMemo(() => {
     return Object.keys(affordabilityData)
       .map((countryCode): ComparisonData | null => {
         const cData =
-          affordabilityData[
-            countryCode as keyof typeof affordabilityData
-          ];
+          affordabilityData[countryCode as keyof typeof affordabilityData];
         if (
           !cData ||
           !cData.realIncome?.length ||
@@ -105,18 +128,13 @@ export default function Home() {
           };
         }
 
-        const payment = calcMortgagePayment(
-          rate,
-          metrics.housePrice,
-          ltv,
-          term
-        );
+        const payment = calcMortgagePayment(rate, metrics.housePrice, ltv, term);
         const mps = calcMPS(metrics.income, payment);
         const ydp = calcYDP(
           metrics.housePrice,
           ltv,
           metrics.income,
-          savingsRate
+          savingsRate,
         );
 
         return {
@@ -134,15 +152,10 @@ export default function Home() {
       .filter((x): x is ComparisonData => x !== null);
   }, []);
 
-
   const comparisonSubtitle = useMemo(() => {
     if (!sortConfig) return "";
-    const label = t(
-      `ComparisonTable.sortKeys.${sortConfig.key}`,
-    );
-    const direction = t(
-      `ComparisonTable.sortDirection.${sortConfig.direction}`,
-    );
+    const label = t(`ComparisonTable.sortKeys.${sortConfig.key}`);
+    const direction = t(`ComparisonTable.sortDirection.${sortConfig.direction}`);
     return t("Page.comparisonSubtitle", {
       label,
       direction,
@@ -190,9 +203,7 @@ export default function Home() {
           isOpen={isAssumptionsModalOpen}
           onClose={() => setIsAssumptionsModalOpen(false)}
           countryName={selectedCountryName}
-          baseHousePrice={
-            BASE_HOUSE_PRICES_2015[selectedCountry]
-          }
+          baseHousePrice={BASE_HOUSE_PRICES_2015[selectedCountry]}
           latestMortgageRate={0}
           dataStartYear={0}
           dataEndYear={0}
@@ -203,31 +214,22 @@ export default function Home() {
   }
 
   const startYear = countryData.realIncome[0].year;
-  const endYear =
-    countryData.realIncome.slice(-1)[0].year;
+  const endYear = countryData.realIncome.slice(-1)[0].year;
 
   const startMetrics = getMetricsForYear(
     countryData,
     startYear,
     selectedCountry,
   );
-  const endMetrics = getMetricsForYear(
-    countryData,
-    endYear,
-    selectedCountry,
-  );
+  const endMetrics = getMetricsForYear(countryData, endYear, selectedCountry);
 
   const insightSummary =
     startMetrics && endMetrics
-      ? generateAffordabilitySummary(
-          startMetrics,
-          endMetrics,
-        )
+      ? generateAffordabilitySummary(startMetrics, endMetrics)
       : [];
 
   const latestMortgageRate =
-    countryData.mortgageRate?.slice(-1)[0]?.value ??
-    0;
+    countryData.mortgageRate?.slice(-1)[0]?.value ?? 0;
 
   const housePrice = endMetrics?.housePrice ?? 0;
   const income = endMetrics?.income ?? 0;
@@ -240,23 +242,13 @@ export default function Home() {
     term,
   );
   const mps = calcMPS(income, monthlyPayment);
-  const ydp = calcYDP(
-    housePrice,
-    ltv,
-    income,
-    savingsRate,
-  );
+  const ydp = calcYDP(housePrice, ltv, income, savingsRate);
 
-  const baseHousePrice =
-    BASE_HOUSE_PRICES_2015[selectedCountry];
+  const baseHousePrice = BASE_HOUSE_PRICES_2015[selectedCountry];
   const startIncome = countryData.realIncome[0]?.value;
-  const endIncome =
-    countryData.realIncome.slice(-1)[0]?.value;
-  const startIndexValue =
-    countryData.realHousePriceIndex[0]?.value;
-  const endIndexValue =
-    countryData.realHousePriceIndex.slice(-1)[0]
-      ?.value;
+  const endIncome = countryData.realIncome.slice(-1)[0]?.value;
+  const startIndexValue = countryData.realHousePriceIndex[0]?.value;
+  const endIndexValue = countryData.realHousePriceIndex.slice(-1)[0]?.value;
 
   return (
     <main className="container mx-auto p-4 sm:p-6 lg:p-10">
@@ -288,39 +280,29 @@ export default function Home() {
       </SectionCard>
 
       <ChartCard
-        title={t(
-          "Page.chartCard_RealHouseholdIncome_title",
-        )}
+        title={t("Page.chartCard_RealHouseholdIncome_title")}
         chartComponent={
           <IncomeChart
             countryData={countryData}
             countryCode={selectedCountry}
           />
         }
-        explanationTitle={t(
-          "ChartCard.explanationTitle",
-        )}
+        explanationTitle={t("ChartCard.explanationTitle")}
         explanationContent={
           <>
             <p
               dangerouslySetInnerHTML={{
-                __html: t.raw(
-                  "ChartCard.incomeExplanation.p1",
-                ),
+                __html: t.raw("ChartCard.incomeExplanation.p1"),
               }}
             />
             <p
               dangerouslySetInnerHTML={{
-                __html: t.raw(
-                  "ChartCard.incomeExplanation.p2",
-                ),
+                __html: t.raw("ChartCard.incomeExplanation.p2"),
               }}
             />
             <p
               dangerouslySetInnerHTML={{
-                __html: t.raw(
-                  "ChartCard.incomeExplanation.p3",
-                ),
+                __html: t.raw("ChartCard.incomeExplanation.p3"),
               }}
             />
           </>
@@ -328,32 +310,24 @@ export default function Home() {
       />
 
       <ChartCard
-        title={t(
-          "Page.chartCard_PriceToIncomeRatio_title",
-        )}
+        title={t("Page.chartCard_PriceToIncomeRatio_title")}
         chartComponent={
           <AffordabilityTrendsChart
             countryData={countryData}
             countryCode={selectedCountry}
           />
         }
-        explanationTitle={t(
-          "ChartCard.explanationTitle",
-        )}
+        explanationTitle={t("ChartCard.explanationTitle")}
         explanationContent={
           <>
             <p
               dangerouslySetInnerHTML={{
-                __html: t.raw(
-                  "ChartCard.ptiExplanation.p1",
-                ),
+                __html: t.raw("ChartCard.ptiExplanation.p1"),
               }}
             />
             <p
               dangerouslySetInnerHTML={{
-                __html: t.raw(
-                  "ChartCard.ptiExplanation.p2",
-                ),
+                __html: t.raw("ChartCard.ptiExplanation.p2"),
               }}
             />
           </>
@@ -361,9 +335,7 @@ export default function Home() {
       />
 
       <ChartCard
-        title={t(
-          "Page.chartCard_MortgageBurden_title",
-        )}
+        title={t("Page.chartCard_MortgageBurden_title")}
         chartComponent={
           <MortgageBurdenChart
             countryData={countryData}
@@ -373,30 +345,22 @@ export default function Home() {
             rate={latestMortgageRate}
           />
         }
-        explanationTitle={t(
-          "ChartCard.explanationTitle",
-        )}
+        explanationTitle={t("ChartCard.explanationTitle")}
         explanationContent={
           <>
             <p
               dangerouslySetInnerHTML={{
-                __html: t.raw(
-                  "ChartCard.mortgageBurdenExplanation.p1",
-                ),
+                __html: t.raw("ChartCard.mortgageBurdenExplanation.p1"),
               }}
             />
             <p
               dangerouslySetInnerHTML={{
-                __html: t.raw(
-                  "ChartCard.mortgageBurdenExplanation.p2",
-                ),
+                __html: t.raw("ChartCard.mortgageBurdenExplanation.p2"),
               }}
             />
             <p
               dangerouslySetInnerHTML={{
-                __html: t.raw(
-                  "ChartCard.mortgageBurdenExplanation.p3",
-                ),
+                __html: t.raw("ChartCard.mortgageBurdenExplanation.p3"),
               }}
             />
           </>
@@ -404,36 +368,24 @@ export default function Home() {
       />
 
       <ChartCard
-        title={t(
-          "Page.chartCard_PriceToRentIndex_title",
-        )}
-        chartComponent={
-          <PriceToRentChart countryData={countryData} />
-        }
-        explanationTitle={t(
-          "ChartCard.explanationTitle",
-        )}
+        title={t("Page.chartCard_PriceToRentIndex_title")}
+        chartComponent={<PriceToRentChart countryData={countryData} />}
+        explanationTitle={t("ChartCard.explanationTitle")}
         explanationContent={
           <>
             <p
               dangerouslySetInnerHTML={{
-                __html: t.raw(
-                  "ChartCard.priceToRentExplanation.p1",
-                ),
+                __html: t.raw("ChartCard.priceToRentExplanation.p1"),
               }}
             />
             <p
               dangerouslySetInnerHTML={{
-                __html: t.raw(
-                  "ChartCard.priceToRentExplanation.p2",
-                ),
+                __html: t.raw("ChartCard.priceToRentExplanation.p2"),
               }}
             />
             <p
               dangerouslySetInnerHTML={{
-                __html: t.raw(
-                  "ChartCard.priceToRentExplanation.p3",
-                ),
+                __html: t.raw("ChartCard.priceToRentExplanation.p3"),
               }}
             />
           </>
@@ -441,36 +393,24 @@ export default function Home() {
       />
 
       <ChartCard
-        title={t(
-          "Page.chartCard_TotalHouseholds_title",
-        )}
-        chartComponent={
-          <TotalHouseholdsChart countryData={countryData} />
-        }
-        explanationTitle={t(
-          "ChartCard.explanationTitle",
-        )}
+        title={t("Page.chartCard_TotalHouseholds_title")}
+        chartComponent={<TotalHouseholdsChart countryData={countryData} />}
+        explanationTitle={t("ChartCard.explanationTitle")}
         explanationContent={
           <>
             <p
               dangerouslySetInnerHTML={{
-                __html: t.raw(
-                  "ChartCard.totalHouseholdsExplanation.p1",
-                ),
+                __html: t.raw("ChartCard.totalHouseholdsExplanation.p1"),
               }}
             />
             <p
               dangerouslySetInnerHTML={{
-                __html: t.raw(
-                  "ChartCard.totalHouseholdsExplanation.p2",
-                ),
+                __html: t.raw("ChartCard.totalHouseholdsExplanation.p2"),
               }}
             />
             <p
               dangerouslySetInnerHTML={{
-                __html: t.raw(
-                  "ChartCard.totalHouseholdsExplanation.p3",
-                ),
+                __html: t.raw("ChartCard.totalHouseholdsExplanation.p3"),
               }}
             />
           </>
@@ -478,9 +418,7 @@ export default function Home() {
       />
 
       <CollapsibleSectionCard
-        title={t(
-          "Page.collapsible_CountryComparison_title",
-        )}
+        title={t("Page.collapsible_CountryComparison_title")}
         subtitle={comparisonSubtitle}
       >
         <ComparisonTable
@@ -492,12 +430,8 @@ export default function Home() {
       </CollapsibleSectionCard>
 
       <CollapsibleSectionCard
-        title={t(
-          "Page.collapsible_AssetPerformance_title",
-        )}
-        subtitle={t(
-          "Page.collapsible_AssetPerformance_subtitle",
-        )}
+        title={t("Page.collapsible_AssetPerformance_title")}
+        subtitle={t("Page.collapsible_AssetPerformance_subtitle")}
       >
         <AssetPerformanceSimulationCard
           currentHomePrice={housePrice}
@@ -507,12 +441,8 @@ export default function Home() {
       </CollapsibleSectionCard>
 
       <CollapsibleSectionCard
-        title={t(
-          "Page.collapsible_PersonalOutcome_title",
-        )}
-        subtitle={t(
-          "Page.collapsible_PersonalOutcome_subtitle",
-        )}
+        title={t("Page.collapsible_PersonalOutcome_title")}
+        subtitle={t("Page.collapsible_PersonalOutcome_subtitle")}
       >
         <PersonalOutcomeSimulationCard
           defaultIncome={income}
@@ -523,26 +453,18 @@ export default function Home() {
       </CollapsibleSectionCard>
 
       <Footer
-        onMethodologyOpen={() =>
-          setIsMethodologyModalOpen(true)
-        }
-        onAssumptionsOpen={() =>
-          setIsAssumptionsModalOpen(true)
-        }
+        onMethodologyOpen={() => setIsMethodologyModalOpen(true)}
+        onAssumptionsOpen={() => setIsAssumptionsModalOpen(true)}
       />
 
       <MethodologyModal
         isOpen={isMethodologyModalOpen}
-        onClose={() =>
-          setIsMethodologyModalOpen(false)
-        }
+        onClose={() => setIsMethodologyModalOpen(false)}
       />
 
       <AssumptionsModal
         isOpen={isAssumptionsModalOpen}
-        onClose={() =>
-          setIsAssumptionsModalOpen(false)
-        }
+        onClose={() => setIsAssumptionsModalOpen(false)}
         countryName={selectedCountryName}
         baseHousePrice={baseHousePrice}
         latestMortgageRate={latestMortgageRate}
