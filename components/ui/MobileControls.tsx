@@ -1,6 +1,6 @@
 "use client";
 
-import { Globe, Languages } from "lucide-react";
+import { Languages } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { countryCodeMap } from "../../data/countryCodes";
 import MobileThemeSelector from "./MobileThemeSelector";
