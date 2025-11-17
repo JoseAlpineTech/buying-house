@@ -1,0 +1,247 @@
+{
+  "Metadata": {
+    "title": "Wohnungszugänglichkeit im Jahr 2025",
+    "description": "Ein visueller Überblick über die Entwicklung der Wohnungszugänglichkeit."
+  },
+  "Hero": {
+    "title": "Wohnungszugänglichkeit",
+    "subtitle": "Wie hat sich die Fähigkeit, ein Eigenheim zu kaufen, im Laufe der Zeit verändert? Entdecken Sie inflationsbereinigte Preise, Einkommen und Hypothekenkosten in den OECD-Ländern. <strong>Klicken Sie auf die schwebende Flagge, um andere Länder anzuzeigen</strong>"
+  },
+  "Errors": {
+    "noData": "Leider sind für {countryName} keine vollständigen inflationsbereinigten Daten zur Wohnungszugänglichkeit verfügbar. Bitte wählen Sie ein anderes Land."
+  },
+  "Page": {
+    "comparisonSubtitle": "Sortiert nach {label} ({direction})",
+    "chartCard_RealHouseholdIncome_title": "Reales Haushaltseinkommen",
+    "chartCard_PriceToIncomeRatio_title": "Preis-Einkommens-Verhältnis",
+    "chartCard_MortgageBurden_title": "Hypothekenbelastung",
+    "chartCard_PriceToRentIndex_title": "Preis-Miet-Index",
+    "chartCard_TotalHouseholds_title": "Anzahl der Haushalte",
+    "collapsible_CountryComparison_title": "Ländervergleich",
+    "collapsible_AssetPerformance_title": "Vermögensentwicklung: Eigentümer vs. Mieter",
+    "collapsible_AssetPerformance_subtitle": "Vergleicht, ob Kaufen oder Mieten langfristig zu mehr Vermögen führt.",
+    "collapsible_PersonalOutcome_title": "Persönliche Projektion",
+    "collapsible_PersonalOutcome_subtitle": "Schätzen Sie Ihr Vermögen basierend auf Ihrem Einkommen"
+  },
+  "ChartCard": {
+    "toggleExplanation": "Erklärung zu {title} ein-/ausblenden",
+    "explanationTitle": "Was ist das?",
+    "incomeExplanation": {
+      "p1": "Diese Grafik zeigt das inflationsbereinigte <strong>verfügbare Haushaltseinkommen</strong> im Zeitverlauf.",
+      "p2": "Ein <strong>aufwärtsgerichteter Trend</strong> bedeutet steigende Kaufkraft der Haushalte – gut für die Wohnungszugänglichkeit. Alle Werte sind auf 2015 inflationsbereinigt.",
+      "p3": "Das Einkommen wird „äquivalisiert“, also an die Haushaltsgröße angepasst, um Lebensstandards fair vergleichen zu können."
+    },
+    "ptiExplanation": {
+      "p1": "Dieses Verhältnis zeigt, wie viele Jahre des <strong>Bruttohaushaltseinkommens</strong> nötig wären, um ein durchschnittliches Haus zu kaufen.",
+      "p2": "Ein <strong>höherer</strong> Wert bedeutet eine <strong>geringere Zugänglichkeit</strong>. Die Daten sind real, auf 2015 bereinigt."
+    },
+    "mortgageBurdenExplanation": {
+      "p1": "Dies zeigt den Prozentsatz des <strong>Bruttohaushaltseinkommens</strong>, der für eine typische monatliche Hypothekenzahlung benötigt wird.",
+      "p2": "Ein <strong>höherer</strong> Prozentsatz bedeutet eine größere finanzielle Belastung. Für alle Jahre wird derselbe aktuelle Zinssatz verwendet, um Vergleichbarkeit sicherzustellen.",
+      "p3": "Die <strong>30-%-Linie</strong> gilt häufig als Schwelle, ab der Haushalte als „wohnkostenbelastet“ gelten."
+    },
+    "priceToRentExplanation": {
+      "p1": "Dieser Index misst die Kosten eines Hauskaufs im Verhältnis zur Miete. Er ergibt sich aus dem Verhältnis des Immobilienpreisindex zum Mietpreisindex.",
+      "p2": "Ein <strong>höherer</strong> Index deutet darauf hin, dass Kaufpreise im Verhältnis zu Mieten hoch sind – Mieten kann finanziell vorteilhafter sein.",
+      "p3": "Basiswert ist <strong>100 im Jahr 2015</strong>. Werte darüber bedeuten, dass Kaufen seit 2015 teurer geworden ist als Mieten."
+    },
+    "totalHouseholdsExplanation": {
+      "p1": "Diese Grafik zeigt die Gesamtzahl der Haushalte im Zeitverlauf.",
+      "p2": "Mehr Haushalte erhöhen die Wohnungsnachfrage und können Preise und Mieten steigen lassen, wenn das Angebot nicht mithält.",
+      "p3": "Einflussfaktoren sind Bevölkerungswachstum, Migration und kleinere durchschnittliche Haushaltsgrößen."
+    }
+  },
+  "Charts": {
+    "year": "Jahr",
+    "AffordabilityTrends": {
+      "yAxisLabel": "Verhältnis",
+      "legend": "Reales Preis-Einkommens-Verhältnis"
+    },
+    "Income": {
+      "yAxisLabel": "Reales Einkommen ({currencyCode})",
+      "legend": "Reales verfügbares Einkommen (äquivalisiert)"
+    },
+    "MortgageBurden": {
+      "yAxisLabel": "Hypothekenbelastung (bei aktuellen Zinsen)",
+      "legend": "Hypothekenbelastung",
+      "thresholdLabel": "30-%-Schwelle"
+    },
+    "PriceToRent": {
+      "yAxisLabel": "Index (2015 = 100)",
+      "legend": "Realer Preis-Miet-Index"
+    },
+    "SensitivityCurve": {
+      "yAxisSubtitle": "Y-Achse: Vorteil (Mieter – Eigentümer)",
+      "xAxisSubtitle": "X-Achse: Marktrendite (%)",
+      "tooltipLabel": "Mietvorteil",
+      "tooltipTitle": "Marktrendite: {value} %",
+      "rentingWins": "Mieten gewinnt",
+      "buyingWins": "Kaufen gewinnt"
+    },
+    "TotalHouseholds": {
+      "yAxisLabel": "Anzahl",
+      "legend": "Haushalte insgesamt"
+    }
+  },
+  "ComparisonTable": {
+    "headers": {
+      "rank": "#",
+      "country": "Land",
+      "pti": "Preis/Einkommen",
+      "mps": "Hypothekenbelastung (%)",
+      "ydp": "Jahre zum Sparen",
+      "year": "Jahr"
+    },
+    "sortDirection": {
+      "ascending": "Aufsteigend",
+      "descending": "Absteigend"
+    },
+    "sortKeys": {
+      "countryName": "Ländername",
+      "pti": "Preis/Einkommen",
+      "mps": "Hypothekenbelastung",
+      "ydp": "Sparjahre"
+    },
+    "alignToggle": {
+      "label": "Jahresmodus",
+      "latest": "Neueste verfügbare Daten",
+      "common": "Auf gleiches Jahr ausrichten"
+    }
+  },
+  "Snapshot": {
+    "title": "Überblick für {countryName} im Jahr {endYear}",
+    "subtitle": "Basierend auf verfügbaren Daten von {startYear} bis {endYear}.",
+    "housePriceLabel": "Geschätzter realer Hauspreis",
+    "housePriceUnit": "In lokaler Währung, inflationsbereinigt.",
+    "ptiLabel": "Reales Preis-Einkommens-Verhältnis",
+    "ptiUnit": "Einkommensjahre für einen Hauskauf.",
+    "mpsLabel": "Hypothekenbelastung",
+    "mpsUnit": "% des realen Einkommens für die Hypothek.",
+    "ydpLabel": "Jahre bis zur Anzahlung",
+    "ydpUnit": "Für ein durchschnittliches Käuferprofil.",
+    "explanation1": "Der inflationsbereinigte Preis eines typischen Hauses – ein realistisches Maß für die tatsächlichen Kosten.",
+    "explanation2": "Ein Verhältnis von <strong>{pti}</strong> bedeutet, dass so viele Jahre Bruttoeinkommen benötigt werden.",
+    "explanation3": "Der Anteil des Bruttoeinkommens, der für eine Hypothek bei aktuellen Zinsen benötigt wird.",
+    "explanation4": "Die Zeit, um eine <strong>10-%-Anzahlung</strong> zu sparen, wenn ein Haushalt 10 % seines Einkommens zur Seite legt.",
+    "insightsTitle": "Wichtigste Erkenntnisse"
+  },
+  "AssetPerformanceSimulation": {
+    "disclaimer": "Diese Simulation vergleicht langfristige Ergebnisse von Kaufen vs. Mieten und Investieren. Die Annahmen sind vereinfacht und basieren auf historischen Durchschnittswerten. Alle Werte sind inflationsbereinigt. Es handelt sich um Projektionen – keine Vorhersagen.",
+    "downPaymentLabel": "Ihre Anzahlung: ",
+    "timeHorizonLabel": "Zeithorizont: ",
+    "years": " Jahre",
+    "homeownerPathTitle": "Szenario Eigentümer",
+    "finalHomeValue": "Endwert der Immobilie: ",
+    "remainingMortgage": "Resthypothek: ",
+    "homeEquity": "Ihr Immobilienvermögen: ",
+    "renterPathTitle": "Szenario Mieter & Investor",
+    "initialInvestment": "Startinvestition: ",
+    "addedMonthlySavings": "Zusätzliche monatliche Ersparnis: ",
+    "finalInvestmentValue": "Endwert des Investments: ",
+    "verdictTitle": "Nach {yearsToSimulate} Jahren...",
+    "verdictContent": "In diesem Szenario könnte <strong_label>{choice}</strong_label> ein höheres Vermögen von <strong_accent>{difference}</strong_accent> erzielen.",
+    "verdictChoice_buy": "kaufen",
+    "verdictChoice_rent": "mieten und investieren",
+    "sensitivityTitle": "Sensitivität: Marktrendite",
+    "advancedAssumptionsToggle_hide": "Ausblenden",
+    "advancedAssumptionsToggle_show": "Einblenden",
+    "advancedAssumptionsToggle_label": " Erweiterte Annahmen",
+    "assumption_annualHomePriceGrowth": "Jährliches Preiswachstum",
+    "assumption_annualStockMarketReturn": "Jährliche Marktrendite",
+    "assumption_annualRentIncrease": "Jährliche Mietsteigerung",
+    "assumption_annualOwnershipCostRate": "Jährliche Eigentumskosten",
+    "assumption_initialRentalYield": "Anfängliche Mietrendite",
+    "resetButton": "Zurücksetzen"
+  },
+  "PersonalOutcomeSimulation": {
+    "disclaimer": "Dieses Modell verwendet Ihr <strong>Nettogehalt (nach Steuern)</strong> sowie den Betrag, den Sie monatlich sparen. Es vergleicht das Immobilienvermögen eines Eigentümers mit dem Investitionsvermögen eines Mieters. Dies ist eine vereinfachte Projektion — niemand kann die Zukunft vorhersagen.",
+    "annualIncomeLabel": "Ihr jährliches Nettoeinkommen: ",
+    "savingsRateLabel": "Ihre monatliche Ersparnis: ",
+    "downPaymentLabel": "Anzahlung: ",
+    "timeHorizonLabel": "Zeithorizont: ",
+    "years": " Jahre",
+    "homeownerPathTitle": "Szenario Eigentümer",
+    "homeownerNetWorth": "Prognostiziertes Vermögen (Immobilie): ",
+    "renterPathTitle": "Szenario Mieter & Investor",
+    "renterNetWorth": "Prognostiziertes Vermögen (Investitionen): ",
+    "verdictTitle": "Nach {yearsToSimulate} Jahren...",
+    "verdictContent": "Basierend auf Ihren Angaben könnte <strong_label>{choice}</strong_label> zu einem höheren Vermögen von <strong_accent>{difference}</strong_accent> führen.",
+    "verdictChoice_buy": "kaufen",
+    "verdictChoice_rent": "mieten und investieren"
+  },
+  "Footer": {
+    "source": "Quelle: OECD-Daten",
+    "methodology": "Methodik",
+    "assumptions": "Annahmen",
+    "poweredBy": "Bereitgestellt von: Alpine Tech Inc."
+  },
+  "FloatingControls": {
+    "changeCountry": "Land ändern",
+    "viewing": "Ansicht:",
+    "flagOf": "Flagge von {countryName}",
+    "changeLanguage": "Sprache ändern",
+    "language": "Sprache:"
+  },
+  "AssumptionsModal": {
+    "title": "Zentrale Annahmen für {countryName}",
+    "basePrice": {
+      "label": "Basis-Hauspreis (2015)",
+      "description": "Referenzpreis in lokaler Währung zur Umrechnung des Index. Quelle: {source}"
+    },
+    "mortgageRate": {
+      "label": "Aktueller Hypothekenzins",
+      "description": "Der jüngste langfristige Zinssatz, der für die Hypothekenbelastung verwendet wird."
+    },
+    "timeRange": {
+      "label": "Datenzeitraum",
+      "description": "Start- und Endjahre der kontinuierlichen, interpolierten Datensätze."
+    },
+    "incomeRange": {
+      "label": "Reales äquivalisiertes Einkommen",
+      "description": "Repräsentiert das inflationsbereinigte äquivalisierte verfügbare Haushaltseinkommen."
+    },
+    "indexRange": {
+      "label": "Immobilienpreisindex (real)",
+      "description": "Veränderung des Index (Basis 2015) von {startYear} bis {endYear}."
+    }
+  },
+  "MethodologyModal": {
+    "title": "Methodik & Datenquellen",
+    "primarySources": {
+      "title": "Hauptdatenquellen",
+      "p1": "Alle Zeitreihendaten stammen aus dem <link>OECD Data Explorer</link>. Die Analyse kombiniert mehrere Kernindikatoren zu einem konsistenten, inflationsbereinigten Bild.",
+      "housePrices": {
+        "title": "Analytische Immobilienpreisindikatoren",
+        "description": "RPPI-Indizes für reale Immobilienpreise, Mieten und Preis-Einkommens-Verhältnisse. (Aktualisiert am: 13. November 2025)"
+      },
+      "income": {
+        "title": "Einkommensverteilungsdatenbank (IDD)",
+        "description": "Quelle für das äquivalisierte verfügbare Haushaltseinkommen. (Aktualisiert am: 16. Juni 2025)"
+      },
+      "financial": {
+        "title": "Finanzmarktindikatoren",
+        "description": "Langfristige Zinssätze dienen als Proxy für Hypothekenzinsen. (Aktualisiert am: 10. November 2025)"
+      }
+    },
+    "seriesExplained": {
+      "title": "Erklärung der Datenreihen",
+      "p1": "Alle Werte werden in <strong>realen</strong> (inflationsbereinigten) Zahlen mit 2015 als Basisjahr dargestellt.",
+      "realIncome": {
+        "title": "Reales Medianeinkommen (äquivalisiert)",
+        "description": "Angepasst an die Haushaltsgröße und inflationsbereinigt über den Verbraucherpreisindex."
+      },
+      "realHousePrice": {
+        "title": "Geschätzter realer Immobilienpreis",
+        "description": "Basierend auf dem realen Immobilienpreisindex und einem Basispreis von 2015. Formel: <code>(Basispreis 2015 × Index Jahr ÷ Index 2015)</code>."
+      },
+      "mortgageRate": {
+        "title": "Hypothekenzins-Proxy",
+        "description": "Der langfristige Staatsanleihenzins dient als internationale Annäherung an Hypothekenzinsen."
+      },
+      "rentToPrice": {
+        "title": "Miet-Preis-Index",
+        "description": "Misst die Attraktivität von Kaufen vs. Mieten. Hohe Werte begünstigen Mieten."
+      }
+    }
+  }
+}

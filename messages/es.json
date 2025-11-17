@@ -1,0 +1,247 @@
+{
+  "Metadata": {
+    "title": "Accesibilidad de la vivienda en 2025",
+    "description": "Un recorrido visual por la evolución de la accesibilidad a la vivienda."
+  },
+  "Hero": {
+    "title": "Accesibilidad de la vivienda",
+    "subtitle": "¿Cómo ha cambiado la posibilidad de comprar una vivienda a lo largo del tiempo? Explora precios, ingresos y costos hipotecarios ajustados por inflación en los países de la OCDE. <strong>Haz clic en la bandera flotante para ver otros países</strong>"
+  },
+  "Errors": {
+    "noData": "Lo sentimos, no hay datos completos ajustados por inflación para {countryName}. Por favor selecciona otro país."
+  },
+  "Page": {
+    "comparisonSubtitle": "Ordenado por {label} ({direction})",
+    "chartCard_RealHouseholdIncome_title": "Ingreso Real del Hogar",
+    "chartCard_PriceToIncomeRatio_title": "Relación Precio–Ingreso",
+    "chartCard_MortgageBurden_title": "Carga Hipotecaria",
+    "chartCard_PriceToRentIndex_title": "Índice Precio–Alquiler",
+    "chartCard_TotalHouseholds_title": "Total de Hogares",
+    "collapsible_CountryComparison_title": "Comparación entre Países",
+    "collapsible_AssetPerformance_title": "Desempeño de Activos: Propietario vs. Arrendatario",
+    "collapsible_AssetPerformance_subtitle": "Compara qué opción —comprar o alquilar— podría generar más patrimonio con el tiempo.",
+    "collapsible_PersonalOutcome_title": "Simulación Personal",
+    "collapsible_PersonalOutcome_subtitle": "Proyecta tu patrimonio según tu ingreso"
+  },
+  "ChartCard": {
+    "toggleExplanation": "Mostrar/ocultar explicación de {title}",
+    "explanationTitle": "¿Qué es esto?",
+    "incomeExplanation": {
+      "p1": "Este gráfico muestra el <strong>ingreso disponible del hogar</strong> ajustado por inflación a lo largo del tiempo.",
+      "p2": "Una <strong>tendencia al alza</strong> indica que el poder adquisitivo del hogar está aumentando, lo que generalmente mejora la accesibilidad. Todas las cifras están ajustadas a valores de 2015 para permitir comparaciones consistentes.",
+      "p3": "El ingreso está ‘equivalizado’, lo que significa que se ajusta por tamaño del hogar para comparar mejor los niveles de vida."
+    },
+    "ptiExplanation": {
+      "p1": "Esta razón muestra cuántos años de <strong>ingreso bruto del hogar</strong> se necesitarían para comprar una vivienda promedio.",
+      "p2": "Una razón <strong>más alta</strong> indica que la vivienda es <strong>menos accesible</strong>. Todos los datos están ajustados por inflación a dólares de 2015."
+    },
+    "mortgageBurdenExplanation": {
+      "p1": "Muestra el porcentaje del <strong>ingreso bruto del hogar</strong> necesario para cubrir el pago mensual de una hipoteca promedio.",
+      "p2": "Un porcentaje <strong>más alto</strong> implica una mayor carga financiera. Este cálculo usa la misma tasa de interés reciente para todos los años, permitiendo comparaciones justas.",
+      "p3": "La línea del <strong>30%</strong> es un punto de referencia común para medir si un hogar está ‘sobrecargado’ por costos de vivienda."
+    },
+    "priceToRentExplanation": {
+      "p1": "Este índice mide el costo de comprar una vivienda en relación con alquilarla. Se calcula dividiendo el índice de precios de vivienda entre el índice de precios de alquiler.",
+      "p2": "Un índice <strong>más alto</strong> sugiere que los precios de vivienda son elevados respecto al alquiler. Esto puede indicar que alquilar podría ser financieramente más conveniente.",
+      "p3": "El índice está fijado en <strong>100 en 2015</strong>. Valores superiores a 100 indican que comprar se ha vuelto relativamente más caro que alquilar desde 2015."
+    },
+    "totalHouseholdsExplanation": {
+      "p1": "Este gráfico muestra el número total de hogares en el país a lo largo del tiempo.",
+      "p2": "Un <strong>aumento</strong> en la cantidad de hogares puede incrementar la demanda de vivienda, presionando al alza precios y alquileres si la oferta no acompaña.",
+      "p3": "Factores como crecimiento poblacional, migración y cambios en el tamaño del hogar contribuyen a esta tendencia."
+    }
+  },
+  "Charts": {
+    "year": "Año",
+    "AffordabilityTrends": {
+      "yAxisLabel": "Relación",
+      "legend": "Relación Real Precio–Ingreso"
+    },
+    "Income": {
+      "yAxisLabel": "Ingreso Real ({currencyCode})",
+      "legend": "Ingreso Disponible Real (Equivalizado)"
+    },
+    "MortgageBurden": {
+      "yAxisLabel": "Carga Hipotecaria (a tasas actuales)",
+      "legend": "Carga Hipotecaria",
+      "thresholdLabel": "Umbral del 30%"
+    },
+    "PriceToRent": {
+      "yAxisLabel": "Índice (2015 = 100)",
+      "legend": "Índice Real Precio–Alquiler"
+    },
+    "SensitivityCurve": {
+      "yAxisSubtitle": "Eje Y: Ventaja (Arrendatario – Propietario)",
+      "xAxisSubtitle": "Eje X: Retorno del Mercado (%)",
+      "tooltipLabel": "Ventaja del arrendatario",
+      "tooltipTitle": "Retorno del mercado: {value}%",
+      "rentingWins": "Gana alquilar",
+      "buyingWins": "Gana comprar"
+    },
+    "TotalHouseholds": {
+      "yAxisLabel": "Cantidad",
+      "legend": "Total de Hogares"
+    }
+  },
+  "ComparisonTable": {
+    "headers": {
+      "rank": "#",
+      "country": "País",
+      "pti": "Precio–Ingreso",
+      "mps": "Carga Hipotecaria (%)",
+      "ydp": "Años para ahorrar",
+      "year": "Año"
+    },
+    "sortDirection": {
+      "ascending": "Ascendente",
+      "descending": "Descendente"
+    },
+    "sortKeys": {
+      "countryName": "Nombre del país",
+      "pti": "Precio–Ingreso",
+      "mps": "Carga Hipotecaria",
+      "ydp": "Años para ahorrar"
+    },
+    "alignToggle": {
+      "label": "Modo de año",
+      "latest": "Mostrar el último año disponible",
+      "common": "Alinear al mismo año"
+    }
+  },
+  "Snapshot": {
+    "title": "Resumen para {countryName} en {endYear}",
+    "subtitle": "Basado en datos disponibles entre {startYear} y {endYear}.",
+    "housePriceLabel": "Precio Real Estimado de Vivienda",
+    "housePriceUnit": "En moneda local, ajustado por inflación.",
+    "ptiLabel": "Relación Real Precio–Ingreso",
+    "ptiUnit": "Años de ingreso para comprar una vivienda.",
+    "mpsLabel": "Carga Hipotecaria",
+    "mpsUnit": "% del ingreso real destinado a la hipoteca.",
+    "ydpLabel": "Años para el Pago Inicial",
+    "ydpUnit": "Para un perfil promedio de comprador.",
+    "explanation1": "El precio de una vivienda típica ajustado por inflación. Refleja el costo real de la vivienda al eliminar el efecto de la inflación general.",
+    "explanation2": "Una relación de <strong>{pti}</strong> significa que se requieren esos años de ingreso bruto para comprar una vivienda. Una cifra mayor indica menor accesibilidad.",
+    "explanation3": "El porcentaje del ingreso bruto necesario para pagar una hipoteca con tasas actuales. El <strong>30%</strong> es un punto de referencia común.",
+    "explanation4": "El tiempo estimado para ahorrar un <strong>10%</strong> de pago inicial, asumiendo que el hogar ahorra el <strong>10%</strong> de su ingreso anual.",
+    "insightsTitle": "Resumen de Hallazgos"
+  },
+  "AssetPerformanceSimulation": {
+    "disclaimer": "Esta simulación compara resultados a largo plazo entre comprar una vivienda y alquilar e invertir. Usa supuestos simplificados basados en promedios históricos. Todas las cifras están ajustadas por inflación. Son proyecciones, no predicciones — nadie puede anticipar los mercados o los precios de vivienda.",
+    "downPaymentLabel": "Tu Pago Inicial: ",
+    "timeHorizonLabel": "Horizonte Temporal: ",
+    "years": " Años",
+    "homeownerPathTitle": "Escenario Propietario",
+    "finalHomeValue": "Valor Final de la Vivienda: ",
+    "remainingMortgage": "Hipoteca Restante: ",
+    "homeEquity": "Tu Patrimonio en la Vivienda: ",
+    "renterPathTitle": "Escenario Arrendatario e Inversor",
+    "initialInvestment": "Inversión Inicial: ",
+    "addedMonthlySavings": "Ahorro Mensual Adicional: ",
+    "finalInvestmentValue": "Valor Final de la Inversión: ",
+    "verdictTitle": "Después de {yearsToSimulate} años...",
+    "verdictContent": "En este escenario, <strong_label>{choice}</strong_label> podría dejarte con un patrimonio mayor por <strong_accent>{difference}</strong_accent>.",
+    "verdictChoice_buy": "comprar una vivienda",
+    "verdictChoice_rent": "alquilar e invertir",
+    "sensitivityTitle": "Sensibilidad: Retorno del Mercado",
+    "advancedAssumptionsToggle_hide": "Ocultar",
+    "advancedAssumptionsToggle_show": "Mostrar",
+    "advancedAssumptionsToggle_label": " Supuestos Avanzados",
+    "assumption_annualHomePriceGrowth": "Crecimiento Anual del Precio de Vivienda",
+    "assumption_annualStockMarketReturn": "Retorno Anual del Mercado",
+    "assumption_annualRentIncrease": "Aumento Anual del Alquiler",
+    "assumption_annualOwnershipCostRate": "Costo Anual de Propiedad",
+    "assumption_initialRentalYield": "Rendimiento Inicial del Alquiler",
+    "resetButton": "Restablecer Valores"
+  },
+  "PersonalOutcomeSimulation": {
+    "disclaimer": "Este modelo utiliza tu <strong>ingreso neto (después de impuestos)</strong> y el monto que decides ahorrar cada mes. Compara el patrimonio de un propietario con el de un arrendatario que invierte sus ahorros. Es una proyección simplificada — nadie puede predecir el futuro.",
+    "annualIncomeLabel": "Tu Ingreso Anual Después de Impuestos: ",
+    "savingsRateLabel": "Tu Ahorro Mensual: ",
+    "downPaymentLabel": "Pago Inicial: ",
+    "timeHorizonLabel": "Horizonte Temporal: ",
+    "years": " Años",
+    "homeownerPathTitle": "Escenario Propietario",
+    "homeownerNetWorth": "Patrimonio Proyectado (Vivienda): ",
+    "renterPathTitle": "Escenario Arrendatario e Inversor",
+    "renterNetWorth": "Patrimonio Proyectado (Inversiones): ",
+    "verdictTitle": "Después de {yearsToSimulate} años...",
+    "verdictContent": "Según tus datos, <strong_label>{choice}</strong_label> podría generar un patrimonio mayor por <strong_accent>{difference}</strong_accent>.",
+    "verdictChoice_buy": "comprar una vivienda",
+    "verdictChoice_rent": "alquilar e invertir"
+  },
+  "Footer": {
+    "source": "Fuente: Datos de la OCDE",
+    "methodology": "Metodología",
+    "assumptions": "Supuestos",
+    "poweredBy": "Desarrollado por: Alpine Tech Inc."
+  },
+  "FloatingControls": {
+    "changeCountry": "Cambiar país",
+    "viewing": "Viendo:",
+    "flagOf": "Bandera de {countryName}",
+    "changeLanguage": "Cambiar idioma",
+    "language": "Idioma:"
+  },
+  "AssumptionsModal": {
+    "title": "Supuestos Clave para {countryName}",
+    "basePrice": {
+      "label": "Precio Base de Vivienda (2015)",
+      "description": "Precio de referencia en moneda local usado para convertir el índice. Fuente: {source}"
+    },
+    "mortgageRate": {
+      "label": "Tasa Hipotecaria Reciente",
+      "description": "La tasa de interés a largo plazo más reciente, usada para todos los cálculos de carga hipotecaria."
+    },
+    "timeRange": {
+      "label": "Rango Temporal de Datos",
+      "description": "Años inicial y final de la serie continua e interpolada."
+    },
+    "incomeRange": {
+      "label": "Rango del Ingreso Real Equivalizado",
+      "description": "Representa el ‘Ingreso Disponible Equivalizado del Hogar’, ajustado por inflación y tamaño del hogar para permitir comparaciones más precisas."
+    },
+    "indexRange": {
+      "label": "Rango del Índice Real de Precios de Vivienda",
+      "description": "Cambio del índice con base 2015 entre {startYear} y {endYear}."
+    }
+  },
+  "MethodologyModal": {
+    "title": "Metodología y Fuentes de Datos",
+    "primarySources": {
+      "title": "Fuentes Principales",
+      "p1": "Todos los datos de series temporales provienen del <link>OECD Data Explorer</link>. El análisis combina varios indicadores clave para construir una visión coherente y ajustada por inflación de la accesibilidad a la vivienda.",
+      "housePrices": {
+        "title": "Indicadores Analíticos de Precios de Vivienda",
+        "description": "Incluyen los Índices de Precios Residenciales (RPPI) usados para calcular precios reales de vivienda, alquileres y razones precio–ingreso. (Actualizado: 13 Nov 2025)"
+      },
+      "income": {
+        "title": "Base de Datos de Distribución del Ingreso (IDD)",
+        "description": "Fuente del indicador de ‘Ingreso Disponible Equivalizado del Hogar’, incluyendo datos de niveles de ingreso, desigualdad y pobreza. (Actualizado: 16 Jun 2025)"
+      },
+      "financial": {
+        "title": "Indicadores de Mercado Financiero",
+        "description": "Las tasas de interés a largo plazo (bonos soberanos) se usan como aproximación coherente para las tasas hipotecarias entre países. (Actualizado: 10 Nov 2025)"
+      }
+    },
+    "seriesExplained": {
+      "title": "Explicación de las Series",
+      "p1": "La aplicación construye métricas de accesibilidad combinando estas fuentes. Todas las métricas se muestran en términos <strong>reales (ajustados por inflación)</strong> usando 2015 como año base.",
+      "realIncome": {
+        "title": "Ingreso Real Mediano (Equivalizado)",
+        "description": "Ajusta el ingreso total del hogar según el tamaño del mismo, representando mejor los recursos económicos disponibles por persona. Luego se ajusta por inflación usando el IPC."
+      },
+      "realHousePrice": {
+        "title": "Precio Real Estimado de Vivienda",
+        "description": "Se calcula a partir del Índice Real de Precios de Vivienda de la OCDE, anclado a un precio base representativo de 2015. Fórmula: <code>(Precio Base 2015) × (Índice del Año ÷ Índice 2015)</code>."
+      },
+      "mortgageRate": {
+        "title": "Tasa Hipotecaria (Proxy de Tasa a Largo Plazo)",
+        "description": "La tasa de bonos gubernamentales a largo plazo se usa como aproximación estándar para tasas hipotecarias en todos los países."
+      },
+      "rentToPrice": {
+        "title": "Índice Alquiler–Precio",
+        "description": "Mide el costo relativo entre comprar y alquilar. Un valor alto puede indicar menor rentabilidad para propietarios o mayor conveniencia al alquilar."
+      }
+    }
+  }
+}

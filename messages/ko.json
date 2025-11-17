@@ -1,0 +1,247 @@
+{
+  "Metadata": {
+    "title": "2025 주택 접근성 분석",
+    "description": "시간에 따라 변화한 주택 접근성의 흐름을 시각적으로 보여줍니다."
+  },
+  "Hero": {
+    "title": "주택 접근성",
+    "subtitle": "집을 사기 쉬운 정도는 시간이 지나며 어떻게 변했을까요? 물가를 반영한 주택 가격, 소득, 모기지 비용을 OECD 국가 간에 비교해 보세요. <strong>오른쪽 아래의 떠 있는 국기를 클릭해 다른 국가를 선택하세요</strong>"
+  },
+  "Errors": {
+    "noData": "{countryName}의 물가 조정된 주택 접근성 데이터가 충분하지 않습니다. 다른 국가를 선택해 주세요."
+  },
+  "Page": {
+    "comparisonSubtitle": "{label} 기준 정렬 ({direction})",
+    "chartCard_RealHouseholdIncome_title": "실질 가계소득",
+    "chartCard_PriceToIncomeRatio_title": "가격/소득 비율",
+    "chartCard_MortgageBurden_title": "모기지 부담률",
+    "chartCard_PriceToRentIndex_title": "매매/임대 지수",
+    "chartCard_TotalHouseholds_title": "총 가구 수",
+    "collapsible_CountryComparison_title": "국가 비교",
+    "collapsible_AssetPerformance_title": "자산 비교: 주택 구매 vs. 임대",
+    "collapsible_AssetPerformance_subtitle": "주택 구매와 임대+투자 중 어떤 선택이 더 높은 장기 자산을 만들 수 있는지 비교합니다.",
+    "collapsible_PersonalOutcome_title": "개인별 시뮬레이션",
+    "collapsible_PersonalOutcome_subtitle": "당신의 소득을 기준으로 미래 자산을 추정합니다."
+  },
+  "ChartCard": {
+    "toggleExplanation": "{title} 설명 보기/숨기기",
+    "explanationTitle": "무엇을 의미하나요?",
+    "incomeExplanation": {
+      "p1": "이 그래프는 물가를 반영한 <strong>가계 가처분소득</strong>의 변화를 보여줍니다.",
+      "p2": "<strong>상승 추세</strong>는 구매력이 증가하고 주택 접근성이 개선되고 있음을 의미합니다. 모든 값은 2015년 기준으로 조정되었습니다.",
+      "p3": "소득은 가구 규모를 반영한 ‘등가화 소득’을 사용하여 국가 간 생활 수준을 더 정확히 비교할 수 있습니다."
+    },
+    "ptiExplanation": {
+      "p1": "평균적인 집을 사기 위해 필요한 <strong>가구 총소득 연수</strong>를 나타내는 지표입니다.",
+      "p2": "수치가 <strong>높을수록</strong> 주택 구매가 어려운 상황을 의미합니다. 모든 데이터는 2015년 기준 물가로 조정됩니다."
+    },
+    "mortgageBurdenExplanation": {
+      "p1": "평균적인 집을 구입했을 때 월 모기지 상환액이 <strong>가구 총소득의 몇 퍼센트</strong>인지 보여줍니다.",
+      "p2": "부담률이 <strong>높을수록</strong> 가계 재정에 압박이 커집니다. 비교의 일관성을 위해 모든 연도에 최신 금리를 적용합니다.",
+      "p3": "<strong>30% 기준선</strong>은 일반적으로 ‘주거비 과부담’의 기준으로 사용됩니다."
+    },
+    "priceToRentExplanation": {
+      "p1": "매매 가격과 임대료의 상대적인 수준을 보여주는 지수입니다.",
+      "p2": "지수가 <strong>높을수록</strong> 임대에 비해 주택 구매가 더 비싸졌음을 의미합니다.",
+      "p3": "2015년을 <strong>100</strong>으로 기준 삼으며, 이보다 높은 값은 시간이 지날수록 매매가가 상대적으로 더 비싸졌음을 나타냅니다."
+    },
+    "totalHouseholdsExplanation": {
+      "p1": "국가 전체 가구 수의 변화를 보여줍니다.",
+      "p2": "가구 수 <strong>증가</strong>는 주택 수요를 높이고 가격·임대료 상승 압력을 만들 수 있습니다.",
+      "p3": "인구 증가, 이민, 1~2인 가구 증가 등이 주요 요인입니다."
+    }
+  },
+  "Charts": {
+    "year": "연도",
+    "AffordabilityTrends": {
+      "yAxisLabel": "비율",
+      "legend": "실질 가격/소득 비율"
+    },
+    "Income": {
+      "yAxisLabel": "실질 소득 ({currencyCode})",
+      "legend": "실질 가처분소득 (등가화)"
+    },
+    "MortgageBurden": {
+      "yAxisLabel": "모기지 부담률 (현재 금리)",
+      "legend": "모기지 부담률",
+      "thresholdLabel": "30% 기준"
+    },
+    "PriceToRent": {
+      "yAxisLabel": "지수 (2015 = 100)",
+      "legend": "실질 매매/임대 지수"
+    },
+    "SensitivityCurve": {
+      "yAxisSubtitle": "Y축: 차이 (임대 – 구매)",
+      "xAxisSubtitle": "X축: 시장 수익률 (%)",
+      "tooltipLabel": "임대가 유리",
+      "tooltipTitle": "시장 수익률: {value}%",
+      "rentingWins": "임대가 유리",
+      "buyingWins": "구매가 유리"
+    },
+    "TotalHouseholds": {
+      "yAxisLabel": "가구 수",
+      "legend": "총 가구 수"
+    }
+  },
+  "ComparisonTable": {
+    "headers": {
+      "rank": "#",
+      "country": "국가",
+      "pti": "가격/소득",
+      "mps": "모기지 부담 (%)",
+      "ydp": "저축 필요 연수",
+      "year": "연도"
+    },
+    "sortDirection": {
+      "ascending": "오름차순",
+      "descending": "내림차순"
+    },
+    "sortKeys": {
+      "countryName": "국가명",
+      "pti": "가격/소득",
+      "mps": "모기지 부담",
+      "ydp": "저축 필요 연수"
+    },
+    "alignToggle": {
+      "label": "연도 모드",
+      "latest": "최신 연도 표시",
+      "common": "동일 연도로 정렬"
+    }
+  },
+  "Snapshot": {
+    "title": "{countryName} – {endYear}년 스냅샷",
+    "subtitle": "{startYear}년부터 {endYear}년까지의 데이터를 기반으로 합니다.",
+    "housePriceLabel": "추정 실질 주택 가격",
+    "housePriceUnit": "현지통화, 물가조정값",
+    "ptiLabel": "실질 가격/소득 비율",
+    "ptiUnit": "집을 사기 위해 필요한 소득 연수",
+    "mpsLabel": "모기지 부담률",
+    "mpsUnit": "실질 소득 대비 비율",
+    "ydpLabel": "다운페이먼트까지의 연수",
+    "ydpUnit": "평균 가구 기준",
+    "explanation1": "물가 조정된 평균 주택 가격으로, 실질적인 주택 부담 수준을 보여줍니다.",
+    "explanation2": "<strong>{pti}</strong>은 필요한 소득 연수를 의미하며 값이 높을수록 부담이 큽니다.",
+    "explanation3": "최신 금리를 기준으로 계산한 모기지 지출 비율입니다.",
+    "explanation4": "가구가 연 소득의 <strong>10%</strong>를 저축한다고 가정했을 때 10% 다운페이를 모으는 데 걸리는 예상 기간입니다.",
+    "insightsTitle": "요약 인사이트"
+  },
+  "AssetPerformanceSimulation": {
+    "disclaimer": "이 시뮬레이션은 구매 vs. 임대+투자의 장기적인 자산 형성 차이를 비교합니다. 모든 값은 물가 조정값이며, 역사적 평균 기반의 단순 모델입니다. 미래를 예측하는 것은 아닙니다.",
+    "downPaymentLabel": "다운페이먼트: ",
+    "timeHorizonLabel": "기간: ",
+    "years": " 년",
+    "homeownerPathTitle": "구매 시나리오",
+    "finalHomeValue": "미래 주택 가치: ",
+    "remainingMortgage": "남은 모기지: ",
+    "homeEquity": "주택 순자산: ",
+    "renterPathTitle": "임대+투자 시나리오",
+    "initialInvestment": "초기 투자액: ",
+    "addedMonthlySavings": "월 추가 투자액: ",
+    "finalInvestmentValue": "미래 투자 가치: ",
+    "verdictTitle": "{yearsToSimulate}년 후…",
+    "verdictContent": "이 조건에서는 <strong_label>{choice}</strong_label> 선택 시 <strong_accent>{difference}</strong_accent> 만큼 더 높은 자산을 형성할 가능성이 있습니다.",
+    "verdictChoice_buy": "구매",
+    "verdictChoice_rent": "임대+투자",
+    "sensitivityTitle": "감도 분석: 시장 수익률",
+    "advancedAssumptionsToggle_hide": "숨기기",
+    "advancedAssumptionsToggle_show": "보기",
+    "advancedAssumptionsToggle_label": " 고급 설정",
+    "assumption_annualHomePriceGrowth": "주택 가격 연간 상승률",
+    "assumption_annualStockMarketReturn": "시장 연수익률",
+    "assumption_annualRentIncrease": "임대료 연간 상승률",
+    "assumption_annualOwnershipCostRate": "연간 보유비용률",
+    "assumption_initialRentalYield": "초기 임대수익률",
+    "resetButton": "초기값으로 재설정"
+  },
+  "PersonalOutcomeSimulation": {
+    "disclaimer": "이 모델은 당신의 <strong>세후 실질 소득</strong>과 매월 저축하는 금액을 바탕으로 미래 순자산을 예측합니다. 주택 구매와 임대+투자를 비교한 단순화된 계산이며, 미래를 정확히 예측하는 것은 아닙니다.",
+    "annualIncomeLabel": "세후 연 소득: ",
+    "savingsRateLabel": "월 저축액: ",
+    "downPaymentLabel": "다운페이먼트: ",
+    "timeHorizonLabel": "기간: ",
+    "years": " 년",
+    "homeownerPathTitle": "구매 시나리오",
+    "homeownerNetWorth": "예상 순자산 (주택): ",
+    "renterPathTitle": "임대+투자 시나리오",
+    "renterNetWorth": "예상 순자산 (투자): ",
+    "verdictTitle": "{yearsToSimulate}년 후…",
+    "verdictContent": "당신의 조건에서는 <strong_label>{choice}</strong_label> 선택이 <strong_accent>{difference}</strong_accent> 만큼 더 높은 순자산을 제공할 수 있습니다.",
+    "verdictChoice_buy": "구매",
+    "verdictChoice_rent": "임대+투자"
+  },
+  "Footer": {
+    "source": "출처: OECD 데이터",
+    "methodology": "방법론",
+    "assumptions": "가정",
+    "poweredBy": "제공: Alpine Tech Inc."
+  },
+  "FloatingControls": {
+    "changeCountry": "국가 변경",
+    "viewing": "현재 국가:",
+    "flagOf": "{countryName} 국기",
+    "changeLanguage": "언어 변경",
+    "language": "언어:"
+  },
+  "AssumptionsModal": {
+    "title": "{countryName} 주요 가정",
+    "basePrice": {
+      "label": "2015년 기준 주택 가격",
+      "description": "지수를 금액으로 변환하기 위한 기준 가격입니다. 출처: {source}"
+    },
+    "mortgageRate": {
+      "label": "최신 모기지 금리",
+      "description": "모든 연도의 계산에 사용되는 최신 장기 금리입니다."
+    },
+    "timeRange": {
+      "label": "데이터 범위",
+      "description": "연속 보간된 데이터의 시작 연도와 종료 연도입니다."
+    },
+    "incomeRange": {
+      "label": "실질 등가화 소득 범위",
+      "description": "가구 규모를 반영하고 물가를 조정한 소득입니다."
+    },
+    "indexRange": {
+      "label": "주택 가격 지수 변화",
+      "description": "2015년 기준 지수의 변화 ({startYear}~{endYear})."
+    }
+  },
+  "MethodologyModal": {
+    "title": "방법론 및 데이터 출처",
+    "primarySources": {
+      "title": "핵심 데이터 출처",
+      "p1": "모든 시계열 데이터는 <link>OECD Data Explorer</link>에서 가져옵니다. 여러 주요 지표를 결합하여 물가를 반영한 일관된 주택 접근성 분석을 구성합니다.",
+      "housePrices": {
+        "title": "주택 가격 분석 지표",
+        "description": "주택 가격, 임대료, 가격/소득 비율 산출에 사용되는 RPPI 지수. (최근 업데이트: 2025-11-13)"
+      },
+      "income": {
+        "title": "소득 분포 데이터베이스 (IDD)",
+        "description": "등가화 가처분소득 데이터를 제공. (최근 업데이트: 2025-06-16)"
+      },
+      "financial": {
+        "title": "금융시장 지표",
+        "description": "장기 금리는 모기지 금리의 신뢰할 만한 대리 지표입니다. (최근 업데이트: 2025-11-10)"
+      }
+    },
+    "seriesExplained": {
+      "title": "지표 설명",
+      "p1": "모든 지표는 2015년 기준으로 <strong>물가 조정된 실질 값</strong>입니다.",
+      "realIncome": {
+        "title": "실질 중위소득 (등가화)",
+        "description": "가구 규모를 고려해 조정하고 CPI로 실질화합니다."
+      },
+      "realHousePrice": {
+        "title": "추정 실질 주택 가격",
+        "description": "2015년 기준 가격과 주택 가격 지수를 이용해 계산합니다."
+      },
+      "mortgageRate": {
+        "title": "모기지 금리 대리지표",
+        "description": "10년물 국채 금리 등 장기 금리는 실제 모기지 금리와 밀접하게 움직입니다."
+      },
+      "rentToPrice": {
+        "title": "임대/매매 지수",
+        "description": "임대 또는 구매 중 어떤 선택이 더 유리한지 보여주는 지표입니다."
+      }
+    }
+  }
+}

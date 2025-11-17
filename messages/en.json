@@ -126,7 +126,7 @@
     "insightsTitle": "Insight Summary"
   },
   "AssetPerformanceSimulation": {
-    "disclaimer": "This simulation projects potential long-term outcomes for buying a home versus renting and investing your savings. The numbers are based on historical averages and simplifying assumptions <strong>not</strong> predictions. Markets, housing prices, and personal circumstances can change in ways no model can fully anticipate. <strong>Nobody can predict the future.</strong>",
+    "disclaimer": "This simulation compares long-term outcomes for buying a home versus renting and investing. It uses simplified assumptions based on historical averages. All figures are inflation-adjusted. These are projections, not predictions — nobody can forecast future markets or housing prices.",
     "downPaymentLabel": "Your Down Payment: ",
     "timeHorizonLabel": "Time Horizon: ",
     "years": " Years",
@@ -154,9 +154,9 @@
     "resetButton": "Reset to Defaults"
   },
   "PersonalOutcomeSimulation": {
-    "disclaimer": "This model projects your potential net worth based on your income and savings habits. It compares a homeowner&apos;s equity against a renter&apos;s invested savings. This is a simplified model, nobody can predict the future in a problem like this.",
-    "annualIncomeLabel": "Your Annual Income: ",
-    "savingsRateLabel": "Your Savings Rate: ",
+    "disclaimer": "This model uses your <strong>after-tax (disposable) income</strong> and the amount you choose to save each month. It compares a homeowner’s equity against a renter’s invested savings. This is a simplified projection — nobody can predict the future.",
+    "annualIncomeLabel": "Your Annual After-Tax Income: ",
+    "savingsRateLabel": "Your Monthly Savings: ",
     "downPaymentLabel": "Down Payment: ",
     "timeHorizonLabel": "Time Horizon: ",
     "years": " Years",

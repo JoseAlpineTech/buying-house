@@ -1,0 +1,247 @@
+{
+  "Metadata": {
+    "title": "Accessibilité au logement en 2025",
+    "description": "Un parcours visuel à travers l’évolution de l’accessibilité au logement."
+  },
+  "Hero": {
+    "title": "Accessibilité au logement",
+    "subtitle": "Comment la possibilité d’acheter un logement a-t-elle évolué au fil du temps ? Explorez les prix, les revenus et les coûts hypothécaires ajustés de l’inflation dans les pays de l’OCDE. <strong>Cliquez sur le drapeau flottant pour consulter d’autres pays</strong>"
+  },
+  "Errors": {
+    "noData": "Désolé, les données complètes ajustées de l’inflation ne sont pas disponibles pour {countryName}. Veuillez sélectionner un autre pays."
+  },
+  "Page": {
+    "comparisonSubtitle": "Trié par {label} ({direction})",
+    "chartCard_RealHouseholdIncome_title": "Revenu Réel des Ménages",
+    "chartCard_PriceToIncomeRatio_title": "Ratio Prix/Revenu",
+    "chartCard_MortgageBurden_title": "Charge Hypothécaire",
+    "chartCard_PriceToRentIndex_title": "Indice Prix/Location",
+    "chartCard_TotalHouseholds_title": "Nombre de Ménages",
+    "collapsible_CountryComparison_title": "Comparaison entre Pays",
+    "collapsible_AssetPerformance_title": "Performance : Propriétaire vs. Locataire",
+    "collapsible_AssetPerformance_subtitle": "Compare quelle option — acheter ou louer — pourrait faire croître davantage votre patrimoine au fil du temps.",
+    "collapsible_PersonalOutcome_title": "Simulation Personnelle",
+    "collapsible_PersonalOutcome_subtitle": "Projetez votre patrimoine selon votre revenu"
+  },
+  "ChartCard": {
+    "toggleExplanation": "Afficher/masquer l’explication de {title}",
+    "explanationTitle": "Qu’est-ce que c’est ?",
+    "incomeExplanation": {
+      "p1": "Ce graphique montre l’évolution du <strong>revenu disponible des ménages</strong> ajusté de l’inflation.",
+      "p2": "Une <strong>tendance à la hausse</strong> indique que le pouvoir d’achat des ménages augmente, ce qui améliore généralement l’accessibilité au logement. Toutes les valeurs sont ajustées au niveau de 2015.",
+      "p3": "Le revenu est « équivalisé », c’est-à-dire ajusté en fonction de la taille du ménage afin de comparer équitablement les niveaux de vie."
+    },
+    "ptiExplanation": {
+      "p1": "Ce ratio indique combien d’années de <strong>revenu brut du ménage</strong> seraient nécessaires pour acheter un logement moyen.",
+      "p2": "Un ratio <strong>plus élevé</strong> signifie que l’accessibilité est <strong>plus faible</strong>. Les données sont ajustées de l’inflation en dollars de 2015."
+    },
+    "mortgageBurdenExplanation": {
+      "p1": "Ce graphique montre le pourcentage du <strong>revenu brut des ménages</strong> nécessaire pour couvrir le paiement mensuel d’un prêt hypothécaire moyen.",
+      "p2": "Un pourcentage <strong>plus élevé</strong> signifie une charge financière plus lourde. Le calcul utilise la même récente taux d’intérêt pour chaque année afin de garantir une comparaison juste.",
+      "p3": "La ligne du <strong>30 %</strong> représente un seuil couramment utilisé pour déterminer si un ménage est « surchargé » par ses frais de logement."
+    },
+    "priceToRentExplanation": {
+      "p1": "Cet indice mesure le coût d’achat d’un logement par rapport à sa location. Il est calculé en divisant l’indice des prix de l’immobilier par l’indice des loyers.",
+      "p2": "Un indice <strong>plus élevé</strong> suggère que les prix de l’immobilier sont élevés par rapport aux loyers, ce qui peut indiquer qu’il est plus avantageux de louer que d’acheter.",
+      "p3": "L’indice est fixé à <strong>100 en 2015</strong>. Une valeur supérieure à 100 signifie que l’achat est devenu relativement plus cher que la location depuis 2015."
+    },
+    "totalHouseholdsExplanation": {
+      "p1": "Ce graphique montre l’évolution du nombre total de ménages dans le pays.",
+      "p2": "Une <strong>augmentation</strong> du nombre de ménages peut accroître la demande de logements, ce qui pousse les prix et les loyers à la hausse si l’offre ne suit pas.",
+      "p3": "Le changement démographique, la migration et la baisse de la taille moyenne des ménages influencent ces tendances."
+    }
+  },
+  "Charts": {
+    "year": "Année",
+    "AffordabilityTrends": {
+      "yAxisLabel": "Ratio",
+      "legend": "Ratio Prix/Revenu Réel"
+    },
+    "Income": {
+      "yAxisLabel": "Revenu Réel ({currencyCode})",
+      "legend": "Revenu Disponible Réel (Équivalisé)"
+    },
+    "MortgageBurden": {
+      "yAxisLabel": "Charge Hypothécaire (taux actuels)",
+      "legend": "Charge Hypothécaire",
+      "thresholdLabel": "Seuil de 30 %"
+    },
+    "PriceToRent": {
+      "yAxisLabel": "Indice (2015 = 100)",
+      "legend": "Indice Prix/Location Réel"
+    },
+    "SensitivityCurve": {
+      "yAxisSubtitle": "Axe Y : Avantage (Locataire – Propriétaire)",
+      "xAxisSubtitle": "Axe X : Rendement du Marché (%)",
+      "tooltipLabel": "Avantage du locataire",
+      "tooltipTitle": "Rendement du marché : {value} %",
+      "rentingWins": "Avantage à la location",
+      "buyingWins": "Avantage à l’achat"
+    },
+    "TotalHouseholds": {
+      "yAxisLabel": "Nombre",
+      "legend": "Total des Ménages"
+    }
+  },
+  "ComparisonTable": {
+    "headers": {
+      "rank": "#",
+      "country": "Pays",
+      "pti": "Prix/Revenu",
+      "mps": "Charge Hyp. (%)",
+      "ydp": "Années d’épargne",
+      "year": "Année"
+    },
+    "sortDirection": {
+      "ascending": "Ascendant",
+      "descending": "Descendant"
+    },
+    "sortKeys": {
+      "countryName": "Nom du pays",
+      "pti": "Prix/Revenu",
+      "mps": "Charge Hypothécaire",
+      "ydp": "Années d’épargne"
+    },
+    "alignToggle": {
+      "label": "Mode année",
+      "latest": "Afficher la dernière année",
+      "common": "Aligner à la même année"
+    }
+  },
+  "Snapshot": {
+    "title": "Aperçu pour {countryName} en {endYear}",
+    "subtitle": "Basé sur les données disponibles de {startYear} à {endYear}.",
+    "housePriceLabel": "Prix Immobilier Réel Estimé",
+    "housePriceUnit": "En monnaie locale, ajusté de l’inflation.",
+    "ptiLabel": "Ratio Réel Prix/Revenu",
+    "ptiUnit": "Années de revenu nécessaires pour acheter.",
+    "mpsLabel": "Charge Hypothécaire",
+    "mpsUnit": "% du revenu réel consacré au prêt.",
+    "ydpLabel": "Années pour le Paiement Initial",
+    "ydpUnit": "Pour un ménage acheteur moyen.",
+    "explanation1": "Prix d’un logement type ajusté de l’inflation, reflétant le coût réel du logement.",
+    "explanation2": "Un ratio de <strong>{pti}</strong> signifie qu’il faut cet nombre d’années de revenu brut pour acheter un logement.",
+    "explanation3": "Pourcentage du revenu brut nécessaire pour payer une hypothèque au taux actuel.",
+    "explanation4": "Temps estimé pour économiser un <strong>acompte de 10 %</strong>, en supposant que le ménage épargne 10 % de son revenu annuel.",
+    "insightsTitle": "Résumé des Conclusions"
+  },
+  "AssetPerformanceSimulation": {
+    "disclaimer": "Cette simulation compare les résultats à long terme entre acheter un logement et louer puis investir. Les hypothèses sont simplifiées et basées sur des moyennes historiques. Toutes les valeurs sont ajustées de l’inflation. Il s’agit de projections, pas de prédictions — personne ne peut prévoir les marchés.",
+    "downPaymentLabel": "Votre Acompte : ",
+    "timeHorizonLabel": "Horizon Temporel : ",
+    "years": " Ans",
+    "homeownerPathTitle": "Scénario Propriétaire",
+    "finalHomeValue": "Valeur Finale du Logement : ",
+    "remainingMortgage": "Hypothèque Restante : ",
+    "homeEquity": "Votre Équité Immobilière : ",
+    "renterPathTitle": "Scénario Locataire & Investisseur",
+    "initialInvestment": "Investissement Initial : ",
+    "addedMonthlySavings": "Épargne Mensuelle Supplémentaire : ",
+    "finalInvestmentValue": "Valeur Finale de l’Investissement : ",
+    "verdictTitle": "Après {yearsToSimulate} ans...",
+    "verdictContent": "Selon ce scénario, <strong_label>{choice}</strong_label> pourrait vous laisser un patrimoine supérieur de <strong_accent>{difference}</strong_accent>.",
+    "verdictChoice_buy": "acheter un logement",
+    "verdictChoice_rent": "louer et investir",
+    "sensitivityTitle": "Sensibilité : Rendement du Marché",
+    "advancedAssumptionsToggle_hide": "Masquer",
+    "advancedAssumptionsToggle_show": "Afficher",
+    "advancedAssumptionsToggle_label": " Hypothèses Avancées",
+    "assumption_annualHomePriceGrowth": "Croissance Annuelle du Prix",
+    "assumption_annualStockMarketReturn": "Rendement Annuel du Marché",
+    "assumption_annualRentIncrease": "Augmentation Annuelle du Loyer",
+    "assumption_annualOwnershipCostRate": "Coût Annuel de Propriété",
+    "assumption_initialRentalYield": "Rendement Locatif Initial",
+    "resetButton": "Réinitialiser"
+  },
+  "PersonalOutcomeSimulation": {
+    "disclaimer": "Ce modèle utilise votre <strong>revenu net (après impôts)</strong> ainsi que le montant que vous choisissez d’épargner chaque mois. Il compare l’équité d’un propriétaire avec le patrimoine accumulé par un locataire investissant son épargne. Il s’agit d’une projection simplifiée — personne ne peut prédire l’avenir.",
+    "annualIncomeLabel": "Votre Revenu Annuel Après Impôts : ",
+    "savingsRateLabel": "Votre Épargne Mensuelle : ",
+    "downPaymentLabel": "Acompte : ",
+    "timeHorizonLabel": "Horizon Temporel : ",
+    "years": " Ans",
+    "homeownerPathTitle": "Scénario Propriétaire",
+    "homeownerNetWorth": "Patrimoine Projeté (Logement) : ",
+    "renterPathTitle": "Scénario Locataire & Investisseur",
+    "renterNetWorth": "Patrimoine Projeté (Investissements) : ",
+    "verdictTitle": "Après {yearsToSimulate} ans...",
+    "verdictContent": "Selon vos données, <strong_label>{choice}</strong_label> pourrait générer un patrimoine supérieur de <strong_accent>{difference}</strong_accent>.",
+    "verdictChoice_buy": "acheter un logement",
+    "verdictChoice_rent": "louer et investir"
+  },
+  "Footer": {
+    "source": "Source : Données OCDE",
+    "methodology": "Méthodologie",
+    "assumptions": "Hypothèses",
+    "poweredBy": "Propulsé par : Alpine Tech Inc."
+  },
+  "FloatingControls": {
+    "changeCountry": "Changer de pays",
+    "viewing": "Vue :",
+    "flagOf": "Drapeau de {countryName}",
+    "changeLanguage": "Changer de langue",
+    "language": "Langue :"
+  },
+  "AssumptionsModal": {
+    "title": "Hypothèses Clés pour {countryName}",
+    "basePrice": {
+      "label": "Prix de Base du Logement (2015)",
+      "description": "Prix de référence en monnaie locale utilisé pour convertir l’indice. Source : {source}"
+    },
+    "mortgageRate": {
+      "label": "Dernier Taux Hypothécaire",
+      "description": "Le taux d’intérêt à long terme le plus récent utilisé pour les calculs de charge hypothécaire."
+    },
+    "timeRange": {
+      "label": "Plage Temporelle des Données",
+      "description": "Années de début et de fin de la série interpolée continue."
+    },
+    "incomeRange": {
+      "label": "Plage du Revenu Réel Équivalisé",
+      "description": "Représente le « revenu disponible équivalisé », ajusté selon le taille du ménage et l’inflation."
+    },
+    "indexRange": {
+      "label": "Plage de l’Indice Réel des Prix Immobiliers",
+      "description": "Variation de l’indice basé sur 2015 entre {startYear} et {endYear}."
+    }
+  },
+  "MethodologyModal": {
+    "title": "Méthodologie & Sources",
+    "primarySources": {
+      "title": "Sources Principales",
+      "p1": "Toutes les données proviennent du <link>OECD Data Explorer</link>. L’analyse combine plusieurs indicateurs pour obtenir une vision cohérente et ajustée de l’accessibilité au logement.",
+      "housePrices": {
+        "title": "Indicateurs Analytiques des Prix Immobiliers",
+        "description": "Indices RPPI utilisés pour calculer prix réels, loyers et ratios prix/revenu. (Mise à jour : 13 nov. 2025)"
+      },
+      "income": {
+        "title": "Base de Données sur la Distribution des Revenus (IDD)",
+        "description": "Source du revenu disponible équivalisé, incluant niveaux, inégalités et pauvreté. (Mise à jour : 16 juin 2025)"
+      },
+      "financial": {
+        "title": "Indicateurs des Marchés Financiers",
+        "description": "Les taux de rendement obligataire à long terme servent de proxy pour les taux hypothécaires. (Mise à jour : 10 nov. 2025)"
+      }
+    },
+    "seriesExplained": {
+      "title": "Explication des Séries",
+      "p1": "Toutes les valeurs sont présentées en termes <strong>réels</strong>, ajustées de l’inflation, avec 2015 comme année de référence.",
+      "realIncome": {
+        "title": "Revenu Médian Réel (Équivalisé)",
+        "description": "Ajusté selon la taille du ménage, puis selon l’inflation via l’IPC."
+      },
+      "realHousePrice": {
+        "title": "Prix Immobilier Réel Estimé",
+        "description": "Basé sur l’indice immobilier réel et un prix de référence 2015. Formule : <code>(Prix Base 2015) × (Indice Année ÷ Indice 2015)</code>."
+      },
+      "mortgageRate": {
+        "title": "Proxy de Taux Hypothécaire",
+        "description": "Le rendement obligataire à long terme est utilisé comme approximation pour les taux hypothécaires internationaux."
+      },
+      "rentToPrice": {
+        "title": "Indice Location/Prix",
+        "description": "Mesure le rapport entre louer et acheter. Un indice élevé favorise la location."
+      }
+    }
+  }
+}

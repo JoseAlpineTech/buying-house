@@ -1,0 +1,247 @@
+{
+  "Metadata": {
+    "title": "Acessibilidade Habitacional em 2025",
+    "description": "Uma visualização das dinâmicas de acessibilidade habitacional ao longo do tempo."
+  },
+  "Hero": {
+    "title": "Acessibilidade Habitacional",
+    "subtitle": "Como mudou, ao longo dos anos, a capacidade de comprar uma casa? Explore preços, rendimentos e custos hipotecários ajustados pela inflação nos países da OCDE. <strong>Clique na bandeira flutuante para ver outros países</strong>"
+  },
+  "Errors": {
+    "noData": "Lamentamos, mas não existem dados completos ajustados pela inflação sobre acessibilidade habitacional para {countryName}. Por favor, selecione outro país."
+  },
+  "Page": {
+    "comparisonSubtitle": "Ordenado por {label} ({direction})",
+    "chartCard_RealHouseholdIncome_title": "Rendimento Real das Famílias",
+    "chartCard_PriceToIncomeRatio_title": "Rácio Preço/Rendimento",
+    "chartCard_MortgageBurden_title": "Peso da Hipoteca",
+    "chartCard_PriceToRentIndex_title": "Índice Preço/Aluguel",
+    "chartCard_TotalHouseholds_title": "Total de Famílias",
+    "collapsible_CountryComparison_title": "Comparação entre Países",
+    "collapsible_AssetPerformance_title": "Desempenho de Ativos: Proprietário vs. Inquilino",
+    "collapsible_AssetPerformance_subtitle": "Compara qual opção — comprar ou alugar — pode gerar maior riqueza ao longo do tempo.",
+    "collapsible_PersonalOutcome_title": "Simulação Pessoal",
+    "collapsible_PersonalOutcome_subtitle": "Projete seu patrimônio futuro com base no seu rendimento"
+  },
+  "ChartCard": {
+    "toggleExplanation": "Mostrar/ocultar explicação de {title}",
+    "explanationTitle": "O que é isto?",
+    "incomeExplanation": {
+      "p1": "Este gráfico mostra o <strong>rendimento disponível das famílias</strong> ao longo do tempo, ajustado pela inflação.",
+      "p2": "Uma <strong>tendência de alta</strong> indica maior poder de compra, o que geralmente melhora a acessibilidade habitacional. Todos os valores são ajustados para 2015.",
+      "p3": "O rendimento é ‘equivalizado’, ou seja, ajustado pelo tamanho da família para permitir comparações justas."
+    },
+    "ptiExplanation": {
+      "p1": "Este rácio indica quantos anos de <strong>rendimento bruto familiar</strong> seriam necessários para comprar uma casa média.",
+      "p2": "Um valor <strong>mais alto</strong> significa menor acessibilidade. Todos os dados são ajustados para 2015."
+    },
+    "mortgageBurdenExplanation": {
+      "p1": "Mostra a percentagem do <strong>rendimento bruto familiar</strong> necessária para cobrir o pagamento mensal de uma hipoteca típica.",
+      "p2": "Uma percentagem <strong>mais alta</strong> indica maior peso financeiro. O gráfico utiliza a mesma taxa de juro atual para todos os anos, garantindo consistência.",
+      "p3": "A <strong>linha dos 30%</strong> é um limite usado para indicar quando os custos de habitação tornam-se excessivos."
+    },
+    "priceToRentExplanation": {
+      "p1": "Este índice compara o custo de comprar uma casa com o custo de alugá-la.",
+      "p2": "Um índice <strong>mais alto</strong> sugere que os preços das casas estão elevados em relação aos aluguéis, tornando o aluguel potencialmente mais vantajoso.",
+      "p3": "O índice é ajustado para <strong>100 em 2015</strong>. Valores acima disso significam que comprar ficou relativamente mais caro desde 2015."
+    },
+    "totalHouseholdsExplanation": {
+      "p1": "Mostra o número total de famílias no país ao longo do tempo.",
+      "p2": "Um <strong>aumento</strong> no número de famílias pode elevar a procura por habitação e exercer pressão sobre preços e aluguéis.",
+      "p3": "Fatores como crescimento populacional, imigração e redução do tamanho das famílias influenciam essa tendência."
+    }
+  },
+  "Charts": {
+    "year": "Ano",
+    "AffordabilityTrends": {
+      "yAxisLabel": "Rácio",
+      "legend": "Rácio Real Preço/Rendimento"
+    },
+    "Income": {
+      "yAxisLabel": "Rendimento Real ({currencyCode})",
+      "legend": "Rendimento Disponível Real (Equivalizado)"
+    },
+    "MortgageBurden": {
+      "yAxisLabel": "Peso da Hipoteca (taxa atual)",
+      "legend": "Peso da Hipoteca",
+      "thresholdLabel": "Limite de 30%"
+    },
+    "PriceToRent": {
+      "yAxisLabel": "Índice (2015 = 100)",
+      "legend": "Índice Real Preço/Aluguel"
+    },
+    "SensitivityCurve": {
+      "yAxisSubtitle": "Eixo Y: Vantagem (Inquilino – Proprietário)",
+      "xAxisSubtitle": "Eixo X: Retorno do Mercado (%)",
+      "tooltipLabel": "Vantagem para Alugar",
+      "tooltipTitle": "Retorno do Mercado: {value}%",
+      "rentingWins": "Alugar vence",
+      "buyingWins": "Comprar vence"
+    },
+    "TotalHouseholds": {
+      "yAxisLabel": "Quantidade",
+      "legend": "Total de Famílias"
+    }
+  },
+  "ComparisonTable": {
+    "headers": {
+      "rank": "#",
+      "country": "País",
+      "pti": "Preço/Rendimento",
+      "mps": "Peso da Hipoteca (%)",
+      "ydp": "Anos para Poupar",
+      "year": "Ano"
+    },
+    "sortDirection": {
+      "ascending": "Ascendente",
+      "descending": "Descendente"
+    },
+    "sortKeys": {
+      "countryName": "Nome do País",
+      "pti": "Preço/Rendimento",
+      "mps": "Peso da Hipoteca",
+      "ydp": "Anos para Poupar"
+    },
+    "alignToggle": {
+      "label": "Modo de Ano",
+      "latest": "Mostrar ano mais recente",
+      "common": "Alinhar para o mesmo ano"
+    }
+  },
+  "Snapshot": {
+    "title": "Resumo de {countryName} em {endYear}",
+    "subtitle": "Com base nos dados disponíveis de {startYear} até {endYear}.",
+    "housePriceLabel": "Preço Real Estimado da Casa",
+    "housePriceUnit": "Em moeda local, ajustado pela inflação.",
+    "ptiLabel": "Preço/Rendimento Real",
+    "ptiUnit": "Anos de rendimento para comprar uma casa.",
+    "mpsLabel": "Peso da Hipoteca",
+    "mpsUnit": "% do rendimento real para a hipoteca.",
+    "ydpLabel": "Anos até a Entrada",
+    "ydpUnit": "Para um comprador típico.",
+    "explanation1": "O preço ajustado pela inflação de uma casa típica — uma medida clara do custo real de habitação.",
+    "explanation2": "Um rácio de <strong>{pti}</strong> significa que são necessários tantos anos de rendimento bruto.",
+    "explanation3": "A percentagem do rendimento necessária para pagar uma hipoteca com as taxas atuais.",
+    "explanation4": "O tempo necessário para poupar uma entrada de <strong>10%</strong>, assumindo que o agregado poupa 10% do rendimento anual.",
+    "insightsTitle": "Resumo das Informações"
+  },
+  "AssetPerformanceSimulation": {
+    "disclaimer": "Esta simulação compara os resultados de longo prazo de comprar vs. alugar e investir. Usa suposições simplificadas baseadas em médias históricas. Estes valores são projeções, não previsões.",
+    "downPaymentLabel": "Sua Entrada: ",
+    "timeHorizonLabel": "Horizonte Temporal: ",
+    "years": " anos",
+    "homeownerPathTitle": "Caminho do Proprietário",
+    "finalHomeValue": "Valor Final da Casa: ",
+    "remainingMortgage": "Hipoteca Restante: ",
+    "homeEquity": "Seu Patrimônio Imobiliário: ",
+    "renterPathTitle": "Caminho do Inquilino & Investidor",
+    "initialInvestment": "Investimento Inicial: ",
+    "addedMonthlySavings": "Poupança Mensal Adicional: ",
+    "finalInvestmentValue": "Valor Final do Investimento: ",
+    "verdictTitle": "Após {yearsToSimulate} anos...",
+    "verdictContent": "Neste cenário, <strong_label>{choice}</strong_label> pode resultar em maior riqueza de <strong_accent>{difference}</strong_accent>.",
+    "verdictChoice_buy": "comprar",
+    "verdictChoice_rent": "alugar e investir",
+    "sensitivityTitle": "Sensibilidade: Retorno do Mercado",
+    "advancedAssumptionsToggle_hide": "Ocultar",
+    "advancedAssumptionsToggle_show": "Mostrar",
+    "advancedAssumptionsToggle_label": " Suposições Avançadas",
+    "assumption_annualHomePriceGrowth": "Crescimento Anual do Preço da Casa",
+    "assumption_annualStockMarketReturn": "Retorno Anual do Mercado",
+    "assumption_annualRentIncrease": "Aumento Anual do Aluguel",
+    "assumption_annualOwnershipCostRate": "Custo Anual de Propriedade",
+    "assumption_initialRentalYield": "Rendimento Inicial do Aluguel",
+    "resetButton": "Restaurar Padrões"
+  },
+  "PersonalOutcomeSimulation": {
+    "disclaimer": "Este modelo utiliza o seu <strong>rendimento líquido (após impostos)</strong> e o valor que decide poupar por mês. Compara o patrimônio imobiliário de um proprietário com o patrimônio investido de um inquilino. Esta é uma projeção simplificada — ninguém pode prever o futuro.",
+    "annualIncomeLabel": "Seu Rendimento Líquido Anual: ",
+    "savingsRateLabel": "Sua Poupança Mensal: ",
+    "downPaymentLabel": "Entrada: ",
+    "timeHorizonLabel": "Horizonte Temporal: ",
+    "years": " anos",
+    "homeownerPathTitle": "Caminho do Proprietário",
+    "homeownerNetWorth": "Patrimônio Projetado (Imóvel): ",
+    "renterPathTitle": "Caminho do Inquilino & Investidor",
+    "renterNetWorth": "Patrimônio Projetado (Investimentos): ",
+    "verdictTitle": "Após {yearsToSimulate} anos...",
+    "verdictContent": "Com base nos seus dados, <strong_label>{choice}</strong_label> pode resultar em maior patrimônio de <strong_accent>{difference}</strong_accent>.",
+    "verdictChoice_buy": "comprar",
+    "verdictChoice_rent": "alugar e investir"
+  },
+  "Footer": {
+    "source": "Fonte: Dados da OCDE",
+    "methodology": "Metodologia",
+    "assumptions": "Suposições",
+    "poweredBy": "Desenvolvido por: Alpine Tech Inc."
+  },
+  "FloatingControls": {
+    "changeCountry": "Alterar País",
+    "viewing": "Visualizando:",
+    "flagOf": "Bandeira de {countryName}",
+    "changeLanguage": "Alterar Idioma",
+    "language": "Idioma:"
+  },
+  "AssumptionsModal": {
+    "title": "Suposições-Chave para {countryName}",
+    "basePrice": {
+      "label": "Preço Base da Casa (2015)",
+      "description": "Preço de referência usado para converter o índice. Fonte: {source}"
+    },
+    "mortgageRate": {
+      "label": "Taxa Hipotecária Atual",
+      "description": "A taxa de juro mais recente usada para os cálculos de peso da hipoteca."
+    },
+    "timeRange": {
+      "label": "Intervalo de Dados",
+      "description": "Anos inicial e final da série contínua de dados."
+    },
+    "incomeRange": {
+      "label": "Rendimento Real Equivalizado",
+      "description": "Representa o rendimento disponível das famílias, ajustado pela inflação e tamanho da família."
+    },
+    "indexRange": {
+      "label": "Variação do Índice de Preço da Habitação",
+      "description": "Mudança do índice (base 2015) de {startYear} até {endYear}."
+    }
+  },
+  "MethodologyModal": {
+    "title": "Metodologia & Fontes de Dados",
+    "primarySources": {
+      "title": "Principais Fontes de Dados",
+      "p1": "Todos os dados de séries temporais vêm do <link>OECD Data Explorer</link>. A análise combina vários indicadores-chave para fornecer uma visão consistente e ajustada pela inflação.",
+      "housePrices": {
+        "title": "Indicadores Analíticos de Preços da Habitação",
+        "description": "Índices RPPI usados para preços de habitação, aluguéis e rácios preço/rendimento. (Atualizado em: 13 Nov 2025)"
+      },
+      "income": {
+        "title": "Base de Dados da Distribuição de Rendimento (IDD)",
+        "description": "Fonte para o rendimento disponível equivalizado. (Atualizado em: 16 Jun 2025)"
+      },
+      "financial": {
+        "title": "Indicadores de Mercado Financeiro",
+        "description": "Taxas de juro de longo prazo usadas como aproximação das taxas hipotecárias. (Atualizado em: 10 Nov 2025)"
+      }
+    },
+    "seriesExplained": {
+      "title": "Explicação das Séries",
+      "p1": "Todas as métricas são apresentadas em <strong>termos reais</strong>, ajustadas para 2015.",
+      "realIncome": {
+        "title": "Rendimento Mediano Real (Equivalizado)",
+        "description": "Ajustado pelo tamanho da família e pela inflação medida pelo IPC."
+      },
+      "realHousePrice": {
+        "title": "Preço Real Estimado da Habitação",
+        "description": "Com base no índice real de preços da habitação e num preço-base de 2015."
+      },
+      "mortgageRate": {
+        "title": "Proxy de Taxa Hipotecária",
+        "description": "A taxa de juro das obrigações de longo prazo é usada como indicador das taxas hipotecárias."
+      },
+      "rentToPrice": {
+        "title": "Índice Aluguel/Preço",
+        "description": "Mostra a atratividade relativa de alugar vs. comprar. Valores altos favorecem o aluguel."
+      }
+    }
+  }
+}

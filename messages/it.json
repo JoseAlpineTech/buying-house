@@ -1,0 +1,247 @@
+{
+  "Metadata": {
+    "title": "Accessibilità Abitativa nel 2025",
+    "description": "Un percorso visivo attraverso le dinamiche dell’accessibilità abitativa."
+  },
+  "Hero": {
+    "title": "Accessibilità Abitativa",
+    "subtitle": "Come è cambiata nel tempo la possibilità di acquistare una casa? Esplora prezzi, redditi e costi dei mutui corretti per l’inflazione nei paesi OCSE. <strong>Clicca sulla bandiera fluttuante per visualizzare altri paesi</strong>"
+  },
+  "Errors": {
+    "noData": "Purtroppo non sono disponibili dati completi corretti per l’inflazione sull’accessibilità abitativa per {countryName}. Seleziona un altro paese."
+  },
+  "Page": {
+    "comparisonSubtitle": "Ordinato per {label} ({direction})",
+    "chartCard_RealHouseholdIncome_title": "Reddito Familiare Reale",
+    "chartCard_PriceToIncomeRatio_title": "Rapporto Prezzo/Reddito",
+    "chartCard_MortgageBurden_title": "Peso del Mutuo",
+    "chartCard_PriceToRentIndex_title": "Indice Prezzo/Affitto",
+    "chartCard_TotalHouseholds_title": "Numero di Famiglie",
+    "collapsible_CountryComparison_title": "Confronto Tra Paesi",
+    "collapsible_AssetPerformance_title": "Rendimento: Proprietario vs. Inquilino",
+    "collapsible_AssetPerformance_subtitle": "Confronta se acquistare o affittare può creare più ricchezza nel lungo periodo.",
+    "collapsible_PersonalOutcome_title": "Simulazione Personale",
+    "collapsible_PersonalOutcome_subtitle": "Proietta il tuo patrimonio futuro in base al tuo reddito"
+  },
+  "ChartCard": {
+    "toggleExplanation": "Mostra/nascondi spiegazione: {title}",
+    "explanationTitle": "Che cos’è?",
+    "incomeExplanation": {
+      "p1": "Questo grafico mostra il <strong>reddito disponibile delle famiglie</strong> corretto per l’inflazione nel tempo.",
+      "p2": "Una <strong>tendenza al rialzo</strong> indica un aumento del potere d’acquisto, migliorando l’accessibilità abitativa. Tutti i valori sono corretti all’anno 2015.",
+      "p3": "Il reddito è ‘equivalizzato’, ovvero adeguato alla dimensione familiare per confrontare correttamente gli standard di vita."
+    },
+    "ptiExplanation": {
+      "p1": "Questo rapporto indica quanti anni di <strong>reddito familiare lordo</strong> servirebbero per acquistare una casa media.",
+      "p2": "Un valore <strong>più alto</strong> indica una minore accessibilità. I dati sono corretti per l’inflazione al 2015."
+    },
+    "mortgageBurdenExplanation": {
+      "p1": "Mostra la percentuale del <strong>reddito familiare lordo</strong> necessaria per coprire la rata mensile di un mutuo tipico.",
+      "p2": "Una percentuale <strong>più alta</strong> indica un maggiore peso finanziario. Per tutti gli anni viene utilizzato lo stesso tasso d’interesse attuale per garantire coerenza.",
+      "p3": "La <strong>soglia del 30%</strong> è spesso usata per indicare quando i costi abitativi diventano eccessivi."
+    },
+    "priceToRentExplanation": {
+      "p1": "Questo indice confronta il costo dell’acquisto di una casa con quello dell’affitto.",
+      "p2": "Un indice <strong>più alto</strong> suggerisce che i prezzi delle case sono elevati rispetto agli affitti, rendendo l’affitto potenzialmente più vantaggioso.",
+      "p3": "L’indice è fissato a <strong>100 nel 2015</strong>. Valori superiori indicano che acquistare è diventato relativamente più costoso dall’anno base."
+    },
+    "totalHouseholdsExplanation": {
+      "p1": "Mostra il numero totale di famiglie nel paese nel tempo.",
+      "p2": "Un <strong>aumento</strong> del numero di famiglie può incrementare la domanda abitativa e contribuire all’aumento di prezzi e affitti.",
+      "p3": "Fattori come crescita demografica, immigrazione e nuclei familiari più piccoli influenzano questa dinamica."
+    }
+  },
+  "Charts": {
+    "year": "Anno",
+    "AffordabilityTrends": {
+      "yAxisLabel": "Rapporto",
+      "legend": "Rapporto Reale Prezzo/Reddito"
+    },
+    "Income": {
+      "yAxisLabel": "Reddito Reale ({currencyCode})",
+      "legend": "Reddito Disponibile Reale (equivalizzato)"
+    },
+    "MortgageBurden": {
+      "yAxisLabel": "Peso del Mutuo (tasso attuale)",
+      "legend": "Peso del Mutuo",
+      "thresholdLabel": "Soglia del 30%"
+    },
+    "PriceToRent": {
+      "yAxisLabel": "Indice (2015 = 100)",
+      "legend": "Indice Reale Prezzo/Affitto"
+    },
+    "SensitivityCurve": {
+      "yAxisSubtitle": "Asse Y: Vantaggio (Inquilino – Proprietario)",
+      "xAxisSubtitle": "Asse X: Rendimento del Mercato (%)",
+      "tooltipLabel": "Vantaggio dell’Affitto",
+      "tooltipTitle": "Rendimento del Mercato: {value}%",
+      "rentingWins": "Affittare è meglio",
+      "buyingWins": "Comprare è meglio"
+    },
+    "TotalHouseholds": {
+      "yAxisLabel": "Numero",
+      "legend": "Totale Famiglie"
+    }
+  },
+  "ComparisonTable": {
+    "headers": {
+      "rank": "#",
+      "country": "Paese",
+      "pti": "Prezzo/Reddito",
+      "mps": "Peso Mutuo (%)",
+      "ydp": "Anni per Risparmiare",
+      "year": "Anno"
+    },
+    "sortDirection": {
+      "ascending": "Crescente",
+      "descending": "Decrescente"
+    },
+    "sortKeys": {
+      "countryName": "Nome del Paese",
+      "pti": "Prezzo/Reddito",
+      "mps": "Peso Mutuo",
+      "ydp": "Anni per Risparmiare"
+    },
+    "alignToggle": {
+      "label": "Modalità anno",
+      "latest": "Mostra anno più recente",
+      "common": "Allinea allo stesso anno"
+    }
+  },
+  "Snapshot": {
+    "title": "Panoramica per {countryName} nel {endYear}",
+    "subtitle": "Basato sui dati disponibili dal {startYear} al {endYear}.",
+    "housePriceLabel": "Prezzo Reale Stimato",
+    "housePriceUnit": "In valuta locale, corretto per l’inflazione.",
+    "ptiLabel": "Prezzo/Reddito Reale",
+    "ptiUnit": "Anni di reddito necessari per acquistare una casa.",
+    "mpsLabel": "Peso del Mutuo",
+    "mpsUnit": "% del reddito reale destinato al mutuo.",
+    "ydpLabel": "Anni fino all’Acconto",
+    "ydpUnit": "Per un profilo medio di acquirente.",
+    "explanation1": "Il prezzo di una casa tipica corretto per l’inflazione — un indicatore realistico del costo effettivo dell’abitazione.",
+    "explanation2": "Un rapporto di <strong>{pti}</strong> indica quanti anni di reddito lordo sono necessari.",
+    "explanation3": "La percentuale del reddito necessaria per pagare un mutuo ai tassi attuali.",
+    "explanation4": "Il tempo necessario per risparmiare un <strong>acconto del 10%</strong>, ipotizzando un risparmio del 10% del reddito annuo.",
+    "insightsTitle": "Sintesi dei Dati"
+  },
+  "AssetPerformanceSimulation": {
+    "disclaimer": "Questa simulazione confronta i risultati a lungo termine tra acquistare e affittare/investire. Le ipotesi sono semplificate e basate su medie storiche. Si tratta di proiezioni, non previsioni.",
+    "downPaymentLabel": "Il tuo Acconto: ",
+    "timeHorizonLabel": "Orizzonte Temporale: ",
+    "years": " anni",
+    "homeownerPathTitle": "Scenario Proprietario",
+    "finalHomeValue": "Valore Finale della Casa: ",
+    "remainingMortgage": "Mutuo Rimanente: ",
+    "homeEquity": "Patrimonio Immobiliare: ",
+    "renterPathTitle": "Scenario Inquilino & Investitore",
+    "initialInvestment": "Investimento Iniziale: ",
+    "addedMonthlySavings": "Risparmio Mensile Aggiuntivo: ",
+    "finalInvestmentValue": "Valore Finale dell’Investimento: ",
+    "verdictTitle": "Dopo {yearsToSimulate} anni...",
+    "verdictContent": "In questo scenario, <strong_label>{choice}</strong_label> può portare a un patrimonio maggiore di <strong_accent>{difference}</strong_accent>.",
+    "verdictChoice_buy": "acquistare",
+    "verdictChoice_rent": "affittare e investire",
+    "sensitivityTitle": "Sensibilità: Rendimento del Mercato",
+    "advancedAssumptionsToggle_hide": "Nascondi",
+    "advancedAssumptionsToggle_show": "Mostra",
+    "advancedAssumptionsToggle_label": " Ipotesi Avanzate",
+    "assumption_annualHomePriceGrowth": "Crescita Annuale del Prezzo",
+    "assumption_annualStockMarketReturn": "Rendimento Annuale del Mercato",
+    "assumption_annualRentIncrease": "Aumento Annuale dell’Affitto",
+    "assumption_annualOwnershipCostRate": "Costo Annuale della Proprietà",
+    "assumption_initialRentalYield": "Rendimento Iniziale dell’Affitto",
+    "resetButton": "Ripristina Predefiniti"
+  },
+  "PersonalOutcomeSimulation": {
+    "disclaimer": "Questo modello utilizza il tuo <strong>reddito netto (dopo le tasse)</strong> e la somma che scegli di risparmiare ogni mese. Confronta il patrimonio immobiliare di un proprietario con il patrimonio investito di un inquilino. È una proiezione semplificata — nessuno può prevedere il futuro.",
+    "annualIncomeLabel": "Il tuo Reddito Netto Annuale: ",
+    "savingsRateLabel": "Il tuo Risparmio Mensile: ",
+    "downPaymentLabel": "Acconto: ",
+    "timeHorizonLabel": "Orizzonte Temporale: ",
+    "years": " anni",
+    "homeownerPathTitle": "Scenario Proprietario",
+    "homeownerNetWorth": "Patrimonio Stimato (Immobile): ",
+    "renterPathTitle": "Scenario Inquilino & Investitore",
+    "renterNetWorth": "Patrimonio Stimato (Investimenti): ",
+    "verdictTitle": "Dopo {yearsToSimulate} anni...",
+    "verdictContent": "In base ai tuoi dati, <strong_label>{choice}</strong_label> potrebbe portare a un patrimonio maggiore di <strong_accent>{difference}</strong_accent>.",
+    "verdictChoice_buy": "acquistare",
+    "verdictChoice_rent": "affittare e investire"
+  },
+  "Footer": {
+    "source": "Fonte: Dati OCSE",
+    "methodology": "Metodologia",
+    "assumptions": "Ipotesi",
+    "poweredBy": "Sviluppato da: Alpine Tech Inc."
+  },
+  "FloatingControls": {
+    "changeCountry": "Cambia Paese",
+    "viewing": "Visualizzando:",
+    "flagOf": "Bandiera di {countryName}",
+    "changeLanguage": "Cambia Lingua",
+    "language": "Lingua:"
+  },
+  "AssumptionsModal": {
+    "title": "Ipotesi Chiave per {countryName}",
+    "basePrice": {
+      "label": "Prezzo Base della Casa (2015)",
+      "description": "Prezzo di riferimento utilizzato per convertire l’indice. Fonte: {source}"
+    },
+    "mortgageRate": {
+      "label": "Tasso di Mutuo Attuale",
+      "description": "L’ultimo tasso a lungo termine utilizzato per i calcoli del peso del mutuo."
+    },
+    "timeRange": {
+      "label": "Intervallo dei Dati",
+      "description": "Anni di inizio e fine delle serie di dati interpolate."
+    },
+    "incomeRange": {
+      "label": "Reddito Reale Equivalizzato",
+      "description": "Rappresenta il reddito disponibile, corretto per l’inflazione e la dimensione familiare."
+    },
+    "indexRange": {
+      "label": "Variazione dell’Indice dei Prezzi delle Case",
+      "description": "Variazione dell'indice (base 2015) dal {startYear} al {endYear}."
+    }
+  },
+  "MethodologyModal": {
+    "title": "Metodologia & Fonti dei Dati",
+    "primarySources": {
+      "title": "Fonti Principali dei Dati",
+      "p1": "Tutte le serie temporali provengono dal <link>OECD Data Explorer</link>. L’analisi combina vari indicatori chiave per fornire una visione coerente e corretta per l’inflazione.",
+      "housePrices": {
+        "title": "Indicatori Analitici dei Prezzi delle Case",
+        "description": "Indici RPPI utilizzati per prezzi delle case, affitti e rapporti prezzo/reddito. (Aggiornato al: 13 novembre 2025)"
+      },
+      "income": {
+        "title": "Banca Dati della Distribuzione del Reddito (IDD)",
+        "description": "Fonte per il reddito disponibile equivalizzato. (Aggiornato al: 16 giugno 2025)"
+      },
+      "financial": {
+        "title": "Indicatori dei Mercati Finanziari",
+        "description": "I tassi d’interesse a lungo termine sono utilizzati come proxy per i tassi ipotecari. (Aggiornato al: 10 novembre 2025)"
+      }
+    },
+    "seriesExplained": {
+      "title": "Spiegazione delle Serie",
+      "p1": "Tutte le metriche vengono presentate in <strong>termini reali</strong>, corrette per l’inflazione con base 2015.",
+      "realIncome": {
+        "title": "Reddito Mediano Reale (Equivalizzato)",
+        "description": "Adeguato alla dimensione familiare e corretto tramite l’indice dei prezzi al consumo."
+      },
+      "realHousePrice": {
+        "title": "Prezzo Reale Stimato della Casa",
+        "description": "Calcolato usando l’indice reale dei prezzi delle case e un prezzo base del 2015."
+      },
+      "mortgageRate": {
+        "title": "Proxy del Tasso di Mutuo",
+        "description": "Il rendimento delle obbligazioni governative a lungo termine viene utilizzato come indicatore dei tassi ipotecari."
+      },
+      "rentToPrice": {
+        "title": "Indice Affitto/Prezzo",
+        "description": "Valuta la convenienza relativa tra affittare e comprare. Valori elevati possono favorire l’affitto."
+      }
+    }
+  }
+}

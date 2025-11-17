@@ -1,0 +1,247 @@
+{
+  "Metadata": {
+    "title": "2025年の住宅アクセス状況",
+    "description": "住宅のアクセス可能性（負担しやすさ）の変化を可視化します。"
+  },
+  "Hero": {
+    "title": "住宅アクセス状況",
+    "subtitle": "家を購入しやすさは時代とともにどう変化してきたのか？ 物価調整後の住宅価格、所得、住宅ローン負担をOECD諸国で比較できます。<strong>右下の国旗をクリックすると他の国を選べます</strong>"
+  },
+  "Errors": {
+    "noData": "{countryName} の物価調整後の完全な住宅アクセスデータは利用できません。別の国を選択してください。"
+  },
+  "Page": {
+    "comparisonSubtitle": "{label}（{direction}）で並び替え済み",
+    "chartCard_RealHouseholdIncome_title": "実質世帯所得",
+    "chartCard_PriceToIncomeRatio_title": "価格／所得比",
+    "chartCard_MortgageBurden_title": "住宅ローン負担",
+    "chartCard_PriceToRentIndex_title": "購入／賃貸指数",
+    "chartCard_TotalHouseholds_title": "総世帯数",
+    "collapsible_CountryComparison_title": "国別比較",
+    "collapsible_AssetPerformance_title": "資産比較：購入 vs. 賃貸",
+    "collapsible_AssetPerformance_subtitle": "購入と賃貸＋投資、どちらが長期的に資産形成しやすいかを比較します。",
+    "collapsible_PersonalOutcome_title": "個人シミュレーション",
+    "collapsible_PersonalOutcome_subtitle": "あなたの所得をもとに将来資産を試算"
+  },
+  "ChartCard": {
+    "toggleExplanation": "{title} の解説を表示／非表示",
+    "explanationTitle": "これは何？",
+    "incomeExplanation": {
+      "p1": "このグラフは、<strong>世帯可処分所得</strong>（物価調整済み）の推移を示します。",
+      "p2": "<strong>上昇傾向</strong>は購買力の向上を意味し、住宅のアクセス状況が改善していることを示唆します。すべて2015年基準に調整されています。",
+      "p3": "所得は世帯人数で調整した「等価化所得」を使用し、生活水準をより公平に比較できます。"
+    },
+    "ptiExplanation": {
+      "p1": "住宅購入に必要な<strong>世帯総所得の年数</strong>を示す指標です。",
+      "p2": "値が<strong>高いほど</strong>住宅取得が難しいことを意味します。データは2015年基準で物価調整済みです."
+    },
+    "mortgageBurdenExplanation": {
+      "p1": "平均的な住宅を購入した場合の月々の支払いが、<strong>世帯総所得の何％</strong>に相当するかを示します。",
+      "p2": "負担率が<strong>高いほど</strong>家計への圧力が大きくなります。各年に同じ金利（最新値）を適用して比較を統一しています。",
+      "p3": "<strong>30％ライン</strong>は一般的な「支払い過多」の目安です。"
+    },
+    "priceToRentExplanation": {
+      "p1": "購入コストと賃貸コストの相対的な高さを示す指数です。",
+      "p2": "指数が<strong>高い</strong>ほど、購入価格が賃料に比べて割高である可能性があります。",
+      "p3": "2015年＝<strong>100</strong>を基準とし、それより高い値は購入の割高感が増している状況を示します。"
+    },
+    "totalHouseholdsExplanation": {
+      "p1": "国内の総世帯数の推移を示します。",
+      "p2": "世帯数の<strong>増加</strong>は住宅需要を押し上げ、価格・賃料の上昇要因になります。",
+      "p3": "人口増、移民、世帯規模の縮小などが影響します。"
+    }
+  },
+  "Charts": {
+    "year": "年",
+    "AffordabilityTrends": {
+      "yAxisLabel": "比率",
+      "legend": "実質価格／所得比"
+    },
+    "Income": {
+      "yAxisLabel": "実質所得（{currencyCode}）",
+      "legend": "実質可処分所得（等価化）"
+    },
+    "MortgageBurden": {
+      "yAxisLabel": "住宅ローン負担（現在の金利）",
+      "legend": "住宅ローン負担",
+      "thresholdLabel": "30% 目安"
+    },
+    "PriceToRent": {
+      "yAxisLabel": "指数（2015 = 100）",
+      "legend": "実質 購入／賃貸指数"
+    },
+    "SensitivityCurve": {
+      "yAxisSubtitle": "Y軸：差分（賃貸 – 購入）",
+      "xAxisSubtitle": "X軸：市場リターン（％）",
+      "tooltipLabel": "賃貸有利",
+      "tooltipTitle": "市場リターン：{value}%",
+      "rentingWins": "賃貸が有利",
+      "buyingWins": "購入が有利"
+    },
+    "TotalHouseholds": {
+      "yAxisLabel": "世帯数",
+      "legend": "総世帯数"
+    }
+  },
+  "ComparisonTable": {
+    "headers": {
+      "rank": "順位",
+      "country": "国",
+      "pti": "価格／所得",
+      "mps": "ローン負担（％）",
+      "ydp": "頭金までの年数",
+      "year": "年"
+    },
+    "sortDirection": {
+      "ascending": "昇順",
+      "descending": "降順"
+    },
+    "sortKeys": {
+      "countryName": "国名",
+      "pti": "価格／所得",
+      "mps": "ローン負担",
+      "ydp": "頭金までの年数"
+    },
+    "alignToggle": {
+      "label": "年モード",
+      "latest": "最新年を表示",
+      "common": "同一年で比較"
+    }
+  },
+  "Snapshot": {
+    "title": "{countryName} の {endYear} 年スナップショット",
+    "subtitle": "{startYear}〜{endYear} のデータに基づく推定値です。",
+    "housePriceLabel": "推定実質住宅価格",
+    "housePriceUnit": "現地通貨・物価調整済み",
+    "ptiLabel": "実質価格／所得比",
+    "ptiUnit": "平均的な家を買うのに必要な所得年数",
+    "mpsLabel": "住宅ローン負担",
+    "mpsUnit": "実質所得に占める割合",
+    "ydpLabel": "頭金までの年数",
+    "ydpUnit": "平均的な世帯を想定",
+    "explanation1": "物価調整後の典型的な住宅価格。住宅取得の実質的な負担感を示します。",
+    "explanation2": "<strong>{pti}</strong> は購入に必要な所得年数を示します。値が大きいほど負担が重いことを意味します。",
+    "explanation3": "最新の金利を用いて算出した住宅ローン支出の割合です。",
+    "explanation4": "世帯が年収の<strong>10%</strong>を貯蓄すると仮定した場合の頭金（10%）達成までの推定期間です。",
+    "insightsTitle": "要点まとめ"
+  },
+  "AssetPerformanceSimulation": {
+    "disclaimer": "このシミュレーションは、購入と賃貸＋投資の長期的な資産形成の差を比較します。すべて物価調整済みで、歴史的平均に基づく簡易モデルです。将来を予測するものではありません。",
+    "downPaymentLabel": "あなたの頭金: ",
+    "timeHorizonLabel": "シミュレーション期間: ",
+    "years": " 年",
+    "homeownerPathTitle": "購入シナリオ",
+    "finalHomeValue": "将来の住宅価値: ",
+    "remainingMortgage": "残債務: ",
+    "homeEquity": "あなたの住宅資産: ",
+    "renterPathTitle": "賃貸＋投資シナリオ",
+    "initialInvestment": "初期投資額: ",
+    "addedMonthlySavings": "毎月の追加投資額: ",
+    "finalInvestmentValue": "将来の資産価値: ",
+    "verdictTitle": "{yearsToSimulate} 年後…",
+    "verdictContent": "この条件では <strong_label>{choice}</strong_label> のほうが <strong_accent>{difference}</strong_accent> だけ資産が増える可能性があります。",
+    "verdictChoice_buy": "購入",
+    "verdictChoice_rent": "賃貸＋投資",
+    "sensitivityTitle": "感度分析：市場リターン",
+    "advancedAssumptionsToggle_hide": "非表示",
+    "advancedAssumptionsToggle_show": "表示",
+    "advancedAssumptionsToggle_label": " 詳細設定",
+    "assumption_annualHomePriceGrowth": "住宅価格の年間成長率",
+    "assumption_annualStockMarketReturn": "株式市場の年間リターン",
+    "assumption_annualRentIncrease": "家賃の年間上昇率",
+    "assumption_annualOwnershipCostRate": "所有コスト率（年間）",
+    "assumption_initialRentalYield": "初期利回り（賃貸）",
+    "resetButton": "初期値に戻す"
+  },
+  "PersonalOutcomeSimulation": {
+    "disclaimer": "このモデルは、あなたの<strong>手取り年収</strong>と、毎月の貯蓄額をもとに将来の資産を推定します。購入シナリオと、賃貸＋投資シナリオを比較します。簡易的な推計であり、将来を正確に予測するものではありません。",
+    "annualIncomeLabel": "あなたの手取り年収: ",
+    "savingsRateLabel": "毎月の貯蓄額: ",
+    "downPaymentLabel": "頭金: ",
+    "timeHorizonLabel": "シミュレーション期間: ",
+    "years": " 年",
+    "homeownerPathTitle": "購入シナリオ",
+    "homeownerNetWorth": "推定総資産（住宅）: ",
+    "renterPathTitle": "賃貸＋投資シナリオ",
+    "renterNetWorth": "推定総資産（投資）: ",
+    "verdictTitle": "{yearsToSimulate} 年後…",
+    "verdictContent": "あなたの条件では、<strong_label>{choice}</strong_label> のほうが <strong_accent>{difference}</strong_accent> だけ資産が増える可能性があります。",
+    "verdictChoice_buy": "購入",
+    "verdictChoice_rent": "賃貸＋投資"
+  },
+  "Footer": {
+    "source": "出典: OECDデータ",
+    "methodology": "方法論",
+    "assumptions": "前提条件",
+    "poweredBy": "提供: Alpine Tech Inc."
+  },
+  "FloatingControls": {
+    "changeCountry": "国を変更",
+    "viewing": "表示中:",
+    "flagOf": "{countryName} の国旗",
+    "changeLanguage": "言語を変更",
+    "language": "言語:"
+  },
+  "AssumptionsModal": {
+    "title": "{countryName} の主要前提条件",
+    "basePrice": {
+      "label": "2015年の基準住宅価格",
+      "description": "指数を金額に変換するための基準価格。出典: {source}"
+    },
+    "mortgageRate": {
+      "label": "最新の住宅ローン金利",
+      "description": "各年のローン負担計算に使用される最新の長期金利です。"
+    },
+    "timeRange": {
+      "label": "データ期間",
+      "description": "連続的に補完されたデータ系列の開始年と終了年。"
+    },
+    "incomeRange": {
+      "label": "実質等価化所得の範囲",
+      "description": "世帯規模を考慮して調整された可処分所得。物価調整済みで、国間比較に適しています。"
+    },
+    "indexRange": {
+      "label": "住宅価格指数の推移",
+      "description": "2015年基準の指数の変化（{startYear}〜{endYear}）。"
+    }
+  },
+  "MethodologyModal": {
+    "title": "方法論・データソース",
+    "primarySources": {
+      "title": "主要データソース",
+      "p1": "すべての時系列データは <link>OECD Data Explorer</link> から取得しています。各指標を組み合わせ、物価調整後の一貫した住宅アクセス状況を構築しています。",
+      "housePrices": {
+        "title": "住宅価格関連指標",
+        "description": "住宅価格・賃料・価格／所得比の算出に用いるRPPI指数。（最終更新：2025年11月13日）"
+      },
+      "income": {
+        "title": "所得分布データベース（IDD）",
+        "description": "等価化可処分所得のデータを提供。（最終更新：2025年6月16日）"
+      },
+      "financial": {
+        "title": "金融市場指標",
+        "description": "住宅ローン金利の代理として長期国債利回りを使用。（最終更新：2025年11月10日）"
+      }
+    },
+    "seriesExplained": {
+      "title": "指標の説明",
+      "p1": "すべての指標は2015年基準で<strong>物価調整（実質値）</strong>されています。",
+      "realIncome": {
+        "title": "実質世帯所得（等価化）",
+        "description": "世帯人数で調整し、消費者物価指数（CPI）で実質化しています。"
+      },
+      "realHousePrice": {
+        "title": "推定実質住宅価格",
+        "description": "2015年の基準価格をもとに、住宅価格指数から金額に換算します。"
+      },
+      "mortgageRate": {
+        "title": "住宅ローン金利の代理値",
+        "description": "10年国債利回りなどの長期金利は住宅ローン金利と密接に連動します。"
+      },
+      "rentToPrice": {
+        "title": "賃料／購入指数",
+        "description": "賃貸と購入の相対的な有利さを示す指標です。"
+      }
+    }
+  }
+}
