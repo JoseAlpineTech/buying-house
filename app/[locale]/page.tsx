@@ -35,7 +35,7 @@ import MobileControls from "../../components/ui/MobileControls";
 import MobileCountrySelector from "../../components/ui/MobileCountrySelector";
 import MobileLanguageSelector from "../../components/ui/MobileLanguageSelector";
 
-// Dynamically import chart components to code-split them
+// Dynamically import chart components
 const IncomeChart = dynamic(
   () =>
     import("../../components/charts/IncomeChart").then((mod) => mod.IncomeChart),
@@ -74,7 +74,6 @@ export const runtime = "edge";
 
 const ltv = 90;
 const term = 30;
-const savingsRate = 10;
 
 export default function Home() {
   const [selectedCountry, setSelectedCountry] = useState<string>("CAN");
@@ -90,6 +89,10 @@ export default function Home() {
     direction: "ascending",
   });
 
+  // 🔥 Shared slider state (NEW)
+  const [downPaymentPct, setDownPaymentPct] = useState(20);
+  const [savingsRate, setSavingsRate] = useState(25);
+
   const t = useTranslations();
 
   const countryData =
@@ -103,16 +106,13 @@ export default function Home() {
   const currency =
     currencies[selectedCountry as keyof typeof currencies] ?? currencies.USA;
 
+  // Build comparison table
   const comparisonData: ComparisonData[] = useMemo(() => {
     return Object.keys(affordabilityData)
       .map((countryCode): ComparisonData | null => {
         const cData =
           affordabilityData[countryCode as keyof typeof affordabilityData];
-        if (
-          !cData ||
-          !cData.realIncome?.length ||
-          !cData.mortgageRate?.length
-        )
+        if (!cData || !cData.realIncome?.length || !cData.mortgageRate?.length)
           return null;
 
         const endYear = cData.realIncome.slice(-1)[0].year;
@@ -135,9 +135,11 @@ export default function Home() {
 
         const payment = calcMortgagePayment(rate, metrics.housePrice, ltv, term);
         const mps = calcMPS(metrics.income, payment);
-        const ydp = calcYDP(
+
+        // Use shared sliders for YDP
+        const computedYdp = calcYDP(
           metrics.housePrice,
-          ltv,
+          100 - downPaymentPct,
           metrics.income,
           savingsRate,
         );
@@ -150,12 +152,12 @@ export default function Home() {
             ] ?? countryCode,
           pti: metrics.pti,
           mps,
-          ydp,
+          ydp: computedYdp,
           year: endYear,
         };
       })
       .filter((x): x is ComparisonData => x !== null);
-  }, []);
+  }, [downPaymentPct, savingsRate]);
 
   const comparisonSubtitle = useMemo(() => {
     if (!sortConfig) return "";
@@ -214,6 +216,7 @@ export default function Home() {
           dataEndYear={0}
           currency={currency.code}
         />
+
         <MobileControls
           onCountryClick={() => setIsCountrySelectorOpen(true)}
           onLanguageClick={() => setIsLanguageSelectorOpen(true)}
@@ -227,6 +230,7 @@ export default function Home() {
           selectedCountry={selectedCountry}
           onSelect={setSelectedCountry}
         />
+
         <MobileLanguageSelector
           isOpen={isLanguageSelectorOpen}
           onClose={() => setIsLanguageSelectorOpen(false)}
@@ -264,7 +268,13 @@ export default function Home() {
     term,
   );
   const mps = calcMPS(income, monthlyPayment);
-  const ydp = calcYDP(housePrice, ltv, income, savingsRate);
+
+  const ydp = calcYDP(
+    housePrice,
+    100 - downPaymentPct,
+    income,
+    savingsRate,
+  );
 
   const baseHousePrice = BASE_HOUSE_PRICES_2015[selectedCountry];
   const startIncome = countryData.realIncome[0]?.value;
@@ -292,41 +302,31 @@ export default function Home() {
           endYear={endYear}
           selectedCountryName={selectedCountryName}
           housePrice={housePrice}
+          income={income}
           pti={pti}
           mps={mps}
           ydp={ydp}
           monthlyPayment={monthlyPayment}
           insightSummary={insightSummary}
           currency={currency.code}
+          downPaymentPct={downPaymentPct}
+          savingsRate={savingsRate}
+          setDownPaymentPct={setDownPaymentPct}
+          setSavingsRate={setSavingsRate}
         />
       </SectionCard>
 
       <ChartCard
         title={t("Page.chartCard_RealHouseholdIncome_title")}
         chartComponent={
-          <IncomeChart
-            countryData={countryData}
-            countryCode={selectedCountry}
-          />
+          <IncomeChart countryData={countryData} countryCode={selectedCountry} />
         }
         explanationTitle={t("ChartCard.explanationTitle")}
         explanationContent={
           <>
-            <p
-              dangerouslySetInnerHTML={{
-                __html: t.raw("ChartCard.incomeExplanation.p1"),
-              }}
-            />
-            <p
-              dangerouslySetInnerHTML={{
-                __html: t.raw("ChartCard.incomeExplanation.p2"),
-              }}
-            />
-            <p
-              dangerouslySetInnerHTML={{
-                __html: t.raw("ChartCard.incomeExplanation.p3"),
-              }}
-            />
+            <p dangerouslySetInnerHTML={{ __html: t.raw("ChartCard.incomeExplanation.p1") }} />
+            <p dangerouslySetInnerHTML={{ __html: t.raw("ChartCard.incomeExplanation.p2") }} />
+            <p dangerouslySetInnerHTML={{ __html: t.raw("ChartCard.incomeExplanation.p3") }} />
           </>
         }
       />
@@ -342,16 +342,8 @@ export default function Home() {
         explanationTitle={t("ChartCard.explanationTitle")}
         explanationContent={
           <>
-            <p
-              dangerouslySetInnerHTML={{
-                __html: t.raw("ChartCard.ptiExplanation.p1"),
-              }}
-            />
-            <p
-              dangerouslySetInnerHTML={{
-                __html: t.raw("ChartCard.ptiExplanation.p2"),
-              }}
-            />
+            <p dangerouslySetInnerHTML={{ __html: t.raw("ChartCard.ptiExplanation.p1") }} />
+            <p dangerouslySetInnerHTML={{ __html: t.raw("ChartCard.ptiExplanation.p2") }} />
           </>
         }
       />
@@ -370,21 +362,9 @@ export default function Home() {
         explanationTitle={t("ChartCard.explanationTitle")}
         explanationContent={
           <>
-            <p
-              dangerouslySetInnerHTML={{
-                __html: t.raw("ChartCard.mortgageBurdenExplanation.p1"),
-              }}
-            />
-            <p
-              dangerouslySetInnerHTML={{
-                __html: t.raw("ChartCard.mortgageBurdenExplanation.p2"),
-              }}
-            />
-            <p
-              dangerouslySetInnerHTML={{
-                __html: t.raw("ChartCard.mortgageBurdenExplanation.p3"),
-              }}
-            />
+            <p dangerouslySetInnerHTML={{ __html: t.raw("ChartCard.mortgageBurdenExplanation.p1") }} />
+            <p dangerouslySetInnerHTML={{ __html: t.raw("ChartCard.mortgageBurdenExplanation.p2") }} />
+            <p dangerouslySetInnerHTML={{ __html: t.raw("ChartCard.mortgageBurdenExplanation.p3") }} />
           </>
         }
       />
@@ -395,21 +375,9 @@ export default function Home() {
         explanationTitle={t("ChartCard.explanationTitle")}
         explanationContent={
           <>
-            <p
-              dangerouslySetInnerHTML={{
-                __html: t.raw("ChartCard.priceToRentExplanation.p1"),
-              }}
-            />
-            <p
-              dangerouslySetInnerHTML={{
-                __html: t.raw("ChartCard.priceToRentExplanation.p2"),
-              }}
-            />
-            <p
-              dangerouslySetInnerHTML={{
-                __html: t.raw("ChartCard.priceToRentExplanation.p3"),
-              }}
-            />
+            <p dangerouslySetInnerHTML={{ __html: t.raw("ChartCard.priceToRentExplanation.p1") }} />
+            <p dangerouslySetInnerHTML={{ __html: t.raw("ChartCard.priceToRentExplanation.p2") }} />
+            <p dangerouslySetInnerHTML={{ __html: t.raw("ChartCard.priceToRentExplanation.p3") }} />
           </>
         }
       />
@@ -420,21 +388,9 @@ export default function Home() {
         explanationTitle={t("ChartCard.explanationTitle")}
         explanationContent={
           <>
-            <p
-              dangerouslySetInnerHTML={{
-                __html: t.raw("ChartCard.totalHouseholdsExplanation.p1"),
-              }}
-            />
-            <p
-              dangerouslySetInnerHTML={{
-                __html: t.raw("ChartCard.totalHouseholdsExplanation.p2"),
-              }}
-            />
-            <p
-              dangerouslySetInnerHTML={{
-                __html: t.raw("ChartCard.totalHouseholdsExplanation.p3"),
-              }}
-            />
+            <p dangerouslySetInnerHTML={{ __html: t.raw("ChartCard.totalHouseholdsExplanation.p1") }} />
+            <p dangerouslySetInnerHTML={{ __html: t.raw("ChartCard.totalHouseholdsExplanation.p2") }} />
+            <p dangerouslySetInnerHTML={{ __html: t.raw("ChartCard.totalHouseholdsExplanation.p3") }} />
           </>
         }
       />
@@ -448,6 +404,10 @@ export default function Home() {
           selectedCountryCode={selectedCountry}
           sortConfig={sortConfig}
           setSortConfig={setSortConfig}
+          downPaymentPct={downPaymentPct}
+          savingsRate={savingsRate}
+          setDownPaymentPct={setDownPaymentPct}
+          setSavingsRate={setSavingsRate}
         />
       </CollapsibleSectionCard>
 
@@ -498,6 +458,7 @@ export default function Home() {
         endIndexValue={endIndexValue}
         currency={currency.code}
       />
+
       <MobileControls
         onCountryClick={() => setIsCountrySelectorOpen(true)}
         onLanguageClick={() => setIsLanguageSelectorOpen(true)}
@@ -511,6 +472,7 @@ export default function Home() {
         selectedCountry={selectedCountry}
         onSelect={setSelectedCountry}
       />
+
       <MobileLanguageSelector
         isOpen={isLanguageSelectorOpen}
         onClose={() => setIsLanguageSelectorOpen(false)}

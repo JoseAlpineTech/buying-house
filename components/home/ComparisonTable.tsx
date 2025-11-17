@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { countryCodeMap } from "../../data/countryCodes";
+import { calcYDP } from "../../lib/metrics";
 
 export interface ComparisonData {
   countryCode: string;
@@ -24,6 +25,12 @@ interface ComparisonTableProps {
   setSortConfig: (
     config: { key: SortKey; direction: SortDirection } | null
   ) => void;
+
+  // NEW shared slider props
+  downPaymentPct: number;
+  savingsRate: number;
+  setDownPaymentPct: (value: number) => void;
+  setSavingsRate: (value: number) => void;
 }
 
 const SortIcon = ({ direction }: { direction: SortDirection | null }) => {
@@ -41,6 +48,11 @@ export default function ComparisonTable({
   selectedCountryCode,
   sortConfig,
   setSortConfig,
+
+  downPaymentPct,
+  savingsRate,
+  setDownPaymentPct,
+  setSavingsRate,
 }: ComparisonTableProps) {
   const t = useTranslations("ComparisonTable");
   const [yearMode, setYearMode] = useState<"latest" | "common">("latest");
@@ -52,18 +64,16 @@ export default function ComparisonTable({
     if (!years.length) return null;
 
     const yearCounts = years.reduce(
-      (acc, year) => {
-        acc[year] = (acc[year] || 0) + 1;
+      (acc, y) => {
+        acc[y] = (acc[y] || 0) + 1;
         return acc;
       },
       {} as Record<number, number>
     );
 
-    const mostCommonYear = Object.keys(yearCounts)
+    return Object.keys(yearCounts)
       .map(Number)
       .reduce((a, b) => (yearCounts[a] > yearCounts[b] ? a : b));
-
-    return mostCommonYear;
   }, [data]);
 
   const alignedData = useMemo(() => {
@@ -128,6 +138,49 @@ export default function ComparisonTable({
 
   return (
     <div className="overflow-x-auto">
+
+      {/* ====================== */}
+      {/*  Shared Slider Controls */}
+      {/* ====================== */}
+
+      <div className="flex flex-row gap-4 mb-6 w-full">
+
+        <div className="w-full">
+          <label className="text-xs flex items-center justify-between mb-1">
+            <span>{t("ydpSlider_downPayment")}</span>
+            <span>{downPaymentPct}%</span>
+          </label>
+          <input
+            type="range"
+            min={0}
+            max={50}
+            value={downPaymentPct}
+            onChange={(e) => setDownPaymentPct(Number(e.target.value))}
+            className="w-full"
+          />
+        </div>
+
+        <div className="w-full">
+          <label className="text-xs flex items-center justify-between mb-1">
+            <span>{t("ydpSlider_savingsRate")}</span>
+            <span>{savingsRate}%</span>
+          </label>
+          <input
+            type="range"
+            min={1}
+            max={30}
+            value={savingsRate}
+            onChange={(e) => setSavingsRate(Number(e.target.value))}
+            className="w-full"
+          />
+        </div>
+
+      </div>
+
+      {/* ================== */}
+      {/*  Year Alignment UI */}
+      {/* ================== */}
+
       <div className="flex gap-4 items-center mb-4">
         <span className="text-[--color-label] text-sm">
           {t("alignToggle.label")}:
@@ -155,6 +208,10 @@ export default function ComparisonTable({
           {commonYear !== null && ` (${commonYear})`}
         </button>
       </div>
+
+      {/* ========= */}
+      {/*  TABLE    */}
+      {/* ========= */}
 
       <table className="w-full text-left">
         <thead>
@@ -217,16 +274,19 @@ export default function ComparisonTable({
                 </td>
               )}
 
+              {/* PTI */}
               <td className="py-2 px-2 md:px-4">
                 {item.pti !== null ? item.pti.toFixed(1) : "N/A"}
               </td>
 
+              {/* MPS */}
               <td className="py-2 px-2 md:px-4">
                 {item.mps !== null && isFinite(item.mps)
                   ? item.mps.toFixed(1)
                   : "N/A"}
               </td>
 
+              {/* YDP (based on shared sliders) */}
               <td className="py-2 px-2 md:px-4">
                 {item.ydp !== null && isFinite(item.ydp)
                   ? item.ydp.toFixed(1)

@@ -106,7 +106,9 @@
       "label": "年モード",
       "latest": "最新年を表示",
       "common": "同一年で比較"
-    }
+    },
+    "ydpSlider_downPayment": "頭金 (%)",
+    "ydpSlider_savingsRate": "貯蓄率 (%)"
   },
   "Snapshot": {
     "title": "{countryName} の {endYear} 年スナップショット",
@@ -123,7 +125,9 @@
     "explanation2": "<strong>{pti}</strong> は購入に必要な所得年数を示します。値が大きいほど負担が重いことを意味します。",
     "explanation3": "最新の金利を用いて算出した住宅ローン支出の割合です。",
     "explanation4": "世帯が年収の<strong>10%</strong>を貯蓄すると仮定した場合の頭金（10%）達成までの推定期間です。",
-    "insightsTitle": "要点まとめ"
+    "insightsTitle": "要点まとめ",
+    "ydpSlider_downPayment": "頭金 (%)",
+    "ydpSlider_savingsRate": "貯蓄率 (%)"
   },
   "AssetPerformanceSimulation": {
     "disclaimer": "このシミュレーションは、購入と賃貸＋投資の長期的な資産形成の差を比較します。すべて物価調整済みで、歴史的平均に基づく簡易モデルです。将来を予測するものではありません。",

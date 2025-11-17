@@ -106,7 +106,9 @@
       "label": "Modo de año",
       "latest": "Mostrar el último año disponible",
       "common": "Alinear al mismo año"
-    }
+    },
+    "ydpSlider_downPayment": "Pago inicial (%)",
+    "ydpSlider_savingsRate": "Tasa de ahorro (%)"
   },
   "Snapshot": {
     "title": "Resumen para {countryName} en {endYear}",
@@ -123,7 +125,9 @@
     "explanation2": "Una relación de <strong>{pti}</strong> significa que se requieren esos años de ingreso bruto para comprar una vivienda. Una cifra mayor indica menor accesibilidad.",
     "explanation3": "El porcentaje del ingreso bruto necesario para pagar una hipoteca con tasas actuales. El <strong>30%</strong> es un punto de referencia común.",
     "explanation4": "El tiempo estimado para ahorrar un <strong>10%</strong> de pago inicial, asumiendo que el hogar ahorra el <strong>10%</strong> de su ingreso anual.",
-    "insightsTitle": "Resumen de Hallazgos"
+    "insightsTitle": "Resumen de Hallazgos",
+    "ydpSlider_downPayment": "Pago inicial (%)",
+    "ydpSlider_savingsRate": "Tasa de ahorro (%)"
   },
   "AssetPerformanceSimulation": {
     "disclaimer": "Esta simulación compara resultados a largo plazo entre comprar una vivienda y alquilar e invertir. Usa supuestos simplificados basados en promedios históricos. Todas las cifras están ajustadas por inflación. Son proyecciones, no predicciones — nadie puede anticipar los mercados o los precios de vivienda.",

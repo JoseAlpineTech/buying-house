@@ -106,7 +106,9 @@
       "label": "Modo de Ano",
       "latest": "Mostrar ano mais recente",
       "common": "Alinhar para o mesmo ano"
-    }
+    },
+    "ydpSlider_downPayment": "Entrada (%)",
+    "ydpSlider_savingsRate": "Taxa de poupança (%)"
   },
   "Snapshot": {
     "title": "Resumo de {countryName} em {endYear}",
@@ -123,7 +125,9 @@
     "explanation2": "Um rácio de <strong>{pti}</strong> significa que são necessários tantos anos de rendimento bruto.",
     "explanation3": "A percentagem do rendimento necessária para pagar uma hipoteca com as taxas atuais.",
     "explanation4": "O tempo necessário para poupar uma entrada de <strong>10%</strong>, assumindo que o agregado poupa 10% do rendimento anual.",
-    "insightsTitle": "Resumo das Informações"
+    "insightsTitle": "Resumo das Informações",
+    "ydpSlider_downPayment": "Entrada (%)",
+    "ydpSlider_savingsRate": "Taxa de poupança (%)"
   },
   "AssetPerformanceSimulation": {
     "disclaimer": "Esta simulação compara os resultados de longo prazo de comprar vs. alugar e investir. Usa suposições simplificadas baseadas em médias históricas. Estes valores são projeções, não previsões.",

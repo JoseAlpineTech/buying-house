@@ -106,7 +106,9 @@
       "label": "Mode année",
       "latest": "Afficher la dernière année",
       "common": "Aligner à la même année"
-    }
+    },
+    "ydpSlider_downPayment": "Acompte (%)",
+    "ydpSlider_savingsRate": "Taux d'épargne (%)"
   },
   "Snapshot": {
     "title": "Aperçu pour {countryName} en {endYear}",
@@ -123,7 +125,9 @@
     "explanation2": "Un ratio de <strong>{pti}</strong> signifie qu’il faut cet nombre d’années de revenu brut pour acheter un logement.",
     "explanation3": "Pourcentage du revenu brut nécessaire pour payer une hypothèque au taux actuel.",
     "explanation4": "Temps estimé pour économiser un <strong>acompte de 10 %</strong>, en supposant que le ménage épargne 10 % de son revenu annuel.",
-    "insightsTitle": "Résumé des Conclusions"
+    "insightsTitle": "Résumé des Conclusions",
+    "ydpSlider_downPayment": "Acompte (%)",
+    "ydpSlider_savingsRate": "Taux d'épargne (%)"
   },
   "AssetPerformanceSimulation": {
     "disclaimer": "Cette simulation compare les résultats à long terme entre acheter un logement et louer puis investir. Les hypothèses sont simplifiées et basées sur des moyennes historiques. Toutes les valeurs sont ajustées de l’inflation. Il s’agit de projections, pas de prédictions — personne ne peut prévoir les marchés.",

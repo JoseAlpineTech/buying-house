@@ -106,7 +106,9 @@
       "label": "Modalità anno",
       "latest": "Mostra anno più recente",
       "common": "Allinea allo stesso anno"
-    }
+    },
+    "ydpSlider_downPayment": "Acconto (%)",
+    "ydpSlider_savingsRate": "Tasso di risparmio (%)"
   },
   "Snapshot": {
     "title": "Panoramica per {countryName} nel {endYear}",
@@ -123,7 +125,9 @@
     "explanation2": "Un rapporto di <strong>{pti}</strong> indica quanti anni di reddito lordo sono necessari.",
     "explanation3": "La percentuale del reddito necessaria per pagare un mutuo ai tassi attuali.",
     "explanation4": "Il tempo necessario per risparmiare un <strong>acconto del 10%</strong>, ipotizzando un risparmio del 10% del reddito annuo.",
-    "insightsTitle": "Sintesi dei Dati"
+    "insightsTitle": "Sintesi dei Dati",
+    "ydpSlider_downPayment": "Acconto (%)",
+    "ydpSlider_savingsRate": "Tasso di risparmio (%)"
   },
   "AssetPerformanceSimulation": {
     "disclaimer": "Questa simulazione confronta i risultati a lungo termine tra acquistare e affittare/investire. Le ipotesi sono semplificate e basate su medie storiche. Si tratta di proiezioni, non previsioni.",

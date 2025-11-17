@@ -1,18 +1,27 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { useMemo } from "react";
+import { calcYDP } from "../../lib/metrics";
 
 interface SnapshotProps {
   startYear: number;
   endYear: number;
   selectedCountryName: string;
   housePrice: number;
+  income: number;
   pti: number;
   mps: number;
   ydp: number;
   monthlyPayment: number;
   insightSummary: string[];
   currency: string;
+
+  // NEW shared slider props
+  downPaymentPct: number;
+  savingsRate: number;
+  setDownPaymentPct: (value: number) => void;
+  setSavingsRate: (value: number) => void;
 }
 
 const ExplanationCard = ({ children }: { children: React.ReactNode }) => (
@@ -44,13 +53,36 @@ export default function Snapshot({
   endYear,
   selectedCountryName,
   housePrice,
+  income,
   pti,
   mps,
   ydp,
+  monthlyPayment,
   insightSummary,
   currency,
+
+  downPaymentPct,
+  savingsRate,
+  setDownPaymentPct,
+  setSavingsRate,
 }: SnapshotProps) {
   const t = useTranslations("Snapshot");
+
+  const liveLtv = useMemo(() => 100 - downPaymentPct, [downPaymentPct]);
+
+  const liveYdp = useMemo(() => {
+    return calcYDP(housePrice, liveLtv, income, savingsRate);
+  }, [housePrice, liveLtv, income, savingsRate]);
+
+  // Replace static 10% with live values
+  const liveExplanation4 = useMemo(() => {
+    let text = t.raw("explanation4");
+
+    text = text.replace("10%</strong>", `${downPaymentPct}%</strong>`);
+    text = text.replace("10%</strong>", `${savingsRate}%</strong>`);
+
+    return text;
+  }, [t, downPaymentPct, savingsRate]);
 
   return (
     <div>
@@ -116,17 +148,57 @@ export default function Snapshot({
         <div className="flex flex-col gap-6">
           <MetricCard
             label={t("ydpLabel")}
-            value={ydp > 0 && isFinite(ydp) ? `${ydp.toFixed(1)}` : "N/A"}
+            value={
+              liveYdp > 0 && isFinite(liveYdp)
+                ? `${liveYdp.toFixed(1)}`
+                : "N/A"
+            }
             unit={t("ydpUnit")}
           />
+
           <ExplanationCard>
-            {t.rich("explanation4", {
-              strong: (chunks) => <strong>{chunks}</strong>,
-            })}
+            <div
+              dangerouslySetInnerHTML={{
+                __html: liveExplanation4,
+              }}
+            />
+
+            {/* Down Payment Slider */}
+            <div className="mt-4">
+              <label className="text-xs flex items-center justify-between">
+                <span>{t("ydpSlider_downPayment")}</span>
+                <span>{downPaymentPct}%</span>
+              </label>
+              <input
+                type="range"
+                min={0}
+                max={50}
+                value={downPaymentPct}
+                onChange={(e) => setDownPaymentPct(Number(e.target.value))}
+                className="w-full mt-1"
+              />
+            </div>
+
+            {/* Savings Rate Slider */}
+            <div className="mt-4">
+              <label className="text-xs flex items-center justify-between">
+                <span>{t("ydpSlider_savingsRate")}</span>
+                <span>{savingsRate}%</span>
+              </label>
+              <input
+                type="range"
+                min={1}
+                max={30}
+                value={savingsRate}
+                onChange={(e) => setSavingsRate(Number(e.target.value))}
+                className="w-full mt-1"
+              />
+            </div>
           </ExplanationCard>
         </div>
       </div>
 
+      {/* Insights */}
       <div className="mt-6 border border-[--color-border] rounded-lg bg-[--color-card] p-6">
         <h3 className="text-2xl font-semibold text-[--color-label] mb-2">
           {t("insightsTitle")}

@@ -106,7 +106,9 @@
       "label": "Jahresmodus",
       "latest": "Neueste verfügbare Daten",
       "common": "Auf gleiches Jahr ausrichten"
-    }
+    },
+    "ydpSlider_downPayment": "Eigenkapital (%)",
+    "ydpSlider_savingsRate": "Sparquote (%)"
   },
   "Snapshot": {
     "title": "Überblick für {countryName} im Jahr {endYear}",
@@ -123,7 +125,9 @@
     "explanation2": "Ein Verhältnis von <strong>{pti}</strong> bedeutet, dass so viele Jahre Bruttoeinkommen benötigt werden.",
     "explanation3": "Der Anteil des Bruttoeinkommens, der für eine Hypothek bei aktuellen Zinsen benötigt wird.",
     "explanation4": "Die Zeit, um eine <strong>10-%-Anzahlung</strong> zu sparen, wenn ein Haushalt 10 % seines Einkommens zur Seite legt.",
-    "insightsTitle": "Wichtigste Erkenntnisse"
+    "insightsTitle": "Wichtigste Erkenntnisse",
+    "ydpSlider_downPayment": "Eigenkapital (%)",
+    "ydpSlider_savingsRate": "Sparquote (%)"
   },
   "AssetPerformanceSimulation": {
     "disclaimer": "Diese Simulation vergleicht langfristige Ergebnisse von Kaufen vs. Mieten und Investieren. Die Annahmen sind vereinfacht und basieren auf historischen Durchschnittswerten. Alle Werte sind inflationsbereinigt. Es handelt sich um Projektionen – keine Vorhersagen.",

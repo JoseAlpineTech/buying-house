@@ -106,7 +106,9 @@
       "label": "Year mode",
       "latest": "Show latest available year",
       "common": "Align to common year"
-    }
+    },
+    "ydpSlider_downPayment": "Down Payment (%)",
+    "ydpSlider_savingsRate": "Savings Rate (%)"
   },
   "Snapshot": {
     "title": "Snapshot for {countryName} in {endYear}",
@@ -123,7 +125,9 @@
     "explanation2": "A ratio of <strong>{pti}</strong> means it takes that many years of gross household income to buy a home. A higher number is less affordable.",
     "explanation3": "The percentage of gross income needed for mortgage payments at current rates. The <strong>30%</strong> level is a common affordability benchmark.",
     "explanation4": "The estimated time to save a <strong>10%</strong> down payment, assuming a household saves <strong>10%</strong> of its gross annual income.",
-    "insightsTitle": "Insight Summary"
+    "insightsTitle": "Insight Summary",
+    "ydpSlider_downPayment": "Down Payment (%)",
+    "ydpSlider_savingsRate": "Savings Rate (%)"
   },
   "AssetPerformanceSimulation": {
     "disclaimer": "This simulation compares long-term outcomes for buying a home versus renting and investing. It uses simplified assumptions based on historical averages. All figures are inflation-adjusted. These are projections, not predictions — nobody can forecast future markets or housing prices.",

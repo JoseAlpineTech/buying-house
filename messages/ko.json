@@ -106,7 +106,9 @@
       "label": "연도 모드",
       "latest": "최신 연도 표시",
       "common": "동일 연도로 정렬"
-    }
+    },
+    "ydpSlider_downPayment": "초기 부담금 (%)",
+    "ydpSlider_savingsRate": "저축률 (%)"
   },
   "Snapshot": {
     "title": "{countryName} – {endYear}년 스냅샷",
@@ -123,7 +125,9 @@
     "explanation2": "<strong>{pti}</strong>은 필요한 소득 연수를 의미하며 값이 높을수록 부담이 큽니다.",
     "explanation3": "최신 금리를 기준으로 계산한 모기지 지출 비율입니다.",
     "explanation4": "가구가 연 소득의 <strong>10%</strong>를 저축한다고 가정했을 때 10% 다운페이를 모으는 데 걸리는 예상 기간입니다.",
-    "insightsTitle": "요약 인사이트"
+    "insightsTitle": "요약 인사이트",
+    "ydpSlider_downPayment": "초기 부담금 (%)",
+    "ydpSlider_savingsRate": "저축률 (%)"
   },
   "AssetPerformanceSimulation": {
     "disclaimer": "이 시뮬레이션은 구매 vs. 임대+투자의 장기적인 자산 형성 차이를 비교합니다. 모든 값은 물가 조정값이며, 역사적 평균 기반의 단순 모델입니다. 미래를 예측하는 것은 아닙니다.",
