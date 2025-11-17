@@ -33,7 +33,9 @@ export function PersonalOutcomeSimulationCard({
   defaultIncome,
 }: PersonalOutcomeSimulationCardProps) {
   const [customIncome, setCustomIncome] = useState(defaultIncome);
-  const [savingsRate, setSavingsRate] = useState(15);
+  const [monthlySavings, setMonthlySavings] = useState(
+    Math.round(defaultIncome / 12 / 10),
+  ); // default: ~10% income
   const [yearsToSimulate, setYearsToSimulate] = useState(25);
   const [downPayment, setDownPayment] = useState(currentHomePrice * 0.2);
   const [assumptions, setAssumptions] = useState<SimulationAssumptions>(
@@ -50,12 +52,13 @@ export function PersonalOutcomeSimulationCard({
 
   useEffect(() => {
     setCustomIncome(defaultIncome);
+    setMonthlySavings(Math.round(defaultIncome / 12 / 10));
   }, [defaultIncome]);
 
   const simulationResult: PersonalOutcomeResult = useMemo(() => {
     return runPersonalOutcomeSimulation({
       customIncome,
-      savingsRate,
+      monthlySavings,
       downPayment,
       yearsToSimulate,
       currentHomePrice,
@@ -65,13 +68,17 @@ export function PersonalOutcomeSimulationCard({
     });
   }, [
     customIncome,
-    savingsRate,
+    monthlySavings,
     downPayment,
     yearsToSimulate,
     currentHomePrice,
     mortgageRate,
     assumptions,
   ]);
+
+  const { homeownerNetWorth, renterNetWorth } = simulationResult;
+  const difference = Math.abs(homeownerNetWorth - renterNetWorth);
+  const buyingIsBetter = homeownerNetWorth > renterNetWorth;
 
   const handleAssumptionChange = (
     key: keyof SimulationAssumptions,
@@ -82,10 +89,6 @@ export function PersonalOutcomeSimulationCard({
       setAssumptions((prev) => ({ ...prev, [key]: numValue }));
     }
   };
-
-  const { homeownerNetWorth, renterNetWorth } = simulationResult;
-  const difference = Math.abs(homeownerNetWorth - renterNetWorth);
-  const buyingIsBetter = homeownerNetWorth > renterNetWorth;
 
   const assumptionLabels: { [key in keyof SimulationAssumptions]?: string } = {
     annualHomePriceGrowth: tAsset("assumption_annualHomePriceGrowth"),
@@ -99,9 +102,10 @@ export function PersonalOutcomeSimulationCard({
         dangerouslySetInnerHTML={{ __html: t.raw("disclaimer") }}
       />
 
-      {/* --- User Controls --- */}
+      {/* Controls */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-8">
-        {/* Custom Income, Savings Rate, Down Payment, Time Horizon */}
+
+        {/* Income */}
         <div>
           <label className="block text-lg font-semibold text-[--color-label] mb-2">
             {t("annualIncomeLabel")}
@@ -115,25 +119,35 @@ export function PersonalOutcomeSimulationCard({
             max={defaultIncome * 4}
             step={1000}
             value={customIncome}
-            onChange={(e) => setCustomIncome(parseFloat(e.target.value))}
+            onChange={(e) => {
+              const val = parseFloat(e.target.value);
+              setCustomIncome(val);
+              setMonthlySavings(Math.round(val / 12 / 10));
+            }}
             className="w-full"
           />
         </div>
+
+        {/* Monthly Savings */}
         <div>
           <label className="block text-lg font-semibold text-[--color-label] mb-2">
-            {t("savingsRateLabel")}
-            <strong className="text-[--color-accent]">{savingsRate}%</strong>
+            Your Monthly Savings:
+            <strong className="text-[--color-accent]">
+              {formatCurrency(monthlySavings, currency)}
+            </strong>
           </label>
           <input
             type="range"
-            min={1}
-            max={50}
-            step={1}
-            value={savingsRate}
-            onChange={(e) => setSavingsRate(parseFloat(e.target.value))}
+            min={0}
+            max={Math.round((customIncome / 12) * 0.5)}
+            step={50}
+            value={monthlySavings}
+            onChange={(e) => setMonthlySavings(parseFloat(e.target.value))}
             className="w-full"
           />
         </div>
+
+        {/* Down Payment */}
         <div>
           <label className="block text-lg font-semibold text-[--color-label] mb-2">
             {t("downPaymentLabel")}
@@ -151,6 +165,8 @@ export function PersonalOutcomeSimulationCard({
             className="w-full"
           />
         </div>
+
+        {/* Time Horizon */}
         <div>
           <label className="block text-lg font-semibold text-[--color-label] mb-2">
             {t("timeHorizonLabel")}
@@ -176,8 +192,9 @@ export function PersonalOutcomeSimulationCard({
         </div>
       </div>
 
-      {/* --- Results --- */}
+      {/* Results */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 md:p-6 rounded-lg bg-[--color-card] border border-[--color-border]">
+
         <div className="p-4">
           <h3 className="text-2xl font-bold text-[--color-title] mb-3">
             {t("homeownerPathTitle")}
@@ -189,6 +206,7 @@ export function PersonalOutcomeSimulationCard({
             </strong>
           </p>
         </div>
+
         <div className="p-4">
           <h3 className="text-2xl font-bold text-[--color-title] mb-3">
             {t("renterPathTitle")}
@@ -202,7 +220,7 @@ export function PersonalOutcomeSimulationCard({
         </div>
       </div>
 
-      {/* --- Verdict --- */}
+      {/* Verdict */}
       <div className="mt-6 p-4 text-center rounded-lg bg-[--color-card] border border-[--color-border]">
         <h3 className="text-xl font-semibold text-[--color-title]">
           {t("verdictTitle", { yearsToSimulate })}
@@ -223,7 +241,7 @@ export function PersonalOutcomeSimulationCard({
         </p>
       </div>
 
-      {/* --- Advanced Settings --- */}
+      {/* Advanced Settings */}
       <div className="mt-6">
         <button
           onClick={() => setIsAdvancedVisible(!isAdvancedVisible)}
@@ -234,6 +252,7 @@ export function PersonalOutcomeSimulationCard({
             : tAsset("advancedAssumptionsToggle_show")}
           {tAsset("advancedAssumptionsToggle_label")}
         </button>
+
         <AnimatePresence>
           {isAdvancedVisible && (
             <motion.div
@@ -243,11 +262,9 @@ export function PersonalOutcomeSimulationCard({
               className="overflow-hidden mt-4"
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 p-4 rounded-lg bg-[--color-card] border border-[--color-border]">
-                {(
-                  Object.keys(assumptions) as Array<
-                    keyof SimulationAssumptions
-                  >
-                )
+                {(Object.keys(assumptions) as Array<
+                  keyof SimulationAssumptions
+                >)
                   .filter(
                     (key) =>
                       key === "annualHomePriceGrowth" ||
@@ -275,6 +292,7 @@ export function PersonalOutcomeSimulationCard({
                       />
                     </div>
                   ))}
+
                 <div className="col-span-full flex justify-end pt-4">
                   <button
                     onClick={() =>
