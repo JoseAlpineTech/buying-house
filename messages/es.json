@@ -57,7 +57,9 @@
       "p1": "Este gráfico muestra el número total de hogares en el país a lo largo del tiempo.",
       "p2": "Un <strong>aumento</strong> en la cantidad de hogares puede incrementar la demanda de vivienda, presionando al alza precios y alquileres si la oferta no acompaña.",
       "p3": "Factores como crecimiento poblacional, migración y cambios en el tamaño del hogar contribuyen a esta tendencia."
-    }
+    },
+    "toggleComparison": "Comparar con otros países",
+    "toggleComparisonOff": "Dejar de comparar"
   },
   "Charts": {
     "year": "Año",

@@ -57,7 +57,9 @@
       "p1": "This chart shows the total number of households in the country over time.",
       "p2": "An <strong>increase</strong> in the number of households can be a significant driver of housing demand, often leading to upward pressure on prices and rents if supply does not keep pace.",
       "p3": "Factors like population growth, immigration, and changes in living arrangements (e.g., smaller household sizes) all contribute to this trend."
-    }
+    },
+    "toggleComparison": "Compare with other countries",
+    "toggleComparisonOff": "Stop comparing"
   },
   "Charts": {
     "year": "Year",

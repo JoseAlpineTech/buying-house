@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import {
   LineChart,
   Line,
@@ -12,13 +13,19 @@ import {
   Legend,
 } from "../../lib/recharts";
 import { useTranslations } from "next-intl";
-import { CountryData } from "../../data/affordability";
+import { CountryData, affordabilityData } from "../../data/affordability";
+import { countryDisplayNames } from "../../data/countryDisplayNames";
 
 interface TotalHouseholdsChartProps {
   countryData: CountryData;
+  countryCode?: string;
+  isComparing?: boolean;
 }
 
+const COMPARE_COLORS = ["#ef4444", "#f97316", "#8b5cf6", "#ec4899", "#3b82f6"];
+
 const formatNumber = (value: number) => {
+  if (value === 0) return "0";
   if (value >= 1_000_000) {
     return `${(value / 1_000_000).toFixed(2)}M`;
   }
@@ -28,22 +35,72 @@ const formatNumber = (value: number) => {
   return value.toString();
 };
 
-const processChartData = (countryData: CountryData) => {
-  if (!countryData?.numberOfHouseholds) return [];
-
-  return countryData.numberOfHouseholds
-    .map((d) => ({
-      year: d.year,
-      households: Math.round(d.value),
-    }))
-    .filter(Boolean) as { year: number; households: number }[];
-};
-
 export function TotalHouseholdsChart({
   countryData,
+  countryCode = "",
+  isComparing = false,
 }: TotalHouseholdsChartProps) {
-  const chartData = processChartData(countryData);
   const t = useTranslations("Charts");
+
+  const chartData = useMemo(() => {
+    const processOne = (cData: CountryData) => {
+      if (!cData.numberOfHouseholds) return [];
+      return cData.numberOfHouseholds.map((d) => ({
+        year: d.year,
+        val: Math.round(d.value),
+      }));
+    };
+
+    const mainKey = countryCode || "Main";
+    const base = processOne(countryData);
+    const dataMap = new Map<number, any>();
+    base.forEach((d) =>
+      dataMap.set(d.year, { year: d.year, [mainKey]: d.val }),
+    );
+
+    if (!isComparing || !countryCode) return Array.from(dataMap.values());
+
+    const allCodes = Object.keys(affordabilityData).filter(
+      (c) => c !== countryCode,
+    );
+    const codeMetrics = allCodes
+      .map((c) => {
+        const cData = affordabilityData[c as keyof typeof affordabilityData];
+        const series = processOne(cData);
+        const lastVal = series[series.length - 1]?.val;
+        return lastVal ? { code: c, val: lastVal } : null;
+      })
+      .filter(Boolean) as { code: string; val: number }[];
+
+    codeMetrics.sort((a, b) => b.val - a.val);
+
+    let selectedCodes: string[] = [];
+    if (codeMetrics.length <= 5) {
+      selectedCodes = codeMetrics.map((c) => c.code);
+    } else {
+      const top2 = codeMetrics.slice(0, 2);
+      const bottom2 = codeMetrics.slice(-2);
+      const median = codeMetrics[Math.floor(codeMetrics.length / 2)];
+      selectedCodes = [...top2, median, ...bottom2].map((c) => c.code);
+    }
+
+    selectedCodes.forEach((code) => {
+      const cData = affordabilityData[code as keyof typeof affordabilityData];
+      processOne(cData).forEach((d) => {
+        const existing = dataMap.get(d.year) || { year: d.year };
+        existing[code] = d.val;
+        dataMap.set(d.year, existing);
+      });
+    });
+
+    return Array.from(dataMap.values())
+      .sort((a, b) => a.year - b.year)
+      .map((item) => ({ ...item, _comparisonCodes: selectedCodes }));
+  }, [countryData, countryCode, isComparing]);
+
+  const comparisonCodes = (chartData[0] as any)?._comparisonCodes || [];
+  const mainKey = countryCode || "Main";
+  const scaleLabel = isComparing ? "Log" : "Linear";
 
   return (
     <div className="h-96">
@@ -61,9 +118,14 @@ export function TotalHouseholdsChart({
               fill="var(--color-text)"
             />
           </XAxis>
-          <YAxis stroke="var(--color-text)" tickFormatter={formatNumber}>
+          <YAxis
+            stroke="var(--color-text)"
+            tickFormatter={formatNumber}
+            scale={isComparing ? "log" : "auto"}
+            domain={isComparing ? ["auto", "auto"] : [0, "auto"]}
+          >
             <Label
-              value={t("TotalHouseholds.yAxisLabel")}
+              value={`${t("TotalHouseholds.yAxisLabel")} (${scaleLabel})`}
               offset={-20}
               angle={-90}
               position="insideLeft"
@@ -79,17 +141,40 @@ export function TotalHouseholdsChart({
             }}
             labelStyle={{ color: "var(--color-title)", fontWeight: "bold" }}
             itemStyle={{ color: "var(--color-text)" }}
-            formatter={(value: number) => new Intl.NumberFormat().format(value)}
+            formatter={(value: number) =>
+              new Intl.NumberFormat().format(value)
+            }
           />
           <Legend verticalAlign="top" height={36} />
           <Line
             type="monotone"
-            dataKey="households"
-            name={t("TotalHouseholds.legend")}
+            dataKey={mainKey}
+            name={
+              countryDisplayNames[
+                mainKey as keyof typeof countryDisplayNames
+              ] ?? t("TotalHouseholds.legend")
+            }
             stroke="var(--color-accent)"
             strokeWidth={3}
             dot={{ r: 3 }}
           />
+          {isComparing &&
+            comparisonCodes.map((code: string, index: number) => (
+              <Line
+                key={code}
+                type="monotone"
+                dataKey={code}
+                name={
+                  countryDisplayNames[
+                    code as keyof typeof countryDisplayNames
+                  ]
+                }
+                stroke={COMPARE_COLORS[index % COMPARE_COLORS.length]}
+                strokeWidth={2}
+                dot={false}
+                strokeOpacity={0.7}
+              />
+            ))}
         </LineChart>
       </ResponsiveContainer>
     </div>

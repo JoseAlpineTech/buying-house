@@ -89,7 +89,7 @@ export default function Home() {
     direction: "ascending",
   });
 
-  // 🔥 Shared slider state (NEW)
+  // Shared slider state
   const [downPaymentPct, setDownPaymentPct] = useState(20);
   const [savingsRate, setSavingsRate] = useState(25);
 
@@ -249,7 +249,6 @@ export default function Home() {
   );
   const endMetrics = getMetricsForYear(countryData, endYear, selectedCountry);
 
-  // Prepare insights summary (with translations)
   const summaryData =
     startMetrics && endMetrics
       ? generateAffordabilitySummary(startMetrics, endMetrics)
@@ -357,9 +356,13 @@ export default function Home() {
 
       <ChartCard
         title={t("Page.chartCard_RealHouseholdIncome_title")}
-        chartComponent={
-          <IncomeChart countryData={countryData} countryCode={selectedCountry} />
-        }
+        chartComponent={({ isComparing }) => (
+          <IncomeChart
+            countryData={countryData}
+            countryCode={selectedCountry}
+            isComparing={isComparing}
+          />
+        )}
         explanationTitle={t("ChartCard.explanationTitle")}
         explanationContent={
           <>
@@ -372,12 +375,13 @@ export default function Home() {
 
       <ChartCard
         title={t("Page.chartCard_PriceToIncomeRatio_title")}
-        chartComponent={
+        chartComponent={({ isComparing }) => (
           <AffordabilityTrendsChart
             countryData={countryData}
             countryCode={selectedCountry}
+            isComparing={isComparing}
           />
-        }
+        )}
         explanationTitle={t("ChartCard.explanationTitle")}
         explanationContent={
           <>
@@ -389,15 +393,16 @@ export default function Home() {
 
       <ChartCard
         title={t("Page.chartCard_MortgageBurden_title")}
-        chartComponent={
+        chartComponent={({ isComparing }) => (
           <MortgageBurdenChart
             countryData={countryData}
             countryCode={selectedCountry}
             ltv={ltv}
             term={term}
             rate={latestMortgageRate}
+            isComparing={isComparing}
           />
-        }
+        )}
         explanationTitle={t("ChartCard.explanationTitle")}
         explanationContent={
           <>
@@ -410,7 +415,13 @@ export default function Home() {
 
       <ChartCard
         title={t("Page.chartCard_PriceToRentIndex_title")}
-        chartComponent={<PriceToRentChart countryData={countryData} />}
+        chartComponent={({ isComparing }) => (
+          <PriceToRentChart
+            countryData={countryData}
+            countryCode={selectedCountry}
+            isComparing={isComparing}
+          />
+        )}
         explanationTitle={t("ChartCard.explanationTitle")}
         explanationContent={
           <>
@@ -423,7 +434,13 @@ export default function Home() {
 
       <ChartCard
         title={t("Page.chartCard_TotalHouseholds_title")}
-        chartComponent={<TotalHouseholdsChart countryData={countryData} />}
+        chartComponent={({ isComparing }) => (
+          <TotalHouseholdsChart
+            countryData={countryData}
+            countryCode={selectedCountry}
+            isComparing={isComparing}
+          />
+        )}
         explanationTitle={t("ChartCard.explanationTitle")}
         explanationContent={
           <>

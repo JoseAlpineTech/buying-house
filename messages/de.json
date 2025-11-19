@@ -57,8 +57,10 @@
       "p1": "Diese Grafik zeigt die Gesamtzahl der Haushalte im Zeitverlauf.",
       "p2": "Mehr Haushalte erhöhen die Wohnungsnachfrage und können Preise und Mieten steigen lassen, wenn das Angebot nicht mithält.",
       "p3": "Einflussfaktoren sind Bevölkerungswachstum, Migration und kleinere durchschnittliche Haushaltsgrößen."
-    }
-  },
+    },
+    "toggleComparison": "Mit anderen Ländern vergleichen",
+    "toggleComparisonOff": "Vergleich beenden"
+  },  
   "Charts": {
     "year": "Jahr",
     "AffordabilityTrends": {

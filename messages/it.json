@@ -57,7 +57,9 @@
       "p1": "Mostra il numero totale di famiglie nel paese nel tempo.",
       "p2": "Un <strong>aumento</strong> del numero di famiglie può incrementare la domanda abitativa e contribuire all’aumento di prezzi e affitti.",
       "p3": "Fattori come crescita demografica, immigrazione e nuclei familiari più piccoli influenzano questa dinamica."
-    }
+    },
+    "toggleComparison": "Confronta con altri paesi",
+    "toggleComparisonOff": "Interrompi confronto"
   },
   "Charts": {
     "year": "Anno",

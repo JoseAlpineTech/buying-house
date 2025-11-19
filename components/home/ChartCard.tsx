@@ -8,7 +8,10 @@ import ExplanationBox from "../ui/ExplanationBox";
 
 interface ChartCardProps {
   title: string;
-  chartComponent: React.ReactNode;
+  // Supports either a static node or a render function that receives state
+  chartComponent:
+    | React.ReactNode
+    | ((props: { isComparing: boolean }) => React.ReactNode);
   explanationTitle: string;
   explanationContent: React.ReactNode;
 }
@@ -42,6 +45,17 @@ const InfoIcon = () => (
   </svg>
 );
 
+const CompareIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 20 20"
+    fill="currentColor"
+    className="h-5 w-5"
+  >
+    <path d="M15 3a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h10zm-9 7a1 1 0 000 2h8a1 1 0 100-2H6zm0-4a1 1 0 100 2h8a1 1 0 100-2H6z" />
+  </svg>
+);
+
 export default function ChartCard({
   title,
   chartComponent,
@@ -49,6 +63,7 @@ export default function ChartCard({
   explanationContent,
 }: ChartCardProps) {
   const [isExplanationVisible, setIsExplanationVisible] = useState(false);
+  const [isComparing, setIsComparing] = useState(false);
   const t = useTranslations("ChartCard");
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 
@@ -58,15 +73,37 @@ export default function ChartCard({
 
   return (
     <SectionCard>
-      <div className="flex items-center gap-3 mb-4">
+      <div className="flex items-center justify-between mb-4">
         <h3 className="chart-title">{title}</h3>
-        <button
-          onClick={() => setIsExplanationVisible(!isExplanationVisible)}
-          className="p-1 rounded-full text-[--color-label] hover:bg-[--color-border] transition-colors"
-          aria-label={t("toggleExplanation", { title })}
-        >
-          <InfoIcon />
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setIsComparing(!isComparing)}
+            className={`p-1 rounded-full transition-colors ${
+              isComparing
+                ? "bg-[--color-accent] text-[--color-card]"
+                : "text-[--color-label] hover:bg-[--color-border]"
+            }`}
+            aria-label={
+              isComparing
+                ? t("toggleComparisonOff")
+                : t("toggleComparison")
+            }
+            title={
+              isComparing
+                ? t("toggleComparisonOff")
+                : t("toggleComparison")
+            }
+          >
+            <CompareIcon />
+          </button>
+          <button
+            onClick={() => setIsExplanationVisible(!isExplanationVisible)}
+            className="p-1 rounded-full text-[--color-label] hover:bg-[--color-border] transition-colors"
+            aria-label={t("toggleExplanation", { title })}
+          >
+            <InfoIcon />
+          </button>
+        </div>
       </div>
       <div className="flex flex-col lg:flex-row gap-6 items-center">
         <motion.div
@@ -77,7 +114,9 @@ export default function ChartCard({
           transition={{ duration: 0.5, type: "spring", bounce: 0.2 }}
           className="w-full"
         >
-          {chartComponent}
+          {typeof chartComponent === "function"
+            ? chartComponent({ isComparing })
+            : chartComponent}
         </motion.div>
         <AnimatePresence>
           {isExplanationVisible && (

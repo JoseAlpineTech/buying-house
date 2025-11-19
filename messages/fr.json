@@ -57,7 +57,9 @@
       "p1": "Ce graphique montre l’évolution du nombre total de ménages dans le pays.",
       "p2": "Une <strong>augmentation</strong> du nombre de ménages peut accroître la demande de logements, ce qui pousse les prix et les loyers à la hausse si l’offre ne suit pas.",
       "p3": "Le changement démographique, la migration et la baisse de la taille moyenne des ménages influencent ces tendances."
-    }
+    },
+    "toggleComparison": "Comparer avec d'autres pays",
+    "toggleComparisonOff": "Arrêter la comparaison"
   },
   "Charts": {
     "year": "Année",

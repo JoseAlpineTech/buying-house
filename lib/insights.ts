@@ -18,15 +18,44 @@ export interface AffordabilitySummaryData {
 }
 
 /**
- * Calculates a representative house price for a given year using the index.
- * This function is now robust and uses the first available year as the base
- * if the default base year (2015) is not present in the data.
+ * Selects representative countries for comparison: Top 2, Median, Bottom 2.
  *
- * @param year - The target year for the calculation.
- * @param countryData - The dataset for the selected country.
- * @param basePrice2015 - The anchor house price for the year 2015.
- * @returns The calculated representative house price, or null if data is insufficient.
+ * @param allData - The full dataset of countries.
+ * @param excludeCode - The country code to exclude (the currently selected one).
+ * @param metricFn - A function to extract the value to sort by (e.g. latest PTI).
+ * @returns An array of 5 country codes.
  */
+export function getRepresentativeCountries(
+  allData: Record<string, CountryData>,
+  excludeCode: string,
+  metricFn: (data: CountryData) => number | null,
+): string[] {
+  const countryMetrics = Object.entries(allData)
+    .filter(([code]) => code !== excludeCode)
+    .map(([code, data]) => ({
+      code,
+      value: metricFn(data),
+    }))
+    .filter((item): item is { code: string; value: number } => item.value !== null)
+    .sort((a, b) => b.value - a.value); // Descending sort
+
+  if (countryMetrics.length < 5) {
+    return countryMetrics.map((c) => c.code);
+  }
+
+  const top2 = countryMetrics.slice(0, 2);
+  const bottom2 = countryMetrics.slice(-2);
+  const medianIndex = Math.floor(countryMetrics.length / 2);
+  const median = countryMetrics[medianIndex];
+
+  // Return unique set in case of small datasets (though <5 check covers mostly)
+  return Array.from(
+    new Set([...top2, median, ...bottom2].map((c) => c.code)),
+  );
+}
+
+// ... (Rest of the file remains unchanged, providing full file below)
+
 function calculateHousePrice(
   year: number,
   countryData: CountryData,
@@ -36,14 +65,10 @@ function calculateHousePrice(
     (p) => p.year === year,
   );
 
-  // Try to find the 2015 base year index.
   let priceIndexBaseYear = countryData.realHousePriceIndex.find(
     (p) => p.year === 2015,
   );
 
-  // --- Fallback Mechanism ---
-  // If 2015 data is not available, use the first year in the dataset as the base.
-  // This makes the calculation resilient for countries with different data ranges.
   if (!priceIndexBaseYear && countryData.realHousePriceIndex.length > 0) {
     priceIndexBaseYear = countryData.realHousePriceIndex[0];
   }
@@ -56,18 +81,11 @@ function calculateHousePrice(
     return null;
   }
 
-  // The logic remains the same: scale the 2015 base price by the index change.
   return (
     basePrice2015 * (priceIndexCurrentYear.value / priceIndexBaseYear.value)
   );
 }
 
-/**
- * Generates calculated affordability metrics for comparison.
- * @param startMetrics - The calculated metrics from the earliest available year.
- * @param endMetrics - The calculated metrics from the most recent available year.
- * @returns Structured data representing the changes, or null if inputs are missing.
- */
 export function generateAffordabilitySummary(
   startMetrics: AffordabilityMetrics,
   endMetrics: AffordabilityMetrics,
@@ -90,9 +108,6 @@ export function generateAffordabilitySummary(
   };
 }
 
-/**
- * A helper function to get calculated metrics for a specific year from the dataset.
- */
 export function getMetricsForYear(
   countryData: CountryData,
   year: number,

@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { useTranslations } from "next-intl";
 import {
   CartesianGrid,
@@ -12,35 +13,111 @@ import {
   XAxis,
   YAxis,
 } from "../../lib/recharts";
-import { CountryData } from "../../data/affordability";
-import { getMetricsForYear } from "../../lib/insights";
+import { CountryData, affordabilityData } from "../../data/affordability";
+import { countryDisplayNames } from "../../data/countryDisplayNames";
+import { getMetricsForYear, getRepresentativeCountries } from "../../lib/insights";
 
 interface AffordabilityTrendsChartProps {
   countryData: CountryData;
   countryCode: string;
+  isComparing?: boolean;
 }
 
-const processChartData = (countryData: CountryData, countryCode: string) => {
-  if (!countryData?.realIncome) return [];
-
-  return countryData.realIncome
-    .map(({ year }) => {
-      const metrics = getMetricsForYear(countryData, year, countryCode);
-      if (!metrics) return null;
-      return {
-        year: metrics.year,
-        pti: parseFloat(metrics.pti.toFixed(2)),
-      };
-    })
-    .filter(Boolean) as { year: number; pti: number }[];
-};
+const COMPARE_COLORS = [
+  "#ef4444", // Red
+  "#f97316", // Orange
+  "#8b5cf6", // Purple
+  "#ec4899", // Pink
+  "#3b82f6", // Blue
+];
 
 export function AffordabilityTrendsChart({
   countryData,
   countryCode,
+  isComparing = false,
 }: AffordabilityTrendsChartProps) {
-  const chartData = processChartData(countryData, countryCode);
   const t = useTranslations("Charts");
+
+  const chartData = useMemo(() => {
+    // 1. Get base data for selected country
+    const years = countryData.realIncome.map((d) => d.year);
+    const baseData = years
+      .map((year) => {
+        const metrics = getMetricsForYear(countryData, year, countryCode);
+        if (!metrics) return null;
+        return {
+          year,
+          [countryCode]: parseFloat(metrics.pti.toFixed(2)),
+        };
+      })
+      .filter(Boolean) as any[];
+
+    if (!isComparing) return baseData;
+
+    // 2. Identify comparison countries
+    const others = getRepresentativeCountries(
+      affordabilityData,
+      countryCode,
+      (data) => {
+        // Sort by latest available PTI
+        if (!data.realIncome.length) return null;
+        const lastYear = data.realIncome[data.realIncome.length - 1].year;
+        const m = getMetricsForYear(data, lastYear, "USA"); // Code doesn't matter for calculation logic as long as data is consistent, but using 'USA' as placeholder or iterating codes?
+        // Actually getMetricsForYear requires the CORRECT code to look up BASE_HOUSE_PRICES_2015
+        // We don't have the code inside the loop of getRepresentativeCountries directly unless we change its signature or map differently.
+        // However, getRepresentativeCountries iterates [code, data].
+        return null; // See fix below
+      },
+    );
+
+    // Redo selection logic locally to get codes correct
+    const allCodes = Object.keys(affordabilityData).filter((c) => c !== countryCode);
+    const codeMetrics = allCodes
+      .map((c) => {
+        const cData = affordabilityData[c as keyof typeof affordabilityData];
+        const lastYear = cData.realIncome.slice(-1)[0]?.year;
+        if (!lastYear) return null;
+        const m = getMetricsForYear(cData, lastYear, c);
+        return m ? { code: c, val: m.pti } : null;
+      })
+      .filter(Boolean) as { code: string; val: number }[];
+    
+    codeMetrics.sort((a, b) => b.val - a.val);
+    
+    // Pick 5
+    let selectedCodes: string[] = [];
+    if (codeMetrics.length <= 5) {
+      selectedCodes = codeMetrics.map((c) => c.code);
+    } else {
+      const top2 = codeMetrics.slice(0, 2);
+      const bottom2 = codeMetrics.slice(-2);
+      const median = codeMetrics[Math.floor(codeMetrics.length / 2)];
+      selectedCodes = [...top2, median, ...bottom2].map((c) => c.code);
+    }
+
+    // 3. Merge data
+    // Create a map of year -> object
+    const dataMap = new Map<number, any>();
+    baseData.forEach((d) => dataMap.set(d.year, { ...d }));
+
+    selectedCodes.forEach((code) => {
+      const cData = affordabilityData[code as keyof typeof affordabilityData];
+      cData.realIncome.forEach((d) => {
+        const m = getMetricsForYear(cData, d.year, code);
+        if (m) {
+          const existing = dataMap.get(d.year) || { year: d.year };
+          existing[code] = parseFloat(m.pti.toFixed(2));
+          dataMap.set(d.year, existing);
+        }
+      });
+    });
+
+    return Array.from(dataMap.values())
+      .sort((a, b) => a.year - b.year)
+      .map(item => ({ ...item, _comparisonCodes: selectedCodes }));
+  }, [countryData, countryCode, isComparing]);
+
+  const comparisonCodes = (chartData[0] as any)?._comparisonCodes || [];
 
   return (
     <div className="h-96">
@@ -79,12 +156,30 @@ export function AffordabilityTrendsChart({
           <Legend verticalAlign="top" height={36} />
           <Line
             type="monotone"
-            dataKey="pti"
-            name={t("AffordabilityTrends.legend")}
+            dataKey={countryCode}
+            name={
+              countryDisplayNames[countryCode as keyof typeof countryDisplayNames]
+            }
             stroke="var(--color-accent)"
             strokeWidth={3}
             dot={{ r: 3 }}
           />
+          {isComparing &&
+            comparisonCodes.map((code: string, index: number) => (
+              <Line
+                key={code}
+                type="monotone"
+                dataKey={code}
+                name={
+                  countryDisplayNames[code as keyof typeof countryDisplayNames] ??
+                  code
+                }
+                stroke={COMPARE_COLORS[index % COMPARE_COLORS.length]}
+                strokeWidth={2}
+                dot={false}
+                strokeOpacity={0.7}
+              />
+            ))}
         </LineChart>
       </ResponsiveContainer>
     </div>

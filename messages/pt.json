@@ -57,7 +57,9 @@
       "p1": "Mostra o número total de famílias no país ao longo do tempo.",
       "p2": "Um <strong>aumento</strong> no número de famílias pode elevar a procura por habitação e exercer pressão sobre preços e aluguéis.",
       "p3": "Fatores como crescimento populacional, imigração e redução do tamanho das famílias influenciam essa tendência."
-    }
+    },
+    "toggleComparison": "Comparar com outros países",
+    "toggleComparisonOff": "Parar comparação"
   },
   "Charts": {
     "year": "Ano",
