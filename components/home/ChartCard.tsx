@@ -71,7 +71,9 @@ export default function ChartCard({
       <div className="flex flex-col lg:flex-row gap-6 items-center">
         <motion.div
           layout
-          animate={{ width: isExplanationVisible ? "60%" : "100%" }}
+          animate={{
+            width: isDesktop && isExplanationVisible ? "60%" : "100%",
+          }}
           transition={{ duration: 0.5, type: "spring", bounce: 0.2 }}
           className="w-full"
         >

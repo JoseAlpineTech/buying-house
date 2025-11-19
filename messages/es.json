@@ -10,6 +10,14 @@
   "Errors": {
     "noData": "Lo sentimos, no hay datos completos ajustados por inflación para {countryName}. Por favor selecciona otro país."
   },
+  "Insights": {
+      "trend_worsened": "empeorado",
+      "trend_improved": "mejorado",
+      "trend_less_affordable": "menos asequible",
+      "trend_more_affordable": "más asequible",
+      "summary_pti": "La relación Precio-Ingreso real calculada ha {trend} de **{startPti}** en {startYear} a **{endPti}** en {endYear}.",
+      "summary_context": "Esto indica que, en términos ajustados a la inflación, la vivienda se ha vuelto un **{percentage}%** {trend} para el hogar promedio."
+    },
   "Page": {
     "comparisonSubtitle": "Ordenado por {label} ({direction})",
     "chartCard_RealHouseholdIncome_title": "Ingreso Real del Hogar",

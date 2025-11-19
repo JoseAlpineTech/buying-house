@@ -10,6 +10,14 @@
   "Errors": {
     "noData": "{countryName}의 물가 조정된 주택 접근성 데이터가 충분하지 않습니다. 다른 국가를 선택해 주세요."
   },
+  "Insights": {
+      "trend_worsened": "악화되었습니다",
+      "trend_improved": "개선되었습니다",
+      "trend_less_affordable": "구입하기 부담스럽게",
+      "trend_more_affordable": "구입하기 수월하게",
+      "summary_pti": "계산된 실질 소득 대비 주택 가격 비율은 {startYear}년 **{startPti}**에서 {endYear}년 **{endPti}**로 {trend}.",
+      "summary_context": "이는 인플레이션을 감안했을 때, 일반 가구의 주택 구매가 **{percentage}%** {trend} 되었음을 의미합니다."
+    },
   "Page": {
     "comparisonSubtitle": "{label} 기준 정렬 ({direction})",
     "chartCard_RealHouseholdIncome_title": "실질 가계소득",

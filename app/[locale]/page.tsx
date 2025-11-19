@@ -249,10 +249,49 @@ export default function Home() {
   );
   const endMetrics = getMetricsForYear(countryData, endYear, selectedCountry);
 
-  const insightSummary =
+  // Prepare insights summary (with translations)
+  const summaryData =
     startMetrics && endMetrics
       ? generateAffordabilitySummary(startMetrics, endMetrics)
-      : [];
+      : null;
+
+  const insightSummary: string[] = [];
+
+  if (summaryData) {
+    const {
+      startPti,
+      startYear,
+      endPti,
+      endYear,
+      ptiChange,
+      ptiPercentageChange,
+    } = summaryData;
+
+    const trend1 =
+      ptiChange > 0
+        ? t("Insights.trend_worsened")
+        : t("Insights.trend_improved");
+    insightSummary.push(
+      t("Insights.summary_pti", {
+        trend: trend1,
+        startPti: startPti.toFixed(1),
+        startYear,
+        endPti: endPti.toFixed(1),
+        endYear,
+      }),
+    );
+
+    const trend2 =
+      ptiChange > 0
+        ? t("Insights.trend_less_affordable")
+        : t("Insights.trend_more_affordable");
+    insightSummary.push(
+      t("Insights.summary_context", {
+        percentage: Math.abs(ptiPercentageChange).toFixed(0),
+        trend: trend2,
+      }),
+    );
+  }
 
   const latestMortgageRate =
     countryData.mortgageRate?.slice(-1)[0]?.value ?? 0;

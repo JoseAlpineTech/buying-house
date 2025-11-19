@@ -10,6 +10,14 @@
   "Errors": {
     "noData": "Sorry, complete inflation-adjusted affordability data is not available for {countryName}. Please select another country."
   },
+  "Insights": {
+    "trend_worsened": "worsened",
+    "trend_improved": "improved",
+    "trend_less_affordable": "less affordable",
+    "trend_more_affordable": "more affordable",
+    "summary_pti": "The calculated Real Price-to-Income ratio has {trend} from **{startPti}** in {startYear} to **{endPti}** in {endYear}.",
+    "summary_context": "This indicates that, in inflation-adjusted terms, housing has become **{percentage}%** {trend} for the average household."
+  },
   "Page": {
     "comparisonSubtitle": "Sorted by {label} ({direction})",
     "chartCard_RealHouseholdIncome_title": "Real Household Income",

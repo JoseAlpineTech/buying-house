@@ -10,6 +10,14 @@
   "Errors": {
     "noData": "Leider sind für {countryName} keine vollständigen inflationsbereinigten Daten zur Wohnungszugänglichkeit verfügbar. Bitte wählen Sie ein anderes Land."
   },
+  "Insights": {
+      "trend_worsened": "verschlechtert",
+      "trend_improved": "verbessert",
+      "trend_less_affordable": "weniger erschwinglich",
+      "trend_more_affordable": "erschwinglicher",
+      "summary_pti": "Das berechnete reale Preis-Einkommens-Verhältnis hat sich von **{startPti}** im Jahr {startYear} auf **{endPti}** im Jahr {endYear} {trend}.",
+      "summary_context": "Dies deutet darauf hin, dass Wohnraum inflationsbereinigt für den Durchschnittshaushalt um **{percentage}%** {trend} geworden ist."
+    },  
   "Page": {
     "comparisonSubtitle": "Sortiert nach {label} ({direction})",
     "chartCard_RealHouseholdIncome_title": "Reales Haushaltseinkommen",

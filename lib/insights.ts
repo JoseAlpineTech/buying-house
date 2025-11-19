@@ -8,6 +8,15 @@ export interface AffordabilityMetrics {
   pti: number; // Price-to-Income Ratio
 }
 
+export interface AffordabilitySummaryData {
+  startPti: number;
+  startYear: number;
+  endPti: number;
+  endYear: number;
+  ptiChange: number;
+  ptiPercentageChange: number;
+}
+
 /**
  * Calculates a representative house price for a given year using the index.
  * This function is now robust and uses the first available year as the base
@@ -54,44 +63,31 @@ function calculateHousePrice(
 }
 
 /**
- * Generates a plain-language summary based on calculated affordability changes.
+ * Generates calculated affordability metrics for comparison.
  * @param startMetrics - The calculated metrics from the earliest available year.
  * @param endMetrics - The calculated metrics from the most recent available year.
- * @returns A list of strings summarizing the key changes.
+ * @returns Structured data representing the changes, or null if inputs are missing.
  */
 export function generateAffordabilitySummary(
   startMetrics: AffordabilityMetrics,
   endMetrics: AffordabilityMetrics,
-): string[] {
+): AffordabilitySummaryData | null {
   if (!startMetrics || !endMetrics) {
-    return [];
+    return null;
   }
 
   const ptiChange = endMetrics.pti - startMetrics.pti;
   const ptiPercentageChange =
     ((endMetrics.pti - startMetrics.pti) / startMetrics.pti) * 100;
 
-  const insights: string[] = [];
-
-  // Insight 1: PTI Change
-  insights.push(
-    `The calculated Real Price-to-Income ratio has ${
-      ptiChange > 0 ? "worsened" : "improved"
-    } from **${startMetrics.pti.toFixed(1)}** in ${
-      startMetrics.year
-    } to **${endMetrics.pti.toFixed(1)}** in ${endMetrics.year}.`,
-  );
-
-  // Insight 2: Contextualize the change
-  insights.push(
-    `This indicates that, in inflation-adjusted terms, housing has become **${Math.abs(
-      ptiPercentageChange,
-    ).toFixed(0)}%** ${
-      ptiChange > 0 ? "less affordable" : "more affordable"
-    } for the average household.`,
-  );
-
-  return insights;
+  return {
+    startPti: startMetrics.pti,
+    startYear: startMetrics.year,
+    endPti: endMetrics.pti,
+    endYear: endMetrics.year,
+    ptiChange,
+    ptiPercentageChange,
+  };
 }
 
 /**

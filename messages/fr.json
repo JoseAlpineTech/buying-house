@@ -10,6 +10,14 @@
   "Errors": {
     "noData": "Désolé, les données complètes ajustées de l’inflation ne sont pas disponibles pour {countryName}. Veuillez sélectionner un autre pays."
   },
+  "Insights": {
+      "trend_worsened": "détérioré",
+      "trend_improved": "amélioré",
+      "trend_less_affordable": "moins abordable",
+      "trend_more_affordable": "plus abordable",
+      "summary_pti": "Le ratio Prix/Revenu réel calculé s'est {trend}, passant de **{startPti}** en {startYear} à **{endPti}** en {endYear}.",
+      "summary_context": "Cela indique que, en termes corrigés de l'inflation, le logement est devenu **{percentage}%** {trend} pour le ménage moyen."
+    },
   "Page": {
     "comparisonSubtitle": "Trié par {label} ({direction})",
     "chartCard_RealHouseholdIncome_title": "Revenu Réel des Ménages",

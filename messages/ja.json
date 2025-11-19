@@ -10,6 +10,14 @@
   "Errors": {
     "noData": "{countryName} の物価調整後の完全な住宅アクセスデータは利用できません。別の国を選択してください。"
   },
+  "Insights": {
+      "trend_worsened": "悪化しました",
+      "trend_improved": "改善しました",
+      "trend_less_affordable": "購入しにくく",
+      "trend_more_affordable": "購入しやすく",
+      "summary_pti": "算出された実質価格対所得比率は、{startYear}年の**{startPti}**から{endYear}年の**{endPti}**へと{trend}。",
+      "summary_context": "これは、インフレ調整後の平均的な世帯にとって、住宅が**{percentage}%**{trend}なったことを示しています。"
+    },
   "Page": {
     "comparisonSubtitle": "{label}（{direction}）で並び替え済み",
     "chartCard_RealHouseholdIncome_title": "実質世帯所得",

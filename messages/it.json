@@ -10,6 +10,14 @@
   "Errors": {
     "noData": "Purtroppo non sono disponibili dati completi corretti per l’inflazione sull’accessibilità abitativa per {countryName}. Seleziona un altro paese."
   },
+  "Insights": {
+      "trend_worsened": "peggiorato",
+      "trend_improved": "migliorato",
+      "trend_less_affordable": "meno accessibile",
+      "trend_more_affordable": "più accessibile",
+      "summary_pti": "Il rapporto Prezzo/Reddito reale calcolato è {trend} da **{startPti}** nel {startYear} a **{endPti}** nel {endYear}.",
+      "summary_context": "Ciò indica che, in termini corretti per l'inflazione, gli alloggi sono diventati del **{percentage}%** {trend} per la famiglia media."
+    },
   "Page": {
     "comparisonSubtitle": "Ordinato per {label} ({direction})",
     "chartCard_RealHouseholdIncome_title": "Reddito Familiare Reale",

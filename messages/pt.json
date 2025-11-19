@@ -10,6 +10,14 @@
   "Errors": {
     "noData": "Lamentamos, mas não existem dados completos ajustados pela inflação sobre acessibilidade habitacional para {countryName}. Por favor, selecione outro país."
   },
+  "Insights": {
+      "trend_worsened": "piorou",
+      "trend_improved": "melhorou",
+      "trend_less_affordable": "menos acessível",
+      "trend_more_affordable": "mais acessível",
+      "summary_pti": "A relação Preço/Renda real calculada {trend} de **{startPti}** em {startYear} para **{endPti}** em {endYear}.",
+      "summary_context": "Isso indica que, em termos ajustados pela inflação, a habitação tornou-se **{percentage}%** {trend} para a família média."
+    },
   "Page": {
     "comparisonSubtitle": "Ordenado por {label} ({direction})",
     "chartCard_RealHouseholdIncome_title": "Rendimento Real das Famílias",
