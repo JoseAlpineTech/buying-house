@@ -23,6 +23,12 @@ interface IncomeChartProps {
   isComparing?: boolean;
 }
 
+interface ChartDataPoint {
+  year: number;
+  _comparisonCodes?: string[];
+  [key: string]: number | string[] | undefined;
+}
+
 const COMPARE_COLORS = ["#ef4444", "#f97316", "#8b5cf6", "#ec4899", "#3b82f6"];
 
 const formatCurrency = (value: number, currencyCode: string) =>
@@ -59,7 +65,7 @@ export function IncomeChart({
       const min = Math.min(...vals);
       const max = Math.max(...vals);
       const range = max - min;
-      
+
       // Avoid division by zero if flat line
       if (range === 0) return data.map((d) => ({ ...d, val: 0.5 }));
 
@@ -74,7 +80,7 @@ export function IncomeChart({
       base = normalize(base);
     }
 
-    const dataMap = new Map<number, any>();
+    const dataMap = new Map<number, ChartDataPoint>();
     base.forEach((d) =>
       dataMap.set(d.year, { year: d.year, [countryCode]: d.val }),
     );
@@ -108,7 +114,7 @@ export function IncomeChart({
     selectedCodes.forEach((code) => {
       const cData = affordabilityData[code as keyof typeof affordabilityData];
       let series = processOne(cData);
-      
+
       // Normalize each comparison series individually so shapes can be compared
       // irrespective of currency magnitude.
       if (isComparing) {
@@ -127,7 +133,8 @@ export function IncomeChart({
       .map((item) => ({ ...item, _comparisonCodes: selectedCodes }));
   }, [countryData, countryCode, isComparing]);
 
-  const comparisonCodes = (chartData[0] as any)?._comparisonCodes || [];
+  const comparisonCodes =
+    (chartData[0] as ChartDataPoint | undefined)?._comparisonCodes || [];
 
   return (
     <div className="h-96">
@@ -176,7 +183,7 @@ export function IncomeChart({
             }}
             labelStyle={{ color: "var(--color-title)", fontWeight: "bold" }}
             itemStyle={{ color: "var(--color-text)" }}
-            formatter={(value: number, name: string) => {
+            formatter={(value: number) => {
               if (isComparing) {
                 return formatNormalized(value);
               }
@@ -203,9 +210,7 @@ export function IncomeChart({
                 type="monotone"
                 dataKey={code}
                 name={
-                  countryDisplayNames[
-                    code as keyof typeof countryDisplayNames
-                  ]
+                  countryDisplayNames[code as keyof typeof countryDisplayNames]
                 }
                 stroke={COMPARE_COLORS[index % COMPARE_COLORS.length]}
                 strokeWidth={2}

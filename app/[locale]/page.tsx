@@ -326,13 +326,6 @@ export default function Home() {
   );
   const mps = calcMPS(income, monthlyPayment);
 
-  const ydp = calcYDP(
-    housePrice,
-    100 - downPaymentPct,
-    income,
-    savingsRate,
-  );
-
   const baseHousePrice = BASE_HOUSE_PRICES_2015[selectedCountry];
   const startIncome = countryData.realIncome[0]?.value;
   const endIncome = countryData.realIncome.slice(-1)[0]?.value;
@@ -362,8 +355,6 @@ export default function Home() {
           income={income}
           pti={pti}
           mps={mps}
-          ydp={ydp}
-          monthlyPayment={monthlyPayment}
           insightSummary={insightSummary}
           currency={currency.code}
           downPaymentPct={downPaymentPct}

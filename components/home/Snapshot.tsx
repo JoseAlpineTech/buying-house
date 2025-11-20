@@ -12,8 +12,8 @@ interface SnapshotProps {
   income: number;
   pti: number;
   mps: number;
-  ydp: number;
-  monthlyPayment: number;
+  // ydp removed (unused)
+  // monthlyPayment removed (unused)
   insightSummary: string[];
   currency: string;
 
@@ -56,8 +56,8 @@ export default function Snapshot({
   income,
   pti,
   mps,
-  ydp,
-  monthlyPayment,
+  // ydp,  <-- removed
+  // monthlyPayment, <-- removed
   insightSummary,
   currency,
 

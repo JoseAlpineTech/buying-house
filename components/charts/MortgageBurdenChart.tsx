@@ -29,6 +29,12 @@ interface MortgageBurdenChartProps {
   isComparing?: boolean;
 }
 
+interface ChartDataPoint {
+  year: number;
+  _comparisonCodes?: string[];
+  [key: string]: number | string[] | undefined;
+}
+
 const COMPARE_COLORS = ["#ef4444", "#f97316", "#8b5cf6", "#ec4899", "#3b82f6"];
 
 export function MortgageBurdenChart({
@@ -48,14 +54,14 @@ export function MortgageBurdenChart({
         .map(({ year }) => {
           const metrics = getMetricsForYear(cData, year, cCode);
           if (!metrics) return null;
-          // Use the same RATE for everyone to keep it comparable as "Mortgage Burden"
-          // Note: Passing 'rate' from props which is the *latest* rate of the SELECTED country.
-          // Ideally we should use each country's latest rate or a fixed rate?
-          // The prop says "rate", usually implies the selected country's latest rate.
-          // To be fair, we should probably use each country's own latest rate.
           const cRate = cData.mortgageRate.slice(-1)[0]?.value ?? rate;
-          
-          const payment = calcMortgagePayment(cRate, metrics.housePrice, ltv, term);
+
+          const payment = calcMortgagePayment(
+            cRate,
+            metrics.housePrice,
+            ltv,
+            term,
+          );
           const mps = calcMPS(metrics.income, payment);
           return { year, val: parseFloat(mps.toFixed(2)) };
         })
@@ -64,13 +70,17 @@ export function MortgageBurdenChart({
 
     // Base data
     const base = processOne(countryData, countryCode);
-    const dataMap = new Map<number, any>();
-    base.forEach((d) => dataMap.set(d.year, { year: d.year, [countryCode]: d.val }));
+    const dataMap = new Map<number, ChartDataPoint>();
+    base.forEach((d) =>
+      dataMap.set(d.year, { year: d.year, [countryCode]: d.val }),
+    );
 
     if (!isComparing) return Array.from(dataMap.values());
 
     // Select comparison countries based on latest MPS
-    const allCodes = Object.keys(affordabilityData).filter((c) => c !== countryCode);
+    const allCodes = Object.keys(affordabilityData).filter(
+      (c) => c !== countryCode,
+    );
     const codeMetrics = allCodes
       .map((c) => {
         const cData = affordabilityData[c as keyof typeof affordabilityData];
@@ -81,7 +91,7 @@ export function MortgageBurdenChart({
       .filter(Boolean) as { code: string; val: number }[];
 
     codeMetrics.sort((a, b) => b.val - a.val);
-    
+
     let selectedCodes: string[] = [];
     if (codeMetrics.length <= 5) {
       selectedCodes = codeMetrics.map((c) => c.code);
@@ -104,10 +114,11 @@ export function MortgageBurdenChart({
 
     return Array.from(dataMap.values())
       .sort((a, b) => a.year - b.year)
-      .map(item => ({ ...item, _comparisonCodes: selectedCodes }));
+      .map((item) => ({ ...item, _comparisonCodes: selectedCodes }));
   }, [countryData, countryCode, ltv, term, rate, isComparing]);
 
-  const comparisonCodes = (chartData[0] as any)?._comparisonCodes || [];
+  const comparisonCodes =
+    (chartData[0] as ChartDataPoint | undefined)?._comparisonCodes || [];
 
   return (
     <div className={isMini ? "h-60" : "h-96"}>
@@ -176,7 +187,11 @@ export function MortgageBurdenChart({
           <Line
             type="monotone"
             dataKey={countryCode}
-            name={countryDisplayNames[countryCode as keyof typeof countryDisplayNames]}
+            name={
+              countryDisplayNames[
+                countryCode as keyof typeof countryDisplayNames
+              ]
+            }
             stroke="var(--color-accent)"
             strokeWidth={3}
             dot={!isMini}
@@ -187,7 +202,9 @@ export function MortgageBurdenChart({
                 key={code}
                 type="monotone"
                 dataKey={code}
-                name={countryDisplayNames[code as keyof typeof countryDisplayNames]}
+                name={
+                  countryDisplayNames[code as keyof typeof countryDisplayNames]
+                }
                 stroke={COMPARE_COLORS[index % COMPARE_COLORS.length]}
                 strokeWidth={2}
                 dot={false}

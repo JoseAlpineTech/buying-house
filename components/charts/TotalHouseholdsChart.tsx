@@ -22,6 +22,12 @@ interface TotalHouseholdsChartProps {
   isComparing?: boolean;
 }
 
+interface ChartDataPoint {
+  year: number;
+  _comparisonCodes?: string[];
+  [key: string]: number | string[] | undefined;
+}
+
 const COMPARE_COLORS = ["#ef4444", "#f97316", "#8b5cf6", "#ec4899", "#3b82f6"];
 
 const formatNumber = (value: number) => {
@@ -53,7 +59,7 @@ export function TotalHouseholdsChart({
 
     const mainKey = countryCode || "Main";
     const base = processOne(countryData);
-    const dataMap = new Map<number, any>();
+    const dataMap = new Map<number, ChartDataPoint>();
     base.forEach((d) =>
       dataMap.set(d.year, { year: d.year, [mainKey]: d.val }),
     );
@@ -98,7 +104,8 @@ export function TotalHouseholdsChart({
       .map((item) => ({ ...item, _comparisonCodes: selectedCodes }));
   }, [countryData, countryCode, isComparing]);
 
-  const comparisonCodes = (chartData[0] as any)?._comparisonCodes || [];
+  const comparisonCodes =
+    (chartData[0] as ChartDataPoint | undefined)?._comparisonCodes || [];
   const mainKey = countryCode || "Main";
   const scaleLabel = isComparing ? "Log" : "Linear";
 

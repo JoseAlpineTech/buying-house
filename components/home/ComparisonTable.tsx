@@ -4,7 +4,6 @@ import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { countryCodeMap } from "../../data/countryCodes";
-import { calcYDP } from "../../lib/metrics";
 
 export interface ComparisonData {
   countryCode: string;
