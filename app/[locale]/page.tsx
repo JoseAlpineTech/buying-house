@@ -3,6 +3,8 @@
 import { useState, useMemo } from "react";
 import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
+import { useRouter, usePathname } from "../../navigation";
 import { affordabilityData } from "../../data/affordability";
 import { currencies } from "../../data/currency";
 import { countryDisplayNames } from "../../data/countryDisplayNames";
@@ -76,7 +78,24 @@ const ltv = 90;
 const term = 30;
 
 export default function Home() {
-  const [selectedCountry, setSelectedCountry] = useState<string>("CAN");
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  // Determine selected country from URL or default to CAN
+  const countryParam = searchParams.get("country");
+  const selectedCountry =
+    countryParam &&
+    affordabilityData[countryParam as keyof typeof affordabilityData]
+      ? countryParam
+      : "CAN";
+
+  const setSelectedCountry = (country: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("country", country);
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  };
+
   const [isMethodologyModalOpen, setIsMethodologyModalOpen] = useState(false);
   const [isAssumptionsModalOpen, setIsAssumptionsModalOpen] = useState(false);
   const [isCountrySelectorOpen, setIsCountrySelectorOpen] = useState(false);

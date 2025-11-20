@@ -8,7 +8,7 @@ export const locales = [
   "it",
   "ja",
   "pt",
-  "ko"
+  "ko",
 ] as const;
 
 export type Locale = (typeof locales)[number];
@@ -16,11 +16,8 @@ export type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = "en";
 export const localePrefix = "as-needed";
 
-export const pathnames = {};
-
 export const { Link, redirect, usePathname, useRouter } = createNavigation({
   locales,
   defaultLocale,
   localePrefix,
-  pathnames,
 });

@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocale, useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import { languages } from "../../data/languages";
 import { usePathname, useRouter } from "../../navigation";
 
@@ -16,6 +17,7 @@ export default function FloatingLanguageSelector() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const selectedLanguage =
     languages.find((lang) => lang.code === locale) ?? languages[0];
@@ -36,7 +38,9 @@ export default function FloatingLanguageSelector() {
   }, []);
 
   const handleLanguageSelect = (lang: Language) => {
-    router.push(pathname, { locale: lang.code });
+    const params = searchParams.toString();
+    const query = params ? `?${params}` : "";
+    router.push(pathname + query, { locale: lang.code });
     setIsOpen(false);
   };
 

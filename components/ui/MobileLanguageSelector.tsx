@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import { languages } from "../../data/languages";
 import { usePathname, useRouter } from "../../navigation";
 
@@ -21,12 +22,15 @@ export default function MobileLanguageSelector({
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const selectedLanguage =
     languages.find((lang) => lang.code === locale) ?? languages[0];
 
   const handleSelect = (lang: Language) => {
-    router.push(pathname, { locale: lang.code });
+    const params = searchParams.toString();
+    const query = params ? `?${params}` : "";
+    router.push(pathname + query, { locale: lang.code });
     onClose();
   };
 
