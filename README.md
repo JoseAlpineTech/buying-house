@@ -6,7 +6,7 @@ This web application provides a deep dive into housing market trends, allowing u
 
 **[Visit the Live Demo](https://buying-house.pages.dev)**
 
-![Project Screenshot](./public/og-image.png)
+![Project Screenshot](./public/og-image.jpg)
 
 ---
 
