@@ -152,13 +152,19 @@ export default function Home() {
           };
         }
 
-        const payment = calcMortgagePayment(rate, metrics.housePrice, ltv, term);
+        const currentLtv = 100 - downPaymentPct;
+        const payment = calcMortgagePayment(
+          rate,
+          metrics.housePrice,
+          currentLtv,
+          term,
+        );
         const mps = calcMPS(metrics.income, payment);
 
         // Use shared sliders for YDP
         const computedYdp = calcYDP(
           metrics.housePrice,
-          100 - downPaymentPct,
+          downPaymentPct,
           metrics.income,
           savingsRate,
         );
@@ -318,14 +324,6 @@ export default function Home() {
   const income = endMetrics?.income ?? 0;
   const pti = endMetrics?.pti ?? 0;
 
-  const monthlyPayment = calcMortgagePayment(
-    latestMortgageRate,
-    housePrice,
-    ltv,
-    term,
-  );
-  const mps = calcMPS(income, monthlyPayment);
-
   const baseHousePrice = BASE_HOUSE_PRICES_2015[selectedCountry];
   const startIncome = countryData.realIncome[0]?.value;
   const endIncome = countryData.realIncome.slice(-1)[0]?.value;
@@ -354,9 +352,10 @@ export default function Home() {
           housePrice={housePrice}
           income={income}
           pti={pti}
-          mps={mps}
           insightSummary={insightSummary}
           currency={currency.code}
+          mortgageRate={latestMortgageRate}
+          term={term}
           downPaymentPct={downPaymentPct}
           savingsRate={savingsRate}
           setDownPaymentPct={setDownPaymentPct}

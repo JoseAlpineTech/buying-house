@@ -235,6 +235,14 @@
       "financial": {
         "title": "Financial Market Indicators",
         "description": "The long-term interest rate from this dataset is used as a consistent proxy for mortgage rates across all countries. (Last updated: Nov 10, 2025)"
+      },
+      "banxico": {
+        "title": "Mexico: Mortgage Market Data",
+        "description": "Weighted average interest rates for housing acquisition, sourced directly from <link>Banco de México (Banxico)</link> to ensure accuracy in mortgage burden calculations."
+      },
+      "abs": {
+        "title": "Australia: Income Data",
+        "description": "Real household disposable income growth figures, sourced from the <link>Australian Bureau of Statistics (ABS)</link> to address lags in international datasets."
       }
     },
     "seriesExplained": {

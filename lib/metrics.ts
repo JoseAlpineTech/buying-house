@@ -49,18 +49,18 @@ export function calcMPS(income: number, payment: number): number {
  * Calculates the Years to save for a Down Payment (YDP).
  *
  * @param price - The total price of the property.
- * @param ltv - The Loan-to-Value ratio (e.g., 80 for 80%).
+ * @param downPaymentPct - The down payment percentage (e.g., 20 for 20%).
  * @param income - Gross annual income.
  * @param savingsRate - The percentage of annual income saved (e.g., 10 for 10%).
  * @returns The number of years required to save for the down payment.
  */
 export function calcYDP(
   price: number,
-  ltv: number,
+  downPaymentPct: number,
   income: number,
   savingsRate: number,
 ): number {
-  const downPaymentAmount = price * (1 - ltv / 100);
+  const downPaymentAmount = price * (downPaymentPct / 100);
   const annualSavings = income * (savingsRate / 100);
 
   if (annualSavings === 0) {

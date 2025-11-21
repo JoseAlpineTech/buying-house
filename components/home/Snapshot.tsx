@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
-import { calcYDP } from "../../lib/metrics";
+import { calcYDP, calcMortgagePayment, calcMPS } from "../../lib/metrics";
 
 interface SnapshotProps {
   startYear: number;
@@ -11,13 +11,15 @@ interface SnapshotProps {
   housePrice: number;
   income: number;
   pti: number;
-  mps: number;
-  // ydp removed (unused)
-  // monthlyPayment removed (unused)
+  // mps prop removed; calculated internally
   insightSummary: string[];
   currency: string;
 
-  // NEW shared slider props
+  // New props for MPS calculation
+  mortgageRate: number;
+  term: number;
+
+  // Shared slider props
   downPaymentPct: number;
   savingsRate: number;
   setDownPaymentPct: (value: number) => void;
@@ -55,11 +57,10 @@ export default function Snapshot({
   housePrice,
   income,
   pti,
-  mps,
-  // ydp,  <-- removed
-  // monthlyPayment, <-- removed
   insightSummary,
   currency,
+  mortgageRate,
+  term,
 
   downPaymentPct,
   savingsRate,
@@ -71,8 +72,18 @@ export default function Snapshot({
   const liveLtv = useMemo(() => 100 - downPaymentPct, [downPaymentPct]);
 
   const liveYdp = useMemo(() => {
-    return calcYDP(housePrice, liveLtv, income, savingsRate);
-  }, [housePrice, liveLtv, income, savingsRate]);
+    return calcYDP(housePrice, downPaymentPct, income, savingsRate);
+  }, [housePrice, downPaymentPct, income, savingsRate]);
+
+  const liveMps = useMemo(() => {
+    const monthlyPayment = calcMortgagePayment(
+      mortgageRate,
+      housePrice,
+      liveLtv,
+      term,
+    );
+    return calcMPS(income, monthlyPayment);
+  }, [mortgageRate, housePrice, liveLtv, term, income]);
 
   // Replace static 10% with live values
   const liveExplanation4 = useMemo(() => {
@@ -134,7 +145,9 @@ export default function Snapshot({
         <div className="flex flex-col gap-6">
           <MetricCard
             label={t("mpsLabel")}
-            value={mps > 0 && isFinite(mps) ? `${mps.toFixed(1)}%` : "N/A"}
+            value={
+              liveMps > 0 && isFinite(liveMps) ? `${liveMps.toFixed(1)}%` : "N/A"
+            }
             unit={t("mpsUnit")}
           />
           <ExplanationCard>

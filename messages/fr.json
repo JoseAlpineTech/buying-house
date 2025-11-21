@@ -235,6 +235,14 @@
       "financial": {
         "title": "Indicateurs des Marchés Financiers",
         "description": "Les taux de rendement obligataire à long terme servent de proxy pour les taux hypothécaires. (Mise à jour : 10 nov. 2025)"
+      },
+      "banxico": {
+        "title": "Mexique : Données du marché hypothécaire",
+        "description": "Taux d'intérêt moyens pondérés pour l'acquisition de logements, provenant directement de la <link>Banco de México (Banxico)</link> pour garantir la précision des calculs de la charge hypothécaire."
+      },
+      "abs": {
+        "title": "Australie : Données sur les revenus",
+        "description": "Chiffres de croissance du revenu disponible réel des ménages, provenant du <link>Australian Bureau of Statistics (ABS)</link> pour combler les retards des ensembles de données internationaux."
       }
     },
     "seriesExplained": {

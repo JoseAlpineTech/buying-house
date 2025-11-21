@@ -235,6 +235,14 @@
       "financial": {
         "title": "Finanzmarktindikatoren",
         "description": "Langfristige Zinssätze dienen als Proxy für Hypothekenzinsen. (Aktualisiert am: 10. November 2025)"
+      },
+      "banxico": {
+        "title": "Mexiko: Hypothekenmarktdaten",
+        "description": "Gewichtete durchschnittliche Zinssätze für den Wohnungserwerb, direkt von der <link>Banco de México (Banxico)</link> bezogen, um die Genauigkeit der Hypothekenbelastungsberechnungen sicherzustellen."
+      },
+      "abs": {
+        "title": "Australien: Einkommensdaten",
+        "description": "Wachstumszahlen des realen verfügbaren Haushaltseinkommens, bezogen vom <link>Australian Bureau of Statistics (ABS)</link>, um Verzögerungen in internationalen Datensätzen auszugleichen."
       }
     },
     "seriesExplained": {

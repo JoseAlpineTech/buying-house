@@ -235,6 +235,14 @@
       "financial": {
         "title": "Indicatori dei Mercati Finanziari",
         "description": "I tassi d’interesse a lungo termine sono utilizzati come proxy per i tassi ipotecari. (Aggiornato al: 10 novembre 2025)"
+      },
+      "banxico": {
+        "title": "Messico: Dati del Mercato Ipotecario",
+        "description": "Tassi di interesse medi ponderati per l'acquisto di abitazioni, provenienti direttamente dalla <link>Banco de México (Banxico)</link> per garantire la precisione nei calcoli dell'onere ipotecario."
+      },
+      "abs": {
+        "title": "Australia: Dati sul Reddito",
+        "description": "Dati sulla crescita del reddito disponibile reale delle famiglie, provenienti dall'<link>Australian Bureau of Statistics (ABS)</link> per colmare i ritardi nei set di dati internazionali."
       }
     },
     "seriesExplained": {

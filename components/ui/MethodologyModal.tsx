@@ -97,6 +97,47 @@ export function MethodologyModal({
                   {t("primarySources.financial.description")}
                 </p>
               </div>
+
+              {/* Country Specific Sources - No borders, matching list style */}
+              <div>
+                <h4 className="font-semibold text-[--color-title]">
+                  {t("primarySources.banxico.title")}
+                </h4>
+                <p className="text-sm">
+                  {t.rich("primarySources.banxico.description", {
+                    link: (chunks) => (
+                      <a
+                        href="https://www.banxico.org.mx/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-400 underline hover:text-[--color-accent]"
+                      >
+                        {chunks}
+                      </a>
+                    ),
+                  })}
+                </p>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-[--color-title]">
+                  {t("primarySources.abs.title")}
+                </h4>
+                <p className="text-sm">
+                  {t.rich("primarySources.abs.description", {
+                    link: (chunks) => (
+                      <a
+                        href="https://www.abs.gov.au/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-400 underline hover:text-[--color-accent]"
+                      >
+                        {chunks}
+                      </a>
+                    ),
+                  })}
+                </p>
+              </div>
             </div>
           </div>
 
@@ -122,11 +163,13 @@ export function MethodologyModal({
                 <h4 className="font-semibold text-[--color-label]">
                   {t("seriesExplained.realHousePrice.title")}
                 </h4>
-                <p className="text-sm">
-                  {t.rich("seriesExplained.realHousePrice.description", {
-                    code: (chunks) => <code>{chunks}</code>,
-                  })}
-                </p>
+                {/* Using dangerouslySetInnerHTML to correctly render &times; and &divide; entities */}
+                <p
+                  className="text-sm"
+                  dangerouslySetInnerHTML={{
+                    __html: t.raw("seriesExplained.realHousePrice.description"),
+                  }}
+                />
               </div>
               <div>
                 <h4 className="font-semibold text-[--color-label]">

@@ -235,6 +235,14 @@
       "financial": {
         "title": "Indicadores de Mercado Financiero",
         "description": "Las tasas de interés a largo plazo (bonos soberanos) se usan como aproximación coherente para las tasas hipotecarias entre países. (Actualizado: 10 Nov 2025)"
+      },
+      "banxico": {
+        "title": "México: Datos del Mercado Hipotecario",
+        "description": "Tasas de interés promedio ponderado para la adquisición de vivienda, obtenidas directamente del <link>Banco de México (Banxico)</link> para asegurar la precisión en los cálculos de la carga hipotecaria. "
+      },
+      "abs": {
+        "title": "Australia: Datos de Ingresos",
+        "description": "Cifras de crecimiento del ingreso real disponible de los hogares, obtenidas de la <link>Australian Bureau of Statistics (ABS)</link> para abordar los rezagos en los conjuntos de datos internacionales."
       }
     },
     "seriesExplained": {

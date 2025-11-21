@@ -235,6 +235,14 @@
       "financial": {
         "title": "Indicadores de Mercado Financeiro",
         "description": "Taxas de juro de longo prazo usadas como aproximação das taxas hipotecárias. (Atualizado em: 10 Nov 2025)"
+      },
+      "banxico": {
+        "title": "México: Dados do Mercado Hipotecário",
+        "description": "Taxas de juros médias ponderadas para aquisição de habitação, obtidas diretamente do <link>Banco de México (Banxico)</link> para garantir a precisão nos cálculos do ônus hipotecário."
+      },
+      "abs": {
+        "title": "Austrália: Dados de Renda",
+        "description": "Números de crescimento da renda disponível real das famílias, obtidos do <link>Australian Bureau of Statistics (ABS)</link> para corrigir atrasos nos conjuntos de dados internacionais."
       }
     },
     "seriesExplained": {
